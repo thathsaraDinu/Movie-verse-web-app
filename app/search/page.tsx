@@ -6,8 +6,6 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 async function SearchResults({ query }: { query: string }) {
   try {
-    console.log("query", query);
-
     // This is the original code that was replaced by the fetch call below since this didn't work
     // const movies = await searchMovies(query);
 
