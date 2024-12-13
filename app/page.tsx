@@ -11,6 +11,8 @@ async function MovieData() {
       getTrendingMovies(),
       getUpcomingMovies(),
     ])
+    console.log('trendingMovies', trendingMovies)
+    console.log('upcomingMovies', upcomingMovies)
 
     return (
       <>
@@ -20,13 +22,10 @@ async function MovieData() {
     )
   } catch (error) {
     return (
-      <div className="container py-8">
-        <ErrorMessage 
-          title="Failed to load movies" 
-          message="Internal Error."
-        />
+      <div className="container py-8 px-6 max-w-7xl mx-auto">
+        <ErrorMessage title="Failed to load movies" message="Internal Error." />
       </div>
-    )
+    );
   }
 }
 

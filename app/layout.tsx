@@ -27,7 +27,7 @@ export default function RootLayout({
         >
           <div className="min-h-screen bg-background">
             <Navbar />
-            <main className="container mx-auto ">{children}</main>
+            <main className=" mx-auto ">{children}</main>
           </div>
         </ThemeProvider>
       </body>

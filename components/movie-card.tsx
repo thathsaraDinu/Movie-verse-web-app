@@ -9,7 +9,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
   return (
     <Link href={`/movie/${movie.id}`}>
       <Card className="overflow-hidden transition-transform hover:scale-105">
-        <div className="aspect-[4/5] relative">
+        <div className="aspect-[2/3] relative">
           <Image
             src={getImageUrl(movie.poster_path, "w500")}
             alt={movie.title}
