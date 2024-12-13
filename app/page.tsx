@@ -11,8 +11,6 @@ async function MovieData() {
       getTrendingMovies(),
       getUpcomingMovies(),
     ])
-    console.log('trendingMovies', trendingMovies)
-    console.log('upcomingMovies', upcomingMovies)
 
     return (
       <>
