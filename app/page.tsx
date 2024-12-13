@@ -23,7 +23,7 @@ async function MovieData() {
       <div className="container py-8">
         <ErrorMessage 
           title="Failed to load movies" 
-          message="Please check your API configuration and try again."
+          message="Internal Error."
         />
       </div>
     )
