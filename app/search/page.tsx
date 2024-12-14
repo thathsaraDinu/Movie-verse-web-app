@@ -3,6 +3,7 @@ import { MovieSection } from "@/components/movie-section";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { SearchBar } from "@/components/search-bar";
 
 async function SearchResults({ query }: { query: string }) {
   try {
@@ -12,9 +13,19 @@ async function SearchResults({ query }: { query: string }) {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=a4f29374da1af0a2599c225407f6b077&query=${query}`
     );
-    const movies = await response.json();
+    if (!response.ok) {
+      throw new Error(`TMDB API error: ${response.status}`);
+    }
+    const data = await response.json();
+    const movieList = data.results || [];
     return (
-      <MovieSection title={`Search Results for "${query}"`} movies={movies} />
+      <div className="pb-8 px-6 py-10 max-w-7xl container mx-auto">
+        <SearchBar />
+        <MovieSection
+          title={`Search Results for "${query}"`}
+          movies={movieList}
+        />
+      </div>
     );
   } catch (error) {
     return (
