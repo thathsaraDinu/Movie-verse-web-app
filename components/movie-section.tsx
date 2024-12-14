@@ -3,12 +3,7 @@ import { MovieGrid } from "@/components/movie-grid"
 
 interface MovieSectionProps {
   title: string
-  movies: {
-    page: number,
-    results: Movie[],
-    total_pages: number,
-    total_results: number
-  }
+  movies: Movie[]
 }
 
 export function MovieSection({ title, movies }: MovieSectionProps) {
