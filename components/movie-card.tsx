@@ -35,5 +35,5 @@ export function MovieCard({ movie }: { movie: Movie }) {
         </CardContent>
       </Card>
     </Link>
-  )
+  );
 }

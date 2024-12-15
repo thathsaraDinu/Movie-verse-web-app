@@ -4,6 +4,8 @@ import { ErrorMessage } from "@/components/ui/error-message";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { SearchBar } from "@/components/search-bar";
+const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+
 
 async function SearchResults({ query }: { query: string }) {
   try {
@@ -11,15 +13,13 @@ async function SearchResults({ query }: { query: string }) {
     // const movies = await searchMovies(query);
 
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=a4f29374da1af0a2599c225407f6b077&query=${query}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
     );
-    if (!response.ok) {
-      throw new Error(`TMDB API error: ${response.status}`);
-    }
+   
     const data = await response.json();
     const movieList = data.results || [];
     return (
-      <div className="pb-8 px-6 py-10 max-w-7xl container mx-auto">
+      <div >
         <SearchBar />
         <MovieSection
           title={`Search Results for "${query}"`}
@@ -44,20 +44,20 @@ export default function SearchPage({
 }) {
   if (!searchParams.q) {
     return (
-      <div className="container py-8 px-6 max-w-7xl mx-auto">
+      <section>
         <ErrorMessage
           title="No search query"
           message="Please enter a search term to find movies."
         />
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="pb-8 px-6 max-w-7xl container mx-auto">
+    <section>
       <Suspense fallback={<LoadingSpinner />}>
         <SearchResults query={searchParams.q} />
       </Suspense>
-    </div>
+    </section>
   );
 }

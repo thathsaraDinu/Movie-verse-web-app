@@ -80,3 +80,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+section {
+  @apply pb-8 py-10 px-2 max-w-7xl container mx-auto;
+}
