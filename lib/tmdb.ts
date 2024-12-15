@@ -12,6 +12,8 @@ export interface Movie {
   release_date: string;
 }
 
+console.log(TMDB_API_KEY);
+
 export interface MovieDetails extends Movie {
   genres: Array<{ id: number; name: string }>;
   runtime: number;
