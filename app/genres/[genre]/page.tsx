@@ -19,7 +19,6 @@ async function GenreMovies({ id, name }: { id: string; name: string }) {
 
     return <MovieSection title={`Genre: ${name}`} movies={movies} />;
   } catch (error) {
-    console.log(error);
     return (
       <ErrorMessage
         title="Failed to load movies"

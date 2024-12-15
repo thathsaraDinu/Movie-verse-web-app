@@ -15,7 +15,6 @@ async function SearchResults({ query }: { query: string }) {
       </div>
     );
   } catch (error) {
-    console.log(error);
     return (
       <ErrorMessage
         title="Search failed"
