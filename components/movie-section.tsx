@@ -33,28 +33,30 @@ export function MovieSection({ title, movies }: MovieSectionProps) {
   };
 
   return (
-    <div className="container py-10">
+    <div>
       <h2 className="text-3xl font-bold mb-8 tracking-tight">{title}</h2>
       <MovieGrid movies={currentMovies} />
-      <div className="flex justify-end items-center mt-5 text-sm">
-        <Button
-          variant={"outline"}
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </Button>
-        <span className="px-4 py-2">
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button
-          variant={"outline"}
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </Button>
-      </div>
+      {movies.length > moviesPerPage && (
+        <div className="flex justify-end items-center mt-5 text-sm">
+          <Button
+            variant={"outline"}
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+          <span className="px-4 py-2">
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            variant={"outline"}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

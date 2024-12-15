@@ -2,31 +2,29 @@ import { MovieSection } from "@/components/movie-section";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { getMoviesByGenre } from "@/lib/tmdb";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 async function GenreMovies({ id, name }: { id: string; name: string }) {
   try {
     const movies = await getMoviesByGenre(id);
 
-    if (!movies) {
-      notFound();
+    if (!movies || movies.length === 0) {
+      return (
+        <ErrorMessage
+          title="No Movies Found"
+          message={`No movies found for the genre: ${name}. Please try again later.`}
+        />
+      );
     }
 
-    return (
-      <section>
-        <MovieSection title={`Genre: ${name}`} movies={movies} />
-      </section>
-    );
+    return <MovieSection title={`Genre: ${name}`} movies={movies} />;
   } catch (error) {
     console.log(error);
     return (
-      <section>
-        <ErrorMessage
-          title="Failed to load movies"
-          message="Unable to fetch movies. Please try again later."
-        />
-      </section>
+      <ErrorMessage
+        title="Failed to load movies"
+        message="Unable to fetch movies. Please try again later."
+      />
     );
   }
 }
@@ -42,10 +40,10 @@ export default function GenrePage({
   const decodedId = searchParams.id ? decodeURIComponent(searchParams.id) : ""; // Decode spaces if needed
 
   return (
-    <div>
+    <section>
       <Suspense fallback={<LoadingSpinner />}>
         <GenreMovies id={decodedId} name={decodedGenre} />
       </Suspense>
-    </div>
+    </section>
   );
 }

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,8 @@ export default function RootLayout({
             <Suspense fallback={<LoadingSpinner/>}>
               <main className="mx-auto">{children}</main>
             </Suspense>
+            <div className="h-10"/>
+            <Footer/>
           </div>
         </ThemeProvider>
       </body>

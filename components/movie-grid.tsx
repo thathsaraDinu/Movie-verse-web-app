@@ -9,7 +9,7 @@ export function MovieGrid({ movies }: MovieGridProps) {
   if (!movies.length) {
     return (
       <p className="text-center text-muted-foreground py-8">No movies found.</p>
-    )
+    );
   }
 
   return (
@@ -18,5 +18,5 @@ export function MovieGrid({ movies }: MovieGridProps) {
         <MovieCard key={movie.id} movie={movie} />
       ))}
     </div>
-  )
+  );
 }

@@ -82,5 +82,5 @@
 }
 
 section {
-  @apply pb-8 py-10 px-2 max-w-7xl container mx-auto;
+  @apply  py-10 px-2 container max-w-screen-xl mx-auto;
 }
