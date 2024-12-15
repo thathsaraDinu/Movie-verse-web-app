@@ -23,7 +23,7 @@ async function MovieData() {
   } catch (error) {
     return (
       <div>
-        <ErrorMessage title="Failed to load movies" message="Internal Error." />
+        <ErrorMessage title="Failed to load movies" message="Please check again later" />
       </div>
     );
   }
