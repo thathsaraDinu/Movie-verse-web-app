@@ -1,14 +1,16 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme-provider';
-import { Navbar } from '@/components/navbar';
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "@/components/navbar";
+import { Suspense } from "react";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'MovieVerse - Discover Amazing Movies',
-  description: 'Explore trending and upcoming movies with MovieVerse',
+  title: "Movie Verse - Discover Amazing Movies",
+  description: "Explore trending and upcoming movies with MovieVerse",
 };
 
 export default function RootLayout({
@@ -27,7 +29,9 @@ export default function RootLayout({
         >
           <div className="min-h-screen bg-background">
             <Navbar />
-            <main className=" mx-auto ">{children}</main>
+            <Suspense fallback={<LoadingSpinner/>}>
+              <main className="mx-auto">{children}</main>
+            </Suspense>
           </div>
         </ThemeProvider>
       </body>

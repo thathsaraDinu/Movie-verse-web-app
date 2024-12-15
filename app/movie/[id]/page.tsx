@@ -16,20 +16,22 @@ async function MovieContent({ id }: { id: string }) {
     return <MovieDetails movie={movie} />
   } catch (error) {
     return (
-      <ErrorMessage 
-        title="Failed to load movie" 
-        message="Unable to fetch movie details. Please try again later."
-      />
-    )
+      <section>
+        <ErrorMessage
+          title="Failed to load movie"
+          message="Unable to fetch movie details. Please try again later."
+        />
+      </section>
+    );
   }
 }
 
 export default function MoviePage({ params }: { params: { id: string } }) {
   return (
-    <div className="pb-8 px-6 max-w-7xl container mx-auto">
+    <section>
       <Suspense fallback={<LoadingSpinner />}>
         <MovieContent id={params.id} />
       </Suspense>
-    </div>
+    </section>
   );
 }

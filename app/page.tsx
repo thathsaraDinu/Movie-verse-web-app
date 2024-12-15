@@ -7,6 +7,7 @@ import { HeroSection } from "@/components/hero-section"
 
 async function MovieData() {
   try {
+    
     const [trendingMovies, upcomingMovies] = await Promise.all([
       getTrendingMovies(),
       getUpcomingMovies(),
@@ -20,9 +21,9 @@ async function MovieData() {
     )
   } catch (error) {
     return (
-      <div className="container py-8 px-6 max-w-7xl mx-auto">
+      <section>
         <ErrorMessage title="Failed to load movies" message="Internal Error." />
-      </div>
+      </section>
     );
   }
 }
@@ -31,11 +32,11 @@ export default function Home() {
   return (
     <div>
       <HeroSection />
-      <div className="pb-8 px-6 max-w-7xl container mx-auto">
+      <section>
         <Suspense fallback={<LoadingSpinner />}>
           <MovieData />
         </Suspense>
-      </div>
+      </section>
     </div>
   );
 }
