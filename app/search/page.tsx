@@ -4,30 +4,18 @@ import { ErrorMessage } from "@/components/ui/error-message";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { SearchBar } from "@/components/search-bar";
-const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
 
 async function SearchResults({ query }: { query: string }) {
   try {
-    // This is the original code that was replaced by the fetch call below since this didn't work
-    // const movies = await searchMovies(query);
-
-    const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
-    );
-   
-    const data = await response.json();
-    const movieList = data.results || [];
+    const movies = await searchMovies(query);
     return (
-      <div >
+      <div>
         <SearchBar />
-        <MovieSection
-          title={`Search Results for "${query}"`}
-          movies={movieList}
-        />
+        <MovieSection title={`Search Results for "${query}"`} movies={movies} />
       </div>
     );
   } catch (error) {
+    console.log(error);
     return (
       <ErrorMessage
         title="Search failed"

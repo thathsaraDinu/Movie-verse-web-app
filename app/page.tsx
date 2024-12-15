@@ -4,6 +4,7 @@ import { ErrorMessage } from "@/components/ui/error-message"
 import { Suspense } from "react"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { HeroSection } from "@/components/hero-section"
+import MovieCarousel from "@/components/movie-carousel"
 
 async function MovieData() {
   try {
