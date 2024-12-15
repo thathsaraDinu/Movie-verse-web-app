@@ -9,13 +9,12 @@ async function SearchResults({ query }: { query: string }) {
   try {
     const movies = await searchMovies(query);
     return (
-      <div>
+      <div className="flex flex-col gap-10">
         <SearchBar />
         <MovieSection title={`Search Results for "${query}"`} movies={movies} />
       </div>
     );
   } catch (error) {
-    console.log(error);
     return (
       <ErrorMessage
         title="Search failed"

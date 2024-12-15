@@ -1,27 +1,25 @@
-import { getMovieDetails, getTrendingMovies } from "@/lib/tmdb"
-import { MovieDetails } from "@/components/movie/movie-details"
-import { ErrorMessage } from "@/components/ui/error-message"
-import { Suspense } from "react"
-import { LoadingSpinner } from "@/components/ui/loading-spinner"
-import { notFound } from "next/navigation"
+import { getMovieDetails, getTrendingMovies } from "@/lib/tmdb";
+import { MovieDetails } from "@/components/movie/movie-details";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { Suspense } from "react";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { notFound } from "next/navigation";
 
 async function MovieContent({ id }: { id: string }) {
   try {
-    const movie = await getMovieDetails(id)
-    
+    const movie = await getMovieDetails(id);
+
     if (!movie) {
-      notFound()
+      notFound();
     }
 
-    return <MovieDetails movie={movie} />
+    return <MovieDetails movie={movie} />;
   } catch (error) {
     return (
-      <section>
-        <ErrorMessage
-          title="Failed to load movie"
-          message="Unable to fetch movie details. Please try again later."
-        />
-      </section>
+      <ErrorMessage
+        title="Failed to load movie"
+        message="Unable to fetch movie details. Please try again later."
+      />
     );
   }
 }
