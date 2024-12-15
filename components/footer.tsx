@@ -12,7 +12,7 @@ export default function Footer() {
             </a>
             <span className="text-muted-foreground">© 2021</span>
           </div>
-          <div className="flex items-center flex-wrap justify-center md:justify-end space-x-4 mt-4 md:mt-0">
+          <div className="flex items-center flex-wrap justify-center md:justify-end space-x-4 gap-3 mt-4 md:mt-0">
             <a href="#" className="hover:text-slate-500">
               Privacy Policy
             </a>
