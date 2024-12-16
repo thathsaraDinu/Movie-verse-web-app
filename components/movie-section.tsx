@@ -33,7 +33,7 @@ export function MovieSection({ title, movies }: MovieSectionProps) {
   };
 
   return (
-    <div>
+    <div className="">
       <h2 className="text-3xl font-bold mb-8 tracking-tight">{title}</h2>
       <MovieGrid movies={currentMovies} />
       {movies.length > moviesPerPage && (

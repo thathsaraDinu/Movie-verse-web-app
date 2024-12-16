@@ -15,14 +15,14 @@ async function MovieData() {
     ])
 
     return (
-      <div className="flex flex-col gap-10">
+      <div className="container mx-auto flex flex-col gap-10">
         <MovieSection title="Trending Movies" movies={trendingMovies} />
         <MovieSection title="Upcoming Movies" movies={upcomingMovies} />
       </div>
     )
   } catch (error) {
     return (
-      <div>
+      <div className="container mx-auto">
         <ErrorMessage title="Failed to load movies" message="Please check again later" />
       </div>
     );

@@ -82,5 +82,6 @@
 }
 
 section {
-  @apply  py-10 px-2 container max-w-screen-xl mx-auto;
+  @apply  py-10 px-2 max-w-screen-xl mx-auto;
 }
+

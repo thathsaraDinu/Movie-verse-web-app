@@ -13,13 +13,19 @@ async function MovieContent({ id }: { id: string }) {
       notFound();
     }
 
-    return <MovieDetails movie={movie} />;
+    return (
+      <div className="container mx-auto">
+        <MovieDetails movie={movie} />
+      </div>
+    );
   } catch (error) {
     return (
-      <ErrorMessage
-        title="Failed to load movie"
-        message="Unable to fetch movie details. Please try again later."
-      />
+      <div className="container mx-auto">
+        <ErrorMessage
+          title="Failed to load movie"
+          message="Unable to fetch movie details. Please try again later."
+        />
+      </div>
     );
   }
 }

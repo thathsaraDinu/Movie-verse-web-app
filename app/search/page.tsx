@@ -9,17 +9,18 @@ async function SearchResults({ query }: { query: string }) {
   try {
     const movies = await searchMovies(query);
     return (
-      <div className="flex flex-col gap-10">
+      <div className="flex container mx-auto flex-col gap-10">
         <SearchBar />
         <MovieSection title={`Search Results for "${query}"`} movies={movies} />
       </div>
     );
   } catch (error) {
     return (
+      <div className="container mx-auto">
       <ErrorMessage
         title="Search failed"
         message="Unable to fetch search results. Please try again."
-      />
+      /></div>
     );
   }
 }
