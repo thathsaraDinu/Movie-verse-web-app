@@ -4,14 +4,16 @@ import GenreSelection from "./genre-selection";
 
 export default function Navbar() {
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex items-center justify-between px-6 py-4 max-w-screen-xl container mx-auto flex-wrap gap-5">
-        <SiteHeader />
-        <div className="flex items-center justify-end w-full sm:w-auto space-x-4">
-          <ThemeToggle />
-          <GenreSelection />
+    <div className="border-b bg-background/95 backdrop-blur  supports-[backdrop-filter]:bg-background/60">
+      <div className="max-w-screen-xl mx-auto">
+        <div className="flex items-center justify-between px-6 py-4 gap-5 container mx-auto">
+          <SiteHeader />
+          <div className="flex items-center justify-end w-full sm:w-auto space-x-4">
+            <ThemeToggle />
+            <GenreSelection />
+          </div>
         </div>
       </div>
-    </nav>
+    </div>
   );
 }
