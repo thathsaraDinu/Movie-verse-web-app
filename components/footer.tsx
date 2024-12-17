@@ -10,7 +10,7 @@ export default function Footer() {
             >
               MovieVerse
             </a>
-            <span className="text-muted-foreground">© 2021</span>
+            <span className="text-muted-foreground">© 2024</span>
           </div>
           <div className="flex items-center flex-wrap justify-center md:justify-end space-x-4 gap-3 mt-4 md:mt-0">
             <a href="#" className="hover:text-slate-500">
