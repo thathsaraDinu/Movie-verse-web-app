@@ -2,4 +2,4 @@
 
 An site to view, search, filter and know about any movie including upcoming movies and trending movies
 
-url - https://movieverseweb.vercel.app
+website url - https://movieverseweb.vercel.app
