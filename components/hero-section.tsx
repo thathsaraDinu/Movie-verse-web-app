@@ -10,7 +10,7 @@ export function HeroSection() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <div className="mx-auto max-w-2xl">
             <div className="flex justify-center mb-6">
-              <Image src="/movie-verse-logo.svg" alt="Movie Verse" width={200} height={200} />
+              <Image src="/movie-verse-logo.svg" alt="Movie Verse" width={200} height={70} />
             </div>
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 text-blue-800 dark:text-blue-200">
               Welcome to
