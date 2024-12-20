@@ -6,7 +6,6 @@ import Navbar from "@/components/navbar";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import Footer from "@/components/footer";
-import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
