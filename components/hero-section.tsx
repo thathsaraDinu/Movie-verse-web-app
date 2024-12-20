@@ -1,5 +1,6 @@
 import { Film } from "lucide-react";
 import { SearchBar } from "./search-bar";
+import Image from "next/image";
 
 export function HeroSection() {
   return (
@@ -9,9 +10,9 @@ export function HeroSection() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <div className="mx-auto max-w-2xl">
             <div className="flex justify-center mb-6">
-              <Film className="h-16 w-16" />
+              <Image src="/movie-verse-logo.svg" alt="Movie Verse" width={200} height={200} />
             </div>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 text-blue-800 dark:text-blue-200">
               Welcome to
               <br /> Movie Verse
             </h1>
