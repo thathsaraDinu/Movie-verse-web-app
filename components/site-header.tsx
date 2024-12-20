@@ -8,16 +8,18 @@ export function SiteHeader() {
         <Image
           alt="logo"
           src="/movieverse-high-resolution-logo-transparent.svg"
-          width={220}
+          width={200}
+          priority
           className="hidden md:block"
-          height={42}
+          height={0}
         />
         <Image
           alt="logo"
           src="/monogram-hq.png"
           width={50}
+          priority
           className="block md:hidden"
-          height={31}
+          height={0}
         />
       </span>
     </Link>

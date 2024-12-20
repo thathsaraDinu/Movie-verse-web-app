@@ -30,6 +30,7 @@ export function SearchBar({ className }: SearchBarProps) {
           placeholder="Search for movies..."
           className="pl-10 h-12 text-base"
           value={search}
+          name="search"
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
