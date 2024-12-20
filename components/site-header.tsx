@@ -10,14 +10,14 @@ export function SiteHeader() {
           src="/movieverse-high-resolution-logo-transparent.svg"
           width={220}
           className="hidden md:block"
-          height={50}
+          height={42}
         />
         <Image
           alt="logo"
           src="/monogram-hq.png"
           width={50}
           className="block md:hidden"
-          height={50}
+          height={31}
         />
       </span>
     </Link>
