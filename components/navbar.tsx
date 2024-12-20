@@ -8,7 +8,7 @@ export default function Navbar() {
       <div className="max-w-screen-xl mx-auto">
         <div className="flex items-center justify-between px-6 py-4 gap-5 container mx-auto">
           <SiteHeader />
-          <div className="flex items-center justify-end w-full sm:w-auto space-x-4">
+          <div className="flex items-center justify-end w-auto space-x-4">
             <ThemeToggle />
             <GenreSelection />
           </div>
