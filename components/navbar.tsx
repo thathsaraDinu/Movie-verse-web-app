@@ -1,6 +1,7 @@
 import { SiteHeader } from "./site-header";
 import { ThemeToggle } from "./theme-toggle";
 import GenreSelection from "./genre-selection";
+import NavbarLinks from "./navbar-links";
 
 export default function Navbar() {
   return (
@@ -11,6 +12,7 @@ export default function Navbar() {
           <div className="flex items-center justify-end w-auto space-x-4">
             <ThemeToggle />
             <GenreSelection />
+            <NavbarLinks />
           </div>
         </div>
       </div>
