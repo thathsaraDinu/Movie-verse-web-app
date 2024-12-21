@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import Footer from "@/components/footer";
+import AuthProvider from "@/components/auth-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: {
@@ -25,7 +25,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-    
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
@@ -33,14 +32,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen bg-background">
-            <Navbar />
-            <Suspense fallback={<LoadingSpinner />}>
-              <main className="mx-auto">{children}</main>
-            </Suspense>
-            <div className="h-10" />
-            <Footer />
-          </div>
+          <AuthProvider>
+            <div className="min-h-screen bg-background">
+              <Navbar />
+              <Suspense fallback={<LoadingSpinner />}>
+                <main className="mx-auto">{children}</main>
+              </Suspense>
+              <div className="h-10" />
+              <Footer />
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
