@@ -15,7 +15,7 @@ export default async function GenreSelection() {
 
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger className="inline-flex rounded-lg items-center p-2 ">
+        <DropdownMenuTrigger className="inline-flex outline-none rounded-lg items-center p-2 ">
           Genres <ChevronDown className="ml-2" />
         </DropdownMenuTrigger>
 
