@@ -52,11 +52,13 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen px-2 flex items-center justify-center">
+    <div className="px-2 py-24 flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Create an Account</CardTitle>
-          <CardDescription>Join our learning platform today</CardDescription>
+          <CardDescription>
+            Join MovieVerse and explore the world of movies! 🎬✨
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">
