@@ -1,14 +1,16 @@
 "use client";
-
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { Button } from "./ui/button";
 import { LogOut, Shield, User } from "lucide-react";
 import Link from "next/link";
+import { Session } from "next-auth";
+import { AuthSession } from "@/lib/auth";
 
-export default function NavbarLinks() {
-  const { data: session } = useSession();
-  const isAdmin = session?.user && (session.user as any).role === "admin";
+interface NavbarLinksProps {
+  session: AuthSession | null;
+}
 
+export default function NavbarLinks({ session }: NavbarLinksProps) {
   return (
     <div className="hidden md:flex items-center space-x-4">
       {session ? (
