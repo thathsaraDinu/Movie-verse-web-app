@@ -48,12 +48,12 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen flex px-2 items-center justify-center">
+    <div className=" flex px-2 py-24 items-center justify-center">
       <Card className="w-full  max-w-md">
         <CardHeader>
           <CardTitle>Sign In</CardTitle>
           <CardDescription>
-            Enter your credentials to access your account
+            Sign in to MovieVerse and continue the adventure! 🎬🚀
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -4,9 +4,9 @@ import {
   getUpcomingMovies,
   getMoviesByGenre,
   searchMovies,
+  Movie,
 } from "@/lib/tmdb";
 
-// Handle GET requests
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const action = searchParams.get("action");
@@ -14,17 +14,31 @@ export async function GET(request: Request) {
   const query = searchParams.get("query");
 
   try {
-    let data;
+    let data: Movie[] | undefined;
 
     switch (action) {
       case "trending":
+        if (id || query) {
+          return NextResponse.json(
+            { error: "Unexpected parameters for this action" },
+            { status: 400 }
+          );
+        }
         data = await getTrendingMovies();
         break;
+
       case "upcoming":
+        if (id || query) {
+          return NextResponse.json(
+            { error: "Unexpected parameters for this action" },
+            { status: 400 }
+          );
+        }
         data = await getUpcomingMovies();
         break;
+
       case "byGenre":
-        if (!id || typeof id !== "string") {
+        if (!id || isNaN(Number(id))) {
           return NextResponse.json(
             { error: "Invalid or missing genre ID" },
             { status: 400 }
@@ -32,23 +46,28 @@ export async function GET(request: Request) {
         }
         data = await getMoviesByGenre(id);
         break;
+
       case "search":
-        if (!query || typeof query !== "string") {
+        if (!query || query.length < 3) {
           return NextResponse.json(
-            { error: "Invalid or missing search query" },
+            {
+              error:
+                "Invalid or missing search query. Query must be at least 3 characters long.",
+            },
             { status: 400 }
           );
         }
         data = await searchMovies(query);
         break;
+
       default:
         return NextResponse.json(
-          { error: "Invalid action parameter" },
+          { error: `Invalid action parameter: ${action}` },
           { status: 400 }
         );
     }
 
-    if (data) {
+    if (data && data.length > 0) {
       return NextResponse.json({ data });
     } else {
       return NextResponse.json({ error: "Data not found" }, { status: 404 });
@@ -56,7 +75,10 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Error in API handler:", error);
     return NextResponse.json(
-      { error: "An error occurred while processing your request" },
+      {
+        error: "An error occurred while processing your request",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

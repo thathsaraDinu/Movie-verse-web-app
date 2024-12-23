@@ -1,4 +1,4 @@
-import { getMovieDetails, getTrendingMovies } from "@/lib/tmdb";
+import { getMovieDetails } from "@/lib/tmdb";
 import { MovieDetails } from "@/components/movie/movie-details";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { Suspense } from "react";
