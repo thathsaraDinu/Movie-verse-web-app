@@ -18,7 +18,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 240 20% 98%; /* Custom light background color */
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -45,9 +45,9 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 228 25% 7%; /* Updated to slate-950 */
     --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
+    --card: 215 28% 10%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;

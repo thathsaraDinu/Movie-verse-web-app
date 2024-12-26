@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-//install bcryptjs
+import bcrypt from "bcryptjs";
 
 export interface IUser extends mongoose.Document {
   email: string;

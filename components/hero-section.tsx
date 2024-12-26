@@ -23,7 +23,7 @@ const UserName = async () => {
 export function HeroSection() {
   return (
     <div className="relative overflow-hidden bg-background py-24 sm:py-32">
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
       <div className="relative">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <div className="mx-auto max-w-2xl">
