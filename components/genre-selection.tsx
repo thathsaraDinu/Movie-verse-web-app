@@ -20,7 +20,7 @@ const GenreSelection = ({ genres }: { genres: Genre[] }) => {
       <DropdownMenuPortal>
         <DropdownMenuContent
           sideOffset={5}
-          className="z-50 min-w-[8rem] flex flex-col overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
+          className="z-50 bg-slate-50 dark:bg-slate-950 min-w-[8rem] flex flex-col overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
         >
           {genres?.length > 0 ? (
             genres.map((genre) => (
