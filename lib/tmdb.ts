@@ -2,6 +2,23 @@ const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
 
+
+const today = new Date();
+
+// Get the first day of the current month
+const start_date = new Date(today.getFullYear(), today.getMonth(), 1)
+  .toISOString()
+  .split("T")[0];
+
+// Get the last day of the current month
+const end_date = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+  .toISOString()
+  .split("T")[0];
+
+// Log the dynamic dates
+console.log(`Start Date: ${start_date}`);
+console.log(`End Date: ${end_date}`);
+
 export interface Movie {
   id: number;
   title: string;
@@ -57,11 +74,15 @@ export async function getGenres(): Promise<Genre[]> {
 }
 
 export async function getTrendingMovies(): Promise<Movie[]> {
-  const data = await fetchFromTMDB<MovieResponse>("/trending/movie/week");
+  const data = await fetchFromTMDB<MovieResponse>(
+    "/discover/movie?language=en-US&page=1&sort_by=popularity.desc"
+  );
   return data.results;
 }
 export async function getUpcomingMovies(): Promise<Movie[]> {
-  const data = await fetchFromTMDB<MovieResponse>("/movie/upcoming");
+  const data = await fetchFromTMDB<MovieResponse>(
+    `/discover/movie?language=en-US&region=US&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${start_date}&release_date.lte=${end_date}`
+  );
   return data.results;
 }
 
