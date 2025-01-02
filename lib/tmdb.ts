@@ -11,13 +11,9 @@ const start_date = new Date(today.getFullYear(), today.getMonth(), 1)
   .split("T")[0];
 
 // Get the last day of the current month
-const end_date = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+const end_date = new Date(today.getFullYear(), today.getMonth() + 2, 0)
   .toISOString()
   .split("T")[0];
-
-// Log the dynamic dates
-console.log(`Start Date: ${start_date}`);
-console.log(`End Date: ${end_date}`);
 
 export interface Movie {
   id: number;
@@ -98,7 +94,7 @@ export async function getMoviesByGenre(id: string): Promise<Movie[]> {
 
 export async function searchMovies(query: string): Promise<Movie[]> {
   const data = await fetchFromTMDB<MovieResponse>(
-    `/search/movie?query=${query}`
+    `/search/movie?query=${query}&sort_by=popularity.desc`
   );
   return data.results;
 }
