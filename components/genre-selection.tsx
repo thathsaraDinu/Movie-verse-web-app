@@ -14,7 +14,7 @@ const GenreSelection = ({ genres }: { genres: Genre[] }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="inline-flex outline-none rounded-lg items-center p-2">
-        Explore by Genre
+        Genres
         <ChevronDown className="ml-2" />
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
