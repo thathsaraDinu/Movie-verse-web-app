@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Raleway } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import { Suspense } from "react";
@@ -8,7 +8,16 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import Footer from "@/components/footer";
 import AuthProvider from "@/components/auth-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"], 
+});
+
+const raleway = Raleway({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-raleway", // Define the custom property
+});
+
 
 export const metadata: Metadata = {
   title: "Movie Verse - Discover Amazing Movies",
@@ -25,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${raleway.variable} ${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

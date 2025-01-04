@@ -36,7 +36,7 @@ export function HeroSection() {
                 height={0}
               />
             </div>
-            <div className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 text-blue-800 dark:text-blue-200">
+            <div className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 text-blue-800 dark:text-blue-200 font-raleway">
               Welcome
               <Suspense fallback={<span></span>}>
                 <UserName />
