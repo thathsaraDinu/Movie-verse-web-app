@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function SignIn() {
   const router = useRouter();
@@ -75,6 +76,15 @@ export default function SignIn() {
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Signing in..." : "Sign In"}
             </Button>
+            <p className="text-center text-sm text-gray-600">
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/auth/signup"
+                className="text-blue-600 hover:underline"
+              >
+                Sign up
+              </Link>
+            </p>
           </form>
         </CardContent>
       </Card>
