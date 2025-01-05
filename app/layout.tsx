@@ -7,9 +7,10 @@ import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import Footer from "@/components/footer";
 import AuthProvider from "@/components/auth-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({
-  subsets: ["latin"], 
+  subsets: ["latin"],
 });
 
 const raleway = Raleway({
@@ -17,7 +18,6 @@ const raleway = Raleway({
   weight: ["700"],
   variable: "--font-raleway", // Define the custom property
 });
-
 
 export const metadata: Metadata = {
   title: "Movie Verse - Discover Amazing Movies",
@@ -35,12 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${raleway.variable} ${inter.className} antialiased`}>
+        {" "}
+        <Toaster position="top-center" />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
+          {" "}
           <AuthProvider>
             <div className="min-h-screen bg-background">
               <Navbar />

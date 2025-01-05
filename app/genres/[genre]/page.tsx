@@ -41,7 +41,7 @@ export default function GenrePage({
   const decodedId = searchParams.id ? decodeURIComponent(searchParams.id) : ""; // Decode spaces if needed
 
   return (
-    <section>
+    <section className="pagesection">
       <Suspense fallback={<LoadingSpinner />}>
         <GenreMovies id={decodedId} name={decodedGenre} />
       </Suspense>

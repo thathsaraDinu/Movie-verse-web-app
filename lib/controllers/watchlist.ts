@@ -9,57 +9,50 @@ export async function getUserWatchlist(userId: string) {
 
 export async function addWatchlistItem(userId: string, item: any) {
   await connectDB();
-  let watchlist = await WatchList.findOne({ userId });
 
-  if (!watchlist) {
-    watchlist = new WatchList({
-      userId,
-      items: [item],
-    });
-  } else {
-    const itemExists = watchlist.items.find(
-      (i: any) => i.movieId.toString() === item.movieId.toString()
-    );
-
-    if (itemExists) {
-      return watchlist.items;
+  const updateResult = await WatchList.findOneAndUpdate(
+    { userId }, // Match the document by `userId`
+    {
+      $setOnInsert: { userId }, // Create a new document if it doesn't exist
+      $addToSet: { items: item }, // Add the item if it doesn't already exist
+    },
+    {
+      upsert: true, // Insert the document if it doesn't exist
+      new: true, // Return the updated document
     }
-    watchlist.items.push(item);
-  }
-  await watchlist.save();
-  return watchlist.items;
+  );
+
+  return updateResult.items;
 }
 
 export async function removeWatchlistItem(userId: string, itemId: string) {
   await connectDB();
-  const watchList = await WatchList.findOne({ userId });
 
-  if (!watchList) {
-    throw new Error("watchList not found");
-  }
-
-  watchList.items = watchList.items.filter(
-    (item: any) => item._id.toString() !== itemId
+  const result = await WatchList.findOneAndUpdate(
+    { userId },
+    { $pull: { items: { movieId: itemId } } },
+    { new: true } // Return the updated document
   );
 
-  await watchList.save();
-  return watchList.items;
+  if (!result) {
+    throw new Error("Watchlist for the user not found");
+  }
+
+  return result.items;
 }
 
-export async function isItemInWatchlist(userId: string, itemId: string) {
+export async function isItemInWatchlist(
+  userId: string,
+  itemId: string
+): Promise<boolean> {
   await connectDB();
-  const watchList = await WatchList.findOne({ userId });
-  if (!watchList) {
-    return false;
-  }
-  const itemExists = watchList.items.find(
-    (i: any) => i.movieId.toString() === itemId.toString()
-  );
-  if (itemExists) {
-    return true;
-  }else{
-    return false;
-  }
+
+  const itemExists = await WatchList.exists({
+    userId,
+    "items.movieId": itemId,
+  });
+
+  return !!itemExists; // Returns true if itemExists is found, otherwise false
 }
 //   if (!itemId) {
 //     return NextResponse.json({ error: "Item not found" }, { status: 400 });

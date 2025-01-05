@@ -15,7 +15,7 @@ const GenreSelection = ({ genres }: { genres: Genre[] }) => {
     <DropdownMenu>
       <DropdownMenuTrigger className="inline-flex outline-none rounded-lg items-center p-2">
         Genres
-        <ChevronDown className="ml-2" />
+        <ChevronDown className="ml-2 w-4 h-4" />
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent

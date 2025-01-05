@@ -9,7 +9,7 @@ export function useWatchlist() {
   const fetchWatchlist = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/movies/api/watchlist", {
+      const response = await fetch("/api/watchlist", {
         method: "GET",
       });
 

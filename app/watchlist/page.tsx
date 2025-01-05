@@ -6,7 +6,7 @@ import { ErrorMessage } from "@/components/ui/error-message";
 const WatchlistPage: React.FC = async () => {
   const session = await getAuthSession();
   return (
-    <section>
+    <section className="pagesection">
       {!session ? (
         <ErrorMessage
           title="Not signed in"

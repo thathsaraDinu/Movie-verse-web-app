@@ -32,7 +32,7 @@ async function MovieContent({ id }: { id: string }) {
 
 export default function MoviePage({ params }: { params: { id: string } }) {
   return (
-    <section>
+    <section className="pagesection">
       <Suspense fallback={<LoadingSpinner />}>
         <MovieContent id={params.id} />
       </Suspense>

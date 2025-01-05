@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <div>
       <HeroSection />
-      <section>
+      <section className="pagesection">
         <Suspense fallback={<LoadingSpinner />}>
           <MovieData />
         </Suspense>

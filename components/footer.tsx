@@ -23,6 +23,9 @@ export default function Footer() {
               Contact Us
             </a>
           </div>
+          <div className="flex items-center justify-center md:justify-end space-x-4 mt-4 md:mt-0">
+            Made with ❤️ by{" "} Thathsara
+          </div>
         </div>
       </div>
     </footer>

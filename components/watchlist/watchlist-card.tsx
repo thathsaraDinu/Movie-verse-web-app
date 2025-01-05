@@ -15,7 +15,7 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
   return (
     <Card className="overflow-hidden transition-transform hover:scale-105 flex flex-col w-full">
       <Link href={`/movies/${watchlistItem.movieId}`} className="z-10">
-        <div className="relative w-full h-80 mb-4">
+        <div className="aspect-[2/3] relative">
           <Image
             layout="fill"
             priority={false}
@@ -25,7 +25,7 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
             className="object-cover"
           />
         </div>
-        <CardContent className="flex flex-col justify-between gap-2">
+        <CardContent className="p-3 flex flex-col items-start gap-1">
           <h3 className="font-semibold line-clamp-1">{watchlistItem.name}</h3>
           <p className="text-xs text-muted-foreground line-clamp-1">
             Release: {new Date(watchlistItem.releaseDate).toLocaleDateString()}
@@ -36,7 +36,7 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
         </CardContent>
       </Link>
       <div className="flex flex-col items-center mt-1 mx-10 mb-4">
-        <WatchlistRemoveButton id={watchlistItem._id} refetch={refetch} />
+        <WatchlistRemoveButton name={watchlistItem.name} id={watchlistItem.movieId} refetch={refetch} />
       </div>
     </Card>
   );

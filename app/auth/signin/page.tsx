@@ -39,6 +39,7 @@ export default function SignIn() {
         toast.error(result.error);
       } else {
         router.push("/");
+        toast.success("Signed in successfully!");
         router.refresh();
       }
     } catch (error) {

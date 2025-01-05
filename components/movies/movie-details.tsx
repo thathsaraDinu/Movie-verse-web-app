@@ -12,9 +12,8 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8">
       <div className="flex flex-col gap-4 items-stretch">
-        
-          <MoviePoster path={movie.poster_path} title={movie.title} />
-    
+        <MoviePoster path={movie.poster_path} title={movie.title} />
+
         <WatchlistToggleButton
           imageUrl={movie.poster_path}
           name={movie.title}

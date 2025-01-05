@@ -32,7 +32,7 @@ export default function SearchPage({
 }) {
   if (!searchParams.q) {
     return (
-      <section>
+      <section className="pagesection">
         <ErrorMessage
           title="No search query"
           message="Please enter a search term to find movies."
@@ -42,7 +42,7 @@ export default function SearchPage({
   }
 
   return (
-    <section>
+    <section className="pagesection">
       <Suspense fallback={<LoadingSpinner />}>
         <SearchResults query={searchParams.q} />
       </Suspense>
