@@ -58,9 +58,13 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                     variant="ghost"
                     size="sm"
                     onClick={async () => {
-                      await signOut({ callbackUrl: "/" }); // Ensures redirection to homepage
-                      toast.success("Signed out successfully");
-                      router.refresh(); // Refreshes the page if needed
+                      try {
+                        await signOut({ callbackUrl: "/" }); // Ensures redirection to homepage
+                        toast.success("Signed out successfully");
+                      } catch (error) {
+                        console.error("Sign out error", error);
+                        toast.error("Error signing out");
+                      }
                     }}
                     className="flex items-center space-x-2"
                   >
@@ -123,9 +127,13 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
               variant="ghost"
               size="sm"
               onClick={async () => {
-                await signOut({ callbackUrl: "/" }); // Ensures redirection to homepage
-                toast.success("Signed out successfully");
-                router.refresh(); // Refreshes the page if needed
+                try {
+                  await signOut({ callbackUrl: "/" }); // Ensures redirection to homepage
+                  toast.success("Signed out successfully");
+                } catch (error) {
+                  console.error("Sign out error", error);
+                  toast.error("Error signing out");
+                }
               }}
               className="flex items-center space-x-2"
             >
