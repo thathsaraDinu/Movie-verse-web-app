@@ -60,7 +60,7 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
 
         {/* Links */}
         {isOpen && (
-          <div className="absolute top-16 left-0 w-full bg-slate-100 dark:bg-gray-900 shadow-md md:hidden">
+          <div className="absolute top-[72px] left-0 w-full bg-slate-100 dark:bg-gray-900 shadow-md md:hidden">
             <div className="flex flex-col items-center space-y-4 p-4">
               {session ? (
                 <Button

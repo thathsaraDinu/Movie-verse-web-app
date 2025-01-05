@@ -9,7 +9,7 @@ export default async function Navbar() {
   const session = await getAuthSession();
   const genres = await getGenres();
   return (
-    <div className="border-b bg-background/95 backdrop-blur  supports-[backdrop-filter]:bg-background/60 z-50 relative">
+    <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60  z-50 relative">
       <div className="max-w-screen-xl mx-auto">
         <div className="flex items-center justify-between px-6 py-4 gap-5 container mx-auto">
           <SiteHeader />
