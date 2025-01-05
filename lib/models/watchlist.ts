@@ -5,6 +5,10 @@ const watchlistItemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  movieId: {
+    type: String,
+    required: true,
+  },
   releaseDate: {
     type: Date,
     required: true,

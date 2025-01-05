@@ -7,7 +7,7 @@ import Link from "next/link"
 
 export function MovieCard({ movie }: { movie: Movie }) {
   return (
-    <Link href={`/movie/${movie.id}`}>
+    <Link href={`/movies/${movie.id}`}>
       <Card className="overflow-hidden transition-transform hover:scale-105">
         <div className="aspect-[2/3] relative">
           <Image

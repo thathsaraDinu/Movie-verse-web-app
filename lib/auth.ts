@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import authOptions from "./authOptions";
 
 export type AuthSession = {
   user: {
@@ -11,7 +12,7 @@ export type AuthSession = {
 };
 
 export async function getAuthSession() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   return session as unknown as AuthSession;
 }
 

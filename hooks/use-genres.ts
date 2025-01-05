@@ -21,7 +21,6 @@ const useGenres = () => {
 
     fetchGenres();
   }, []); // Empty dependency array means it runs once when the component mounts
-console.log(data)
   return { data, loading, error }; // Return the data, loading, and error states
 };
 
