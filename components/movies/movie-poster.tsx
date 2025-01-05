@@ -16,7 +16,6 @@ export function MoviePoster({ path, title }: MoviePosterProps) {
           fill
           className="object-cover"
           priority
-          placeholder="blur"
         />
       ) : (
         <div className="flex items-center justify-center h-full text-gray-500">

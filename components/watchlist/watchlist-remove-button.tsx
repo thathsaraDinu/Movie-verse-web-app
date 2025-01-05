@@ -29,10 +29,10 @@ export default function WatchlistRemoveButton({ id, refetch, name }: any) {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <div className="btn btn-primary font-bold text-xs cursor-pointer border-1 p-2 rounded hover:bg-red-500 hover:text-white transition-all ease-in-out duration-300">
+          <span className="btn btn-primary font-bold text-xs cursor-pointer border-1 p-2 rounded hover:bg-red-500 hover:text-white transition-all ease-in-out duration-300">
             Remove
-            <span className="hidden md:inline-block ml-1"> from Watchlist</span>
-          </div>
+            <span className="hidden md:inline-block pl-1"> from Watchlist</span>
+          </span>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader className="text-lg font-semibold leading-none tracking-tight">
