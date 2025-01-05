@@ -17,7 +17,6 @@ export function MoviePoster({ path, title }: MoviePosterProps) {
           className="object-cover"
           priority
           placeholder="blur"
-          blurDataURL="/path/to/placeholder-image.jpg" // Replace with your placeholder image path
         />
       ) : (
         <div className="flex items-center justify-center h-full text-gray-500">
@@ -25,5 +24,5 @@ export function MoviePoster({ path, title }: MoviePosterProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

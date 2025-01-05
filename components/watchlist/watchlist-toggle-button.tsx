@@ -7,8 +7,10 @@ import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
 import { useSession } from "next-auth/react";
@@ -55,27 +57,26 @@ export default function WatchlistToggleButton({
       ) : isWatchlisted ? (
         <>
           <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger className="w-full">
-              <Button
-                onClick={() => setOpen(true)} // Trigger dialog open
-                className="w-full"
+            <DialogTrigger asChild>
+              <div
+                className={`w-full h-10 px-4 py-2 cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-white-foreground hover:bg-red-500/90`}
               >
-                {" "}
                 <Heart className="w-5 h-5 mr-2 fill-current" />
                 Remove from Watchlist
-              </Button>
+              </div>
             </DialogTrigger>
+
             <DialogContent>
               <DialogHeader className="text-lg font-semibold leading-none tracking-tight">
-                Remove from Watchlist ?
+                <DialogTitle className="text-grey-800 text-xl font-medium">
+                  Remove from Watchlist ?
+                </DialogTitle>{" "}
+                <DialogDescription className="text-grey-600 text-sm">
+                  Are you sure you want to remove{" "}
+                  <span className="font-bold">{name}</span> movie from your
+                  watchlist?
+                </DialogDescription>
               </DialogHeader>
-
-              <p>
-                Are you sure you want to remove{" "}
-                <span className="font-bold">{name}</span> movie from your
-                watchlist?
-              </p>
-              <div className="flex gap-5 justify-end"></div>
               <DialogFooter className="flex justify-end gap-2">
                 <Button onClick={() => setOpen(false)} variant={"secondary"}>
                   Cancel

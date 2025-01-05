@@ -13,11 +13,11 @@ interface WatchlistCardProps {
 
 export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
   return (
-    <Card className="overflow-hidden transition-transform hover:scale-105 flex flex-col w-full">
+    <Card className="overflow-hidden flex flex-col w-full">
       <Link href={`/movies/${watchlistItem.movieId}`} className="z-10">
         <div className="aspect-[2/3] relative">
           <Image
-            layout="fill"
+            fill
             priority={false}
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 10vw"
             src={getImageUrl(watchlistItem.imageUrl, "w500")}
