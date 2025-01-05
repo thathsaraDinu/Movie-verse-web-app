@@ -19,7 +19,7 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
           <Image
             fill
             priority={false}
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 10vw"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
             src={getImageUrl(watchlistItem.imageUrl, "w500")}
             alt={watchlistItem.name}
             className="object-cover"

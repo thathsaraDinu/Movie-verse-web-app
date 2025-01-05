@@ -29,7 +29,7 @@ export default function WatchlistRemoveButton({ id, refetch, name }: any) {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <div className="btn btn-primary font-bold text-xs cursor-pointer border-1 py-2 px-3 rounded hover:bg-red-500 hover:text-white transition-all ease-in-out duration-300">
+          <div className="btn btn-primary w-44 font-bold text-xs cursor-pointer text-center border-1 py-2 px-3 rounded hover:bg-red-500 hover:text-white transition-all ease-in-out duration-300">
             Remove
           </div>
         </DialogTrigger>
@@ -40,7 +40,7 @@ export default function WatchlistRemoveButton({ id, refetch, name }: any) {
             </DialogTitle>{" "}
             <DialogDescription className="text-grey-600 text-sm">
               Are you sure you want to remove{" "}
-              <span className="font-bold">{name}</span> movie from your
+              <span className="font-">{name}</span> movie from your
               watchlist?
             </DialogDescription>
           </DialogHeader>{" "}

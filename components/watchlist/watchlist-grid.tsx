@@ -15,14 +15,14 @@ export default function WatchlistGrid() {
     return <LoadingSpinner />;
   }
   return (
-    <section className="container flex flex-col items-start gap-4 md:gap-6 pagesection">
+    <section className="container mx-auto flex flex-col items-start gap-4 md:gap-6 ">
       <h1 className="text-3xl font-bold">Watchlist</h1>
       {watchlist.length < 1 ? (
         <p className="text-center text-muted-foreground py-8 w-full">
           No entries found.
         </p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5 mx-auto">
           {watchlist?.map((item: any) => (
             <div className="col-span-1 " key={item._id}>
               <WatchlistCard watchlistItem={item} refetch={refetch} />
