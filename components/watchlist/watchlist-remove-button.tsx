@@ -39,7 +39,7 @@ export default function WatchlistRemoveButton({ id, refetch, name }: any) {
             Are you sure you want to remove{" "}
             <span className="font-bold">{name}</span> from your watchlist?
           </p>
-          <DialogFooter>
+          <DialogFooter className="flex justify-end gap-2">
             <Button variant={"secondary"} onClick={() => setOpen(false)}>
               No
             </Button>{" "}

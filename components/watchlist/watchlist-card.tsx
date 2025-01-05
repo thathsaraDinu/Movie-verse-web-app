@@ -25,12 +25,12 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
             className="object-cover"
           />
         </div>
-        <CardContent className="p-3 flex flex-col items-start gap-1">
+        <CardContent className="p-1 md:p-3  flex flex-col items-start gap-1">
           <h3 className="font-semibold line-clamp-1">{watchlistItem.name}</h3>
-          <p className="text-xs text-muted-foreground line-clamp-1">
+          <p className="text-xs text-muted-foreground ">
             Release: {new Date(watchlistItem.releaseDate).toLocaleDateString()}
           </p>
-          <p className="text-xs text-muted-foreground line-clamp-1">
+          <p className="text-xs text-muted-foreground">
             Date Added: {new Date(watchlistItem.addedAt).toLocaleDateString()}
           </p>
         </CardContent>

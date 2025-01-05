@@ -76,7 +76,7 @@ export default function WatchlistToggleButton({
                 watchlist?
               </p>
               <div className="flex gap-5 justify-end"></div>
-              <DialogFooter>
+              <DialogFooter className="flex justify-end gap-2">
                 <Button onClick={() => setOpen(false)} variant={"secondary"}>
                   Cancel
                 </Button>
