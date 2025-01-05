@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "../ui/dialog";
+import { useSession } from "next-auth/react";
 
 interface WatchlistToggleButtonProps {
   movieId: Number;
@@ -82,14 +83,20 @@ export default function WatchlistToggleButton({
                 <Button
                   variant={"destructive"}
                   onClick={async () => {
-                    setIsLoading(true);
-                    await fetch(`/api/watchlist?id=${movieId}`, {
-                      method: "DELETE",
-                    });
-                    setIsLoading(false);
-                    setIsWatchlisted(false); // Item removed from watchlist
-                    setOpen(false); // Close dialog
-                    toast.success("Removed from Watchlist");
+                    try {
+                      setIsLoading(true);
+                      await fetch(`/api/watchlist?id=${movieId}`, {
+                        method: "DELETE",
+                      });
+                      setIsLoading(false);
+                      setIsWatchlisted(false); // Item removed from watchlist
+                      setOpen(false); // Close dialog
+                      toast.success("Removed from Watchlist");
+                    } catch (error) {
+                      toast.error(
+                        "An error occurred while removing from watchlist"
+                      );
+                    }
                   }}
                 >
                   Remove
@@ -102,18 +109,21 @@ export default function WatchlistToggleButton({
         <Button
           className="w-full"
           onClick={async () => {
-            // Add the mock item to the watchlist
-            setIsLoading(true);
-            await fetch(`/api/watchlist`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ movieId, name, releaseDate, imageUrl }),
-            });
-            setIsLoading(false);
-            setIsWatchlisted(!isWatchlisted);
-            toast.success("Added to Watchlist");
+            try {
+              setIsLoading(true);
+              await fetch(`/api/watchlist`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ movieId, name, releaseDate, imageUrl }),
+              });
+              setIsLoading(false);
+              setIsWatchlisted(!isWatchlisted);
+              toast.success("Added to Watchlist");
+            } catch (error) {
+              toast.error("An error occurred while adding to watchlist");
+            }
           }}
         >
           <Heart className="w-5 h-5 mr-2" />
