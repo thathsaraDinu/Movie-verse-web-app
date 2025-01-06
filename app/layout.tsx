@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${raleway.variable} ${inter.className} antialiased`}>
         {" "}
-        <Toaster position="top-center" richColors />
+        <Toaster position="bottom-center" richColors />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

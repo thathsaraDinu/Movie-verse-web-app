@@ -28,24 +28,29 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
           >
             {isOpen ? (
               // Close Icon
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 text-black dark:text-white" />
             ) : (
               // Hamburger Icon
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6 text-black dark:text-white" />
             )}
           </button>
         </div>
         {/* Links */}
         {isOpen && (
-          <div className="absolute top-[72px] left-0 w-full bg-slate-100 dark:bg-gray-900 shadow-md md:hidden">
-            <div className="flex flex-col items-center space-y-4 p-4">
+          <div className="absolute top-[72px] left-0 w-full bg-slate-100 dark:bg-slate-950 shadow-md md:hidden">
+            <div className="flex flex-col items-center space-">
               {session ? (
                 <>
-                  <Link href="/watchlist">
+                  {" "}
+                  <hr
+                    className="border p-0 m-0 border-black border-1 
+                  dark:border-white w-full"
+                  />
+                  <Link href="/watchlist" className="w-full">
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="flex items-center space-x-2"
+                      className="flex items-center space-x-2 w-full py-8 rounded-none"
                       onClick={() => {
                         setIsOpen(!isOpen);
                       }}
@@ -54,6 +59,10 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                       <span>Watchlist</span>
                     </Button>
                   </Link>
+                  <hr
+                    className="border p-0 m-0 border-black border-1 
+                  dark:border-white w-full"
+                  />
                   <Button
                     variant="ghost"
                     size="sm"
@@ -61,24 +70,29 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                       try {
                         await signOut({ callbackUrl: "/" }); // Ensures redirection to homepage
                         toast.success("Signed out successfully");
+                        setIsOpen(!isOpen);
                       } catch (error) {
                         console.error("Sign out error", error);
                         toast.error("Error signing out");
                       }
                     }}
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-2 w-full py-8 rounded-none"
                   >
                     <LogOut className="h-4 w-4" />
                     <span>Sign Out</span>
-                  </Button>
+                  </Button>{" "}
+                  <hr
+                    className="border p-0 m-0 border-black  
+                  dark:border-white w-full h-0"
+                  />
                 </>
               ) : (
                 <>
-                  <Link href="/auth/signin">
+                  <Link href="/auth/signin" className="w-full">
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="flex items-center space-x-2"
+                      className="flex items-center space-x-2 w-full py-8 rounded-none"
                       onClick={() => {
                         setIsOpen(!isOpen);
                       }}
@@ -87,13 +101,17 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                       <span>Sign In</span>
                     </Button>
                   </Link>
-                  <Link href="/auth/signup">
+                  <hr
+                    className="border p-0 m-0 border-black border-1 
+                  dark:border-white w-full"
+                  />
+                  <Link href="/auth/signup" className="w-full">
                     <Button
                       size="sm"
                       onClick={() => {
                         setIsOpen(!isOpen);
                       }}
-                      className="flex items-center space-x-2"
+                      className="flex items-center space-x-2 w-full py-8 rounded-none"
                     >
                       <Shield className="h-4 w-4" />
                       <span>Sign Up</span>

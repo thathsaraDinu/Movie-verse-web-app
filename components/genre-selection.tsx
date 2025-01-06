@@ -13,9 +13,13 @@ import Link from "next/link";
 const GenreSelection = ({ genres }: { genres: Genre[] }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="inline-flex outline-none rounded-lg items-center p-2">
-        Genres
-        <ChevronDown className="ml-2 w-4 h-4" />
+      <DropdownMenuTrigger className="">
+        <div
+          className={`w-full h-10 px-4 py-2 cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-secondary hover:bg-primary/90`}
+        >
+          Genres
+          <ChevronDown className="ml-2 w-4 h-4" />
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent
