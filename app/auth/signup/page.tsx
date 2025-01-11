@@ -57,7 +57,7 @@ export default function SignUp() {
         <CardHeader>
           <CardTitle>Create an Account</CardTitle>
           <CardDescription>
-            Join MovieVerse and explore the world of movies! 🎬✨
+            Join MovieVerse to acces many other features! 🎬✨
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -1,12 +1,11 @@
 "use client";
-import { signOut } from "next-auth/react";
 import { Button } from "./ui/button";
-import { Heart, LogOut, Menu, Shield, User, X } from "lucide-react";
+import { Heart, Menu, Shield, User, X } from "lucide-react";
 import Link from "next/link";
 import { AuthSession } from "@/lib/auth";
 import { useState } from "react";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import SignOutButton from "./sign-out-button";
 
 interface NavbarLinksProps {
   session: AuthSession | null;
@@ -63,24 +62,7 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                     className="border p-0 m-0 border-black border-1 
                   dark:border-white w-full"
                   />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={async () => {
-                      try {
-                        await signOut({ callbackUrl: "/" }); // Ensures redirection to homepage
-                        toast.success("Signed out successfully");
-                        setIsOpen(!isOpen);
-                      } catch (error) {
-                        console.error("Sign out error", error);
-                        toast.error("Error signing out");
-                      }
-                    }}
-                    className="flex items-center space-x-2 w-full py-8 rounded-none"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>Sign Out</span>
-                  </Button>{" "}
+                  <SignOutButton/>
                   <hr
                     className="border p-0 m-0 border-black  
                   dark:border-white w-full h-0"
@@ -141,23 +123,7 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                 <span>Watchlist</span>
               </Button>
             </Link>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={async () => {
-                try {
-                  await signOut({ callbackUrl: "/" }); // Ensures redirection to homepage
-                  toast.success("Signed out successfully");
-                } catch (error) {
-                  console.error("Sign out error", error);
-                  toast.error("Error signing out");
-                }
-              }}
-              className="flex items-center space-x-2"
-            >
-              <LogOut className="h-4 w-4" />
-              <span>Sign Out</span>
-            </Button>
+            <SignOutButton/>
           </>
         ) : (
           <>

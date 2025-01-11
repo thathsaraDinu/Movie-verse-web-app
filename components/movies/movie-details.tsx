@@ -15,13 +15,17 @@ export async function MovieDetails({ movie }: MovieDetailsProps) {
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8">
       <div className="flex flex-col gap-4 items-stretch">
         <MoviePoster path={movie.poster_path} title={movie.title} />
-        {session && session.user && (
+        {session && session.user ? (
           <WatchlistToggleButton
             imageUrl={movie.poster_path}
             name={movie.title}
             releaseDate={movie.release_date}
             movieId={movie.id}
           />
+        ) : (
+          <div className="w-full p-2 text-center text-sm text-muted-foreground">
+            Sign in to create your own watchlist
+          </div>
         )}
       </div>
       <div>

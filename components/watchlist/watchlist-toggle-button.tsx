@@ -67,13 +67,13 @@ export default function WatchlistToggleButton({
             </DialogTrigger>
 
             <DialogContent>
-              <DialogHeader className="text-lg font-semibold leading-none tracking-tight">
+              <DialogHeader className="leading-none tracking-tight">
                 <DialogTitle className="text-grey-800 text-xl font-medium">
                   Remove from Watchlist ?
                 </DialogTitle>{" "}
-                <DialogDescription className="text-grey-600 text-sm">
+                <DialogDescription className="text-grey-600">
                   Are you sure you want to remove{" "}
-                  <span className="font-bold">{name}</span> movie from your
+                  <span className="font-semibold">{name}</span> movie from your
                   watchlist?
                 </DialogDescription>
               </DialogHeader>

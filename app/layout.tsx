@@ -46,7 +46,7 @@ export default function RootLayout({
           {" "}
           <AuthProvider>
             <div className="min-h-screen flex flex-col justify-between bg-background">
-              <div className="">
+              <div>
                 <Navbar />
                 <Suspense fallback={<LoadingSpinner />}>
                   <main className="mx-auto">{children}</main>
