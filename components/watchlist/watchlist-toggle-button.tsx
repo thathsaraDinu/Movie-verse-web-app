@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { useSession } from "next-auth/react";
 
 interface WatchlistToggleButtonProps {
   movieId: Number;
