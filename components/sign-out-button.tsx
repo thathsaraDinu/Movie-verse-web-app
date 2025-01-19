@@ -29,11 +29,11 @@ export default function SignOutButton() {
       </DialogTrigger>
 
       <DialogContent>
-        <DialogHeader className="text-lg font-semibold leading-none tracking-tight">
-          <DialogTitle className="text-grey-800 text-xl font-medium">
+        <DialogHeader className="leading-none tracking-tight">
+          <DialogTitle>
             Sign Out
           </DialogTitle>{" "}
-          <DialogDescription className="text-grey-600 text-sm">
+          <DialogDescription className="">
             Are you sure you want to sign out?
           </DialogDescription>
         </DialogHeader>

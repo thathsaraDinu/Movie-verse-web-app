@@ -22,7 +22,7 @@ const UserName = async () => {
 
 export function HeroSection() {
   return (
-    <div className="relative overflow-hidden bg-background py-24 sm:py-32">
+    <div className="relative overflow-hidden py-24 sm:py-32">
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
       <div className="relative">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
@@ -36,7 +36,7 @@ export function HeroSection() {
                 height={0}
               />
             </div>
-            <div className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 text-blue-800 dark:text-blue-200 font-raleway">
+            <div className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 text-gray-800 dark:text-white font-raleway">
               Welcome
               <Suspense fallback={<span></span>}>
                 <UserName />

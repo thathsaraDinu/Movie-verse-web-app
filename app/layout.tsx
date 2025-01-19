@@ -8,6 +8,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import Footer from "@/components/footer";
 import AuthProvider from "@/components/auth-provider";
 import { Toaster } from "sonner";
+import ParticlesComponent from "@/components/particles";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,19 +36,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${raleway.variable} ${inter.className} antialiased`}>
-        {" "}
-        <Toaster position="bottom-center" richColors />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {" "}
           <AuthProvider>
-            <div className="min-h-screen flex flex-col justify-between bg-background">
+            <div className="-z-50">
+              <ParticlesComponent id="particles" />
+            </div>
+            <Toaster position="bottom-center" richColors />
+            <div className="z-10 min-h-screen flex flex-col justify-between bg-">
+              <Navbar />
               <div>
-                <Navbar />
                 <Suspense fallback={<LoadingSpinner />}>
                   <main className="mx-auto">{children}</main>
                 </Suspense>

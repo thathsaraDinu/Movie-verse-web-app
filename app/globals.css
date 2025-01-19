@@ -18,9 +18,9 @@
 
 @layer base {
   :root {
-    --background: 240 20% 98%; /* Custom light background color */
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
+    --background: 0 0 100%; /* Custom light background color */
+    --foreground: 0 0% 2%;
+    --card: 0 0% 98%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
@@ -45,11 +45,11 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 228 25% 7%; /* Updated to slate-950 */
+    --background: 0, 0%, 13%; /* Dark gray */
     --foreground: 0 0% 98%;
-    --card: 215 28% 10%;
+    --card: 0, 0%, 10%;;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
+    --popover: 0, 0%, 8%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
@@ -83,4 +83,11 @@
 
 .pagesection {
   @apply py-10 px-2 max-w-screen-xl mx-auto;
+}
+
+#particles {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
