@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 export function useWatchlist() {
   const [watchlist, setWatchlist] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
   const { data: session, status } = useSession();
 
   const fetchWatchlist = async () => {
@@ -20,6 +21,7 @@ export function useWatchlist() {
       const data = await response.json();
       setWatchlist(data);
     } catch (error) {
+      setError(error);
     } finally {
       setLoading(false);
     }
@@ -39,5 +41,5 @@ export function useWatchlist() {
     return { watchlist: [], loading: false, refetch: fetchWatchlist }; // Handle unauthenticated state
   }
 
-  return { watchlist, loading, refetch: fetchWatchlist };
+  return { watchlist, loading, error, refetch: fetchWatchlist };
 }
