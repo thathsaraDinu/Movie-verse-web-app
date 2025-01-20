@@ -9,18 +9,18 @@ async function SearchResults({ query }: { query: string }) {
   try {
     const movies = await searchMovies(query);
     return (
-      <div className="flex container mx-auto flex-col gap-10">
-        <SearchBar />
+      <>
         <MovieSection title={`Search Results for "${query}"`} movies={movies} />
-      </div>
+      </>
     );
   } catch (error) {
     return (
       <div className="container mx-auto">
-      <ErrorMessage
-        title="Search failed"
-        message="Unable to fetch search results. Please try again."
-      /></div>
+        <ErrorMessage
+          title="Search failed"
+          message="Unable to fetch search results. Please try again."
+        />
+      </div>
     );
   }
 }
@@ -30,22 +30,19 @@ export default function SearchPage({
 }: {
   searchParams: { q?: string };
 }) {
-  if (!searchParams.q) {
-    return (
-      <section className="pagesection">
+  return (
+    <section className="pagesection flex flex-col justify-start gap-10">
+      <SearchBar />
+      {!searchParams.q ? (
         <ErrorMessage
           title="No search query"
           message="Please enter a search term to find movies."
         />
-      </section>
-    );
-  }
-
-  return (
-    <section className="pagesection">
-      <Suspense fallback={<LoadingSpinner />}>
-        <SearchResults query={searchParams.q} />
-      </Suspense>
+      ) : (
+        <Suspense fallback={<LoadingSpinner />}>
+          <SearchResults query={searchParams.q ?? ""} />
+        </Suspense>
+      )}
     </section>
   );
 }

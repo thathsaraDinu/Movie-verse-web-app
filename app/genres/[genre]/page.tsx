@@ -8,24 +8,30 @@ async function GenreMovies({ id, name }: { id: string; name: string }) {
   try {
     const movies = await getMoviesByGenre(id);
 
-    if (!movies || movies.length === 0) {
+    if (movies?.length === 0) {
       return (
         <div className="container mx-auto">
-        <ErrorMessage
-          title="No Movies Found"
-          message={`No movies found for the genre: ${name}. Please try again later.`}
-        /></div>
+          <ErrorMessage
+            title="No Movies Found"
+            message={`No movies found for the genre: ${name}. Please try again later.`}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="container mx-auto">
+          <MovieSection title={`Genre: ${name}`} movies={movies} />
+        </div>
       );
     }
-
-    return <div className="container mx-auto"><MovieSection title={`Genre: ${name}`} movies={movies} /></div>;
   } catch (error) {
     return (
       <div className="container mx-auto">
-      <ErrorMessage
-        title="Failed to load movies"
-        message="Unable to fetch movies. Please try again later."
-      /></div>
+        <ErrorMessage
+          title="Failed to load movies"
+          message="Unable to fetch movies. Please try again later."
+        />
+      </div>
     );
   }
 }

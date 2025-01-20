@@ -21,14 +21,9 @@ const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
   // Dynamic particle options based on theme
   const options = useMemo(
     () => ({
-      background: {
-        color: {
-          value: theme === "dark" ? "#0c0a09" : "#ffffff", // Dark or light background
-        },
-      },
+     
       fpsLimit: 120,
       interactivity: {
-        
         events: {
           onClick: {
             enable: true,
@@ -81,7 +76,13 @@ const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
     [theme] // Recompute options when the theme changes
   );
 
-  return <Particles id={props.id} options={options} />;
+  return (
+    <Particles
+      className="bg-white dark:bg-zinc-950"
+      id={props.id}
+      options={options}
+    />
+  );
 };
 
 export default ParticlesComponent;

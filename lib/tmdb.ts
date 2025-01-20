@@ -62,44 +62,63 @@ async function fetchFromTMDB<T>(endpoint: string): Promise<T> {
     return res.json();
   } catch (error) {
     console.log(error);
-    return null as T;
+    throw new Error("Failed to fetch data from TMDB");
   }
 }
 
 export async function getGenres(): Promise<Genre[]> {
-  const data = await fetchFromTMDB<{ genres: Genre[] }>("/genre/movie/list");
-  return data?.genres ?? [];
+  try {
+    const data = await fetchFromTMDB<{ genres: Genre[] }>("/genre/movie/list");
+    return data?.genres;
+  } catch (error) {
+    throw new Error("Failed to fetch data from TMDB");
+  }
 }
-
 
 export async function getTrendingMovies(): Promise<Movie[]> {
-  const data = await fetchFromTMDB<MovieResponse>(
-    "/discover/movie?language=en-US&page=1&sort_by=popularity.desc"
-  );
-  return data?.results ?? [];
+  try {
+    const data = await fetchFromTMDB<MovieResponse>(
+      "/discover/movie?language=en-US&page=1&sort_by=popularity.desc"
+    );
+    return data?.results;
+  } catch (error) {
+    throw new Error("Failed to fetch trending movies");
+  }
 }
 export async function getUpcomingMovies(): Promise<Movie[]> {
-  const data = await fetchFromTMDB<MovieResponse>(
-    `/discover/movie?language=en-US&region=US&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${start_date}&release_date.lte=${end_date}`
-  );
-  return data?.results ?? [];
+  try {
+    const data = await fetchFromTMDB<MovieResponse>(
+      `/discover/movie?language=en-US&region=US&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${start_date}&release_date.lte=${end_date}`
+    );
+    return data?.results;
+  } catch (error) {
+    throw new Error("Failed to fetch upcoming movies");
+  }
 }
 
 export async function getMoviesByGenre(id: string): Promise<Movie[]> {
-  if (!id) {
-    return [];
+  try {
+    if (!id) {
+      return [];
+    }
+    const data = await fetchFromTMDB<MovieResponse>(
+      `/discover/movie?with_genres=${id}`
+    );
+    return data?.results;
+  } catch (error) {
+    throw new Error("Failed to fetch upcoming movies");
   }
-  const data = await fetchFromTMDB<MovieResponse>(
-    `/discover/movie?with_genres=${id}`
-  );
-  return data?.results ?? [];
 }
 
 export async function searchMovies(query: string): Promise<Movie[]> {
-  const data = await fetchFromTMDB<MovieResponse>(
-    `/search/movie?query=${query}&sort_by=popularity.desc`
-  );
-  return data?.results ?? [];
+  try {
+    const data = await fetchFromTMDB<MovieResponse>(
+      `/search/movie?query=${query}&sort_by=popularity.desc`
+    );
+    return data?.results;
+  } catch (error) {
+    throw new Error("Failed to search movies");
+  }
 }
 
 export async function getMovieDetails(
@@ -108,11 +127,9 @@ export async function getMovieDetails(
   try {
     return await fetchFromTMDB<MovieDetails>(`/movie/${id}`);
   } catch (error) {
-    console.error(`Failed to fetch movie details for ID ${id}:`, error);
-    return null;
+    throw new Error("Failed to search movies");
   }
 }
-
 
 export function getImageUrl(
   path: string | null,

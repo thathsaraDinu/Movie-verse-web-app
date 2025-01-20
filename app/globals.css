@@ -18,12 +18,12 @@
 
 @layer base {
   :root {
-    --background: 0 0 100%; /* Custom light background color */
+    --background: 0 0 98%; /* Custom light background color */
     --foreground: 0 0% 2%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 0 0% 95%;
+    --card-foreground: 0 0% 2%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover-foreground: 0 0% 2%;
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
@@ -45,9 +45,9 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0, 0%, 10%; /* Dark gray */
+    --background: 0, 0, 2%; /* Dark gray */
     --foreground: 0 0% 98%;
-    --card: 0, 0%, 8%;;
+    --card: 0, 0%, 5%;;
     --card-foreground: 0 0% 98%;
     --popover: 0, 0%, 8%;
     --popover-foreground: 0 0% 98%;
