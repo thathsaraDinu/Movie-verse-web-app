@@ -29,7 +29,7 @@ export default function WatchlistRemoveButton({ id, refetch, name }: any) {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <div className="btn btn-primary font-bold text-xs cursor-pointer text-center border-1 py-2 px-5 rounded bg-red-500 md:bg-transparent text-white md:hover:bg-red-500 transition-all ease-in-out duration-300">
+          <div className="btn btn-primary font-bold text-xs cursor-pointer text-center border-1 py-2 px-5 rounded bg-red-600 hover:bg-red-600/90 md:bg-transparent text-white  transition-all ease-in-out duration-300">
             Remove
           </div>
         </DialogTrigger>
