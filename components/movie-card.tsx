@@ -20,7 +20,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
       className="h-full"
     >
       <Link href={`/movies/${movie.id}`} className="block h-full">
-        <Card className="group relative overflow-hidden h-[400px] bg-card">
+        <Card className="group relative overflow-hidden h-[300px] sm:h-[400px] bg-card">
           <div className="absolute inset-0">
             <Image
               src={getImageUrl(movie.poster_path, "w500")}
@@ -35,7 +35,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
           </div>
 
           {/* Content */}
-          <div className="relative h-full flex flex-col justify-end p-3 md:p-6 text-white">
+          <div className="relative h-full flex flex-col justify-end p-3 md:p-5 text-white">
             {/* Rating badge - always visible */}
             <div className="absolute top-4 right-4">
               <Badge
@@ -58,7 +58,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
                 {formatDate(movie.release_date)}
               </div>
 
-              <p className="text-sm line-clamp-3 text-white/80 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
+              <p className="text-sm line-clamp-3 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
                 {movie.overview}
               </p>
             </div>
