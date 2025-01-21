@@ -22,7 +22,7 @@ export default function SignOutButton() {
       <DialogTrigger asChild>
         <div className="w-full">
           <div
-            className={`w-full hidden px-3 py-2 cursor-pointer md:inline-flex space-x-2 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white bg-red-700 hover:bg-red-700/90`}
+            className={`w-full hidden px-3 py-2 cursor-pointer md:inline-flex space-x-2 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white bg-red-600 hover:bg-red-600/90`}
           >
             <LogOut className="h-4 w-4" />
             <span>Sign Out</span>
