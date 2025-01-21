@@ -29,7 +29,7 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
       transition={{ duration: 0.5 }}
       className="h-full"
     >
-      <Card >
+      <Card>
         <div className="group relative overflow-hidden h-[300px] md:h-[400px] bg-card">
           {/* Image */}
 
@@ -50,15 +50,17 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
           <div className="relative h-full flex flex-col justify-end p-3 md:p-6 text-white">
             {/* Main content */}
             <div className="md:transform md:translate-y-[50%] md:group-hover:translate-y-0 transition-transform duration-500">
-              <h3 className="md:text-2xl font-bold mb-2 text-white/90 line-clamp-2 text-xl">
-                {watchlistItem.name}
-              </h3>
+              <Link href={`/movies/${watchlistItem.movieId}`} passHref>
+                <h3 className="md:text-2xl font-bold mb-2 text-white/90 line-clamp-2 text-xl">
+                  {watchlistItem.name}
+                </h3>
 
-              <div className="flex items-center text-xs md:text-sm text-white/70 mb-3">
-                <Calendar className="w-4 h-4 mr-1 hidden md:block" />
-                Release:{" "}
-                {new Date(watchlistItem.releaseDate).toLocaleDateString()}
-              </div>
+                <div className="flex items-center text-xs md:text-sm text-white/70 mb-3">
+                  <Calendar className="w-4 h-4 mr-1 hidden md:block" />
+                  Release:{" "}
+                  {new Date(watchlistItem.releaseDate).toLocaleDateString()}
+                </div>
+              </Link>
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 hidden md:block">
                 <div className="text-xs md:text-sm text-white/80 mb-3">
                   Added: {new Date(watchlistItem.addedAt).toLocaleDateString()}
