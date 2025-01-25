@@ -9,12 +9,7 @@ const UserName = async () => {
     <>
       {" "}
       {session ? (
-        <span>
-          {session.user?.name
-            ? String(session.user.name).charAt(0).toUpperCase() +
-              String(session.user.name).slice(1)
-            : "Guest"}
-        </span>
+        <span>{session.user?.name}</span>
       ) : (
         <span>
           to
