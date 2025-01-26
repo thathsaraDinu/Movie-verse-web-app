@@ -55,7 +55,7 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
                   {watchlistItem.name}
                 </h3>
 
-                <div className="flex items-center text-xs md:text-sm text-white/70 mb-3">
+                <div className="flex items-center text-xs md:text-sm text-white/70 md:mb-3">
                   <Calendar className="w-4 h-4 mr-1 hidden md:block" />
                   Release:{" "}
                   {new Date(watchlistItem.releaseDate).toLocaleDateString()}
