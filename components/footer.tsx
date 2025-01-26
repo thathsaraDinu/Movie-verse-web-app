@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer className="bg-background/60 border-t border-black dark:border-white text-slate-800 dark:text-white py-20">
+    <footer className="bg-background/60 border-t border-black dark:border-white text-slate-800 dark:text-white py-10">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col gap-5 justify-between items-center">
+        <div className="flex flex-col gap-4 justify-between items-center">
           <div className="flex items-center justify-center md:justify-start space-x-4">
             <a
               href="#"
