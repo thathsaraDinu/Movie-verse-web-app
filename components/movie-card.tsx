@@ -23,7 +23,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
           <div className="absolute inset-0">
             <Image
               src={getImageUrl(movie.poster_path, "w500")}
-              alt={movie.title}
+              alt={movie.title || 'movie poster'}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -42,7 +42,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
                 className="bg-white/80 dark:bg-black/50  backdrop-blur-sm border-none"
               >
                 <Star className="w-3 h-3 text-yellow-500 mr-1 fill-yellow-500" />
-                {formatRating(movie.vote_average)}
+                {formatRating(movie.vote_average || 0)}
               </Badge>
             </div>
 
@@ -54,11 +54,11 @@ export function MovieCard({ movie }: { movie: Movie }) {
 
               <div className="flex items-center text-sm text-white/70 mb-3">
                 <Calendar className="w-4 h-4 mr-1" />
-                {formatDate(movie.release_date)}
+                {formatDate(movie.release_date || "")}
               </div>
 
               <p className="text-sm line-clamp-3 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
-                {movie.overview}
+                {movie.overview || "No overview available."}
               </p>
             </div>
           </div>

@@ -12,7 +12,7 @@ export function MoviePoster({ path, title }: MoviePosterProps) {
       {path ? (
         <Image
           src={getImageUrl(path, "w500")}
-          alt={title}
+          alt={title || "movie poster"}
           fill
           className="object-cover"
           priority

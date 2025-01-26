@@ -11,7 +11,7 @@ export function MovieMetadata({ movie }: MovieMetadataProps) {
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold mb-2">Overview</h2>
-        <p className="text-muted-foreground">{movie.overview}</p>
+        <p className="text-muted-foreground">{movie.overview || ""}</p>
       </div>
 
       <Separator />
@@ -19,9 +19,9 @@ export function MovieMetadata({ movie }: MovieMetadataProps) {
       <div>
         <h2 className="text-xl font-semibold mb-2">Genres</h2>
         <div className="flex flex-wrap gap-2">
-          {movie.genres.map((genre) => (
+          {movie.genres?.map((genre) => (
             <Badge key={genre.id} variant="outline">
-              {genre.name}
+              {genre.name || ""}
             </Badge>
           ))}
         </div>
@@ -35,9 +35,9 @@ export function MovieMetadata({ movie }: MovieMetadataProps) {
               Production Companies
             </h2>
             <div className="flex flex-wrap gap-2">
-              {movie.production_companies.map((company) => (
+              {movie.production_companies?.map((company) => (
                 <Badge key={company.id} variant="outline">
-                  {company.name}
+                  {company.name || ""}
                 </Badge>
               ))}
             </div>
