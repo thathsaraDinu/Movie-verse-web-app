@@ -7,7 +7,7 @@ export function formatDate(dateString: string): string {
 }
 
 export function formatRating(rating: number): string {
-  return rating.toFixed(1)
+  return rating?.toFixed(1)
 }
 
 export function formatRuntime(minutes: number): string {
