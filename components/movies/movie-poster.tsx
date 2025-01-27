@@ -8,7 +8,7 @@ interface MoviePosterProps {
 
 export function MoviePoster({ path, title }: MoviePosterProps) {
   return (
-    <div className="aspect-[2/3] relative rounded-lg overflow-hidden bg-gray-200">
+    <div className="aspect-[2/3] relative rounded-lg overflow-hidden bg-card">
       {path ? (
         <Image
           src={getImageUrl(path, "w500")}

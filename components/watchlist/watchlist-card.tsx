@@ -9,6 +9,7 @@ import WatchlistRemoveButton from "./watchlist-remove-button";
 import { Card } from "@/components/ui/card";
 import { getImageUrl } from "@/lib/tmdb";
 import { Calendar } from "lucide-react";
+import { watch } from "node:fs";
 
 interface WatchlistCardProps {
   watchlistItem: {
@@ -34,14 +35,21 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
           {/* Image */}
 
           <div className="absolute inset-0 rounded-t-md md:rounded-md overflow-clip">
-            <Image
-              src={getImageUrl(watchlistItem.imageUrl, "w500")}
-              alt={watchlistItem.name}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              priority={false}
-            />
+            {watchlistItem.imageUrl ? (
+              <Image
+                src={getImageUrl(watchlistItem.imageUrl, "w500")}
+                alt={watchlistItem.name}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                priority={false}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110">
+                No Image Available
+              </div>
+            )}
+
             {/* Gradient overlay */}
             <div className="absolute bottom-0 top-1/4 left-0 right-0 bg-gradient-to-t from-black to-transparent translate-y-[0%] group-hover:translate-y-0 transition-all duration-500" />
           </div>
