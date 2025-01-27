@@ -45,7 +45,7 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
                 priority={false}
               />
             ) : (
-              <div className="flex items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110">
+              <div className="flex items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center">
                 No Image Available
               </div>
             )}
