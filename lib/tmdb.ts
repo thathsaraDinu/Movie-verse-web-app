@@ -5,7 +5,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
 const today = new Date();
 
 // Get the first day of the current month
-const start_date = new Date(today.getFullYear(), today.getMonth(), 1)
+const start_date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
   .toISOString()
   .split("T")[0];
 
