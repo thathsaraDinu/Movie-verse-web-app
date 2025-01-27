@@ -23,7 +23,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
           <div className="absolute inset-0">
             <Image
               src={getImageUrl(movie.poster_path, "w500")}
-              alt={movie.title || 'movie poster'}
+              alt={movie.title || "movie poster"}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -57,7 +57,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
                 {formatDate(movie.release_date || "")}
               </div>
 
-              <p className="text-sm line-clamp-3 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
+              <p className="text-sm text-clamp-3 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
                 {movie.overview || "No overview available."}
               </p>
             </div>

@@ -77,3 +77,12 @@
   height: 100%;
   z-index: -1;
 }
+
+.text-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;         /* Clamps text after 3 lines */
+  -webkit-box-orient: vertical;  /* Ensures the box is vertical */
+  overflow: hidden;              /* Hides any overflow */
+  height: 4.5em;                 /* Adjust height to 3 lines (usually 1.5em per line) */
+  line-height: 1.5em;            /* Controls the line height */
+}

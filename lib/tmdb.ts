@@ -10,7 +10,7 @@ const start_date = new Date(today.getFullYear(), today.getMonth(), 1)
   .split("T")[0];
 
 // Get the last day of the current month
-const end_date = new Date(today.getFullYear(), today.getMonth() + 2, 0)
+const end_date = new Date(today.getFullYear(), today.getMonth() + 1, 0)
   .toISOString()
   .split("T")[0];
 
@@ -88,7 +88,7 @@ export async function getTrendingMovies(): Promise<Movie[]> {
 export async function getUpcomingMovies(): Promise<Movie[]> {
   try {
     const data = await fetchFromTMDB<MovieResponse>(
-      `/discover/movie?language=en-US&region=US&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${start_date}&release_date.lte=${end_date}`
+      `/discover/movie?include_adult=false&language=en-US&region=US&sort_by=release_date.asc&with_release_type=2|3&release_date.gte=${start_date}&release_date.lte=${end_date}`
     );
     return data?.results;
   } catch (error) {
