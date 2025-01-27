@@ -15,9 +15,6 @@ const end_date = new Date(today);
 end_date.setDate(today.getDate() + 5);
 const formatted_end_date = end_date.toISOString().split("T")[0];
 
-console.log(formatted_start_date);
-console.log(formatted_end_date);
-
 export interface Movie {
   id: number;
   title: string;
