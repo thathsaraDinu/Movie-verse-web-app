@@ -2,17 +2,21 @@ const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
 
+// Get today's date
 const today = new Date();
 
-// Get the first day of the current month
-const start_date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
-  .toISOString()
-  .split("T")[0];
+// Adding 1 day for the start date (next day)
+const start_date = new Date(today);
+start_date.setDate(today.getDate() + 1);
+const formatted_start_date = start_date.toISOString().split("T")[0];
 
-// Get the last day of the current month
-const end_date = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-  .toISOString()
-  .split("T")[0];
+// Adding 5 days for the end date (5 days after today)
+const end_date = new Date(today);
+end_date.setDate(today.getDate() + 5);
+const formatted_end_date = end_date.toISOString().split("T")[0];
+
+console.log(formatted_start_date);
+console.log(formatted_end_date);
 
 export interface Movie {
   id: number;
