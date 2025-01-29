@@ -9,6 +9,7 @@ import Footer from "@/components/footer";
 import AuthProvider from "@/components/auth-provider";
 import { Toaster } from "sonner";
 import ParticlesComponent from "@/components/particles";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
             </div>
           </AuthProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
