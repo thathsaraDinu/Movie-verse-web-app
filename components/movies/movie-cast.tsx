@@ -1,4 +1,4 @@
-import { Actor, fetchMovieCast } from "@/lib/tmdb";
+import { fetchMovieCast } from "@/lib/tmdb";
 import React from "react";
 
 interface MovieCastProps {
@@ -12,7 +12,7 @@ export default async function MovieCast({ movieId }: MovieCastProps) {
       <h2 className="text-2xl font-semibold">Cast</h2>
       {cast && cast.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5  xl:gap-10">
-          {cast?.map((actor: Actor, index: number) => (
+          {cast.map((actor : any , index: number) => (
             <div key={index} className="bg-card rounded-lg overflow-hidden">
               <div className="text-center overflow-clip rounded-t-lg">
                 <img
