@@ -43,6 +43,28 @@ export interface Genre {
   name: string;
 }
 
+export interface Actor {
+  id: number;
+  name: string;
+  birthday?: string;
+  deathday?: string | null;
+  biography: string;
+  profile_path?: string | null;
+  place_of_birth?: string;
+  known_for_department: string;
+  popularity: number;
+}
+
+export interface ActorMovieCredits {
+  cast: {
+    id: number;
+    title: string;
+    character: string;
+    release_date: string;
+    poster_path?: string | null;
+  }[];
+}
+
 async function fetchFromTMDB<T>(endpoint: string): Promise<T> {
   try {
     if (!TMDB_API_KEY) {
@@ -97,6 +119,19 @@ export async function getUpcomingMovies(): Promise<Movie[]> {
   }
 }
 
+export async function getSimilarMovies(id: number): Promise<Movie[]> {
+  try {
+    const data = await fetchFromTMDB<MovieResponse>(
+      `/movie/${id}/similar?llanguage=en-US&page=1&sort_by=popularity.desc`
+    );
+    return data?.results || []; // Ensure it returns an empty array if results are undefined
+  } catch (error) {
+    console.error("Error fetching similar movies:", error);
+    throw new Error("Failed to fetch similar movies");
+  }
+}
+
+
 export async function getMoviesByGenre(id: string): Promise<Movie[]> {
   try {
     if (!id) {
@@ -131,7 +166,13 @@ export async function getMovieDetails(
     throw new Error("Failed to search movies");
   }
 }
-
+export async function getActorDetails(id: number): Promise<Actor> {
+  try {
+    return await fetchFromTMDB<Actor>(`/person/${id}`);
+  } catch (error) {
+    throw new Error("Failed to search movies");
+  }
+}
 export function getImageUrl(
   path: string | null,
   size: string = "original"
@@ -141,3 +182,35 @@ export function getImageUrl(
   }
   return `${IMAGE_BASE_URL}/${size}${path}`;
 }
+
+export const fetchMovieTrailers = async (movieId: number) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/movie/${movieId}/videos?api_key=${TMDB_API_KEY}&language=en-US`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch movie trailers");
+    }
+    const data = await response.json();
+    return data.results.filter((video: any) => video.type === "Trailer");
+  } catch (error) {
+    console.error("Error in fetchMovieTrailers:", error);
+    throw error;
+  }
+};
+
+export const fetchMovieCast = async (movieId: number) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_API_KEY}&language=en-US`
+    );
+    if (!response.ok) {
+      throw new Error('Failed to fetch movie cast');
+    }
+    const data = await response.json();
+    return data.cast.slice(0, 12);
+  } catch (error) {
+    console.error('Error in fetchMovieCast:', error);
+    throw error;
+  }
+};

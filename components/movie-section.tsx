@@ -16,9 +16,9 @@ export function MovieSection({ title, movies }: MovieSectionProps) {
 
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+  const currentMovies = movies?.slice(indexOfFirstMovie, indexOfLastMovie);
 
-  const totalPages = Math.ceil(movies.length / moviesPerPage);
+  const totalPages = Math.ceil(movies?.length / moviesPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {

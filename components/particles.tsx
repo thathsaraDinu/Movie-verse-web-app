@@ -78,7 +78,7 @@ const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
 
   return (
     <Particles
-      className="bg-white dark:bg-zinc-950"
+      className="bg-transparent dark:bg-transparent"
       id={props.id}
       options={options}
     />

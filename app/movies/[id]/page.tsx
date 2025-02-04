@@ -14,7 +14,7 @@ async function MovieContent({ id }: { id: string }) {
     }
 
     return (
-      <div className="container mx-auto">
+      <div >
         <MovieDetails movie={movie} />
       </div>
     );
@@ -32,7 +32,7 @@ async function MovieContent({ id }: { id: string }) {
 
 export default function MoviePage({ params }: { params: { id: string } }) {
   return (
-    <section className="pagesection">
+    <section className="">
       <Suspense fallback={<LoadingSpinner />}>
         <MovieContent id={params.id} />
       </Suspense>
