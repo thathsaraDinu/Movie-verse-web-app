@@ -1,8 +1,15 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
-export default function TrailerSelect({ trailers, movieTitle }: { trailers: any[], movieTitle: string }) {
+export default function TrailerSelect({
+  trailers,
+  movieTitle,
+}: {
+  trailers: any[];
+  movieTitle: string;
+}) {
   const [selectedTrailer, setSelectedTrailer] = useState(trailers[0]);
   return (
     <>
@@ -33,7 +40,7 @@ export default function TrailerSelect({ trailers, movieTitle }: { trailers: any[
           <div className="grid grid-cols-2  md:grid-cols-4 sm:grid-cols-3  xl:grid-cols-1 gap-2 md:gap-4 xl:w-1/3 w-full h-full">
             {trailers.map((trailer, index) => (
               <motion.div
-                key={index}
+                key={trailer.key}
                 initial={{ opacity: 0, x: 50 }}
                 viewport={{ once: true }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -54,8 +61,8 @@ export default function TrailerSelect({ trailers, movieTitle }: { trailers: any[
                     </div>
                     <img
                       src={`https://img.youtube.com/vi/${trailer.key}/hqdefault.jpg`}
-                      alt={trailer.name}
-                      className={`xl:h-28 h-32 w-full object-cover group-hover:scale-110 transition-transform duration-300 `}
+                      alt={trailer.name}     
+                      className={`group-hover:scale-110 transition-transform duration-300 `}
                     />
                   </div>
                   <div className="flex flex-col items-start p-1 xl:w-1/2  ">

@@ -51,7 +51,7 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
   }
   useEffect(() => {
     getWishlistItemsById();
-  }, []);
+  });
 
   async function updateWatchlistImage(imageUrl: string) {
     try {
@@ -82,8 +82,9 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
           <Image
             src={getImageUrl(watchlistImage, "original")}
             alt="movie poster"
-            layout="fill"
-            objectFit="cover"
+            width="0"
+            height="0"
+            sizes="100vw"
             className={`object-cover bg-center h-full w-full absolute top-0 -z-50`}
           />
           <div className="absolute top-0 h-full w-full bg-gradient-to-b from-background/50 -z-50  to-background" />

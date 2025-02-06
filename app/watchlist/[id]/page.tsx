@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/lib/auth";
 import React from "react";
-import WatchlistGrid from "@/components/watchlist/watchlist-grid";
 import { ErrorMessage } from "@/components/ui/error-message";
 import WatchlistPageContent from "../../../components/watchlist/watchlist-items-main";
 

@@ -53,7 +53,7 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
               </h2>
               <div className="flex flex-col md:flex-row gap-6">
                 <Image
-                  className="w-1/3 h-[500px] object-cover rounded-lg"
+                  className="md:w-1/3 h-[500px] object-cover rounded-lg"
                   src={`${actorDetails.profile_image}`}
                   alt={actorDetails.name}
                   width={500}

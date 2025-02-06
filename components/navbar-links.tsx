@@ -67,7 +67,7 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                       }}
                     >
                       <Heart className="h-4 w-4" />
-                      <span>Watchlist</span>
+                      <span>Watchlists</span>
                     </button>
                   </Link>
                   <hr
@@ -166,7 +166,7 @@ export default function NavbarLinks({ session }: NavbarLinksProps) {
                 }}
               >
                 <Heart className="h-4 w-4" />
-                <span>Watchlist</span>
+                <span>Watchlists</span>
               </Button>
             </Link>
             <SignOutButton />
