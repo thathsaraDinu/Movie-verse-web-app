@@ -57,7 +57,7 @@ export default function WatchlistSelectionCard({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {watchlist.items.length} movies
+            {watchlist.items.length} movie(s)
           </div>
         </CardContent>
       </Card>

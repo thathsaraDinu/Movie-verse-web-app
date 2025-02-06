@@ -22,8 +22,8 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  title: "Movie Verse - Discover Amazing Movies",
-  description: "Explore trending and upcoming movies with MovieVerse",
+  title: "Movie Verse - Dive Into a Universe of Cinematic Wonders",
+  description: "Explore Cinematic Universe with MovieVerse",
   icons: {
     icon: "/monogram-hq.png", // SVG favicon link
   },
@@ -60,6 +60,7 @@ export default function RootLayout({
             </div>
           </AuthProvider>
         </ThemeProvider>
+        <Analytics/>
       </body>
     </html>
   );

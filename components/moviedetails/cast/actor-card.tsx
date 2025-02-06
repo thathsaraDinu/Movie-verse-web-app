@@ -50,8 +50,8 @@ export default function ActorCard({ cast }: ActorDetailsProps) {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.05 * index }}
                 >
-                  <div className="bg-card rounded-lg overflow-hidden border">
-                    <div className="text-center overflow-clip rounded-t-lg">
+                  <div className="bg-card rounded-lg overflow-hidden border h-full">
+                    <div className="text-center overflow-clip rounded-t-lg ">
                       <Image
                         src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
                         alt={actor.name}
