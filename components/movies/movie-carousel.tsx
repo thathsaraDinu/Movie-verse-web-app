@@ -9,7 +9,7 @@ import "swiper/css/pagination"; // Pagination module styles
 import "swiper/css/bundle"; // If you prefer a single bundled CSS
 
 // Import your MovieCard component
-import { MovieCard } from "@/components/movie-card"; // Replace with the actual path to your component
+import { MovieCard } from "@/components/movies/movie-card"; // Replace with the actual path to your component
 
 const MovieCarousel = ({ movies }: { movies: any[] }) => {
   return (

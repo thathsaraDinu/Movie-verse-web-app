@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export function useWatchlist() {
-  const [watchlist, setWatchlist] = useState<any[]>([]);
+  const [watchlists, setWatchlists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
   const { data: session, status } = useSession();
@@ -10,18 +10,13 @@ export function useWatchlist() {
   const fetchWatchlist = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/watchlist", {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch watchlist");
+      const response = await fetch("/api/watchlist");
+      if (response.ok) {
+        const data = await response.json();
+        setWatchlists(data);
       }
-
-      const data = await response.json();
-      setWatchlist(data);
     } catch (error) {
-      setError(error);
+     
     } finally {
       setLoading(false);
     }
@@ -34,12 +29,12 @@ export function useWatchlist() {
   }, [status]); // Triggered when session status changes
 
   if (status === "loading") {
-    return { watchlist: [], loading: true, refetch: fetchWatchlist }; // During loading, return empty state
+    return { watchlists: [], loading: true, refetch: fetchWatchlist }; // During loading, return empty state
   }
 
   if (status === "unauthenticated") {
-    return { watchlist: [], loading: false, refetch: fetchWatchlist }; // Handle unauthenticated state
+    return { watchlists: [], loading: false, refetch: fetchWatchlist }; // Handle unauthenticated state
   }
 
-  return { watchlist, loading, error, refetch: fetchWatchlist };
+  return { watchlists: watchlists, loading, error, refetch: fetchWatchlist };
 }

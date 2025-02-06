@@ -15,6 +15,11 @@ const end_date = new Date(today);
 end_date.setDate(today.getDate() + 5);
 const formatted_end_date = end_date.toISOString().split("T")[0];
 
+// last year for trending movies
+const lastYear = new Date();
+lastYear.setFullYear(lastYear.getFullYear() - 1);
+const formatted_lastYear = lastYear.toISOString().split("T")[0];
+
 export interface Movie {
   id: number;
   title: string;
@@ -51,8 +56,9 @@ export interface Actor {
   biography: string;
   profile_path?: string | null;
   place_of_birth?: string;
-  known_for_department: string;
+  known_for: string;
   popularity: number;
+  profile_image: string;
 }
 
 export interface ActorMovieCredits {
@@ -101,7 +107,7 @@ export async function getGenres(): Promise<Genre[]> {
 export async function getTrendingMovies(): Promise<Movie[]> {
   try {
     const data = await fetchFromTMDB<MovieResponse>(
-      "/discover/movie?language=en-US&page=1&sort_by=popularity.desc"
+      `/discover/movie?include_adult=false?language=en-US&page=1&sort_by=popularity.desc&&release_date.gte=${formatted_lastYear}&release_date.lte=${start_date}`
     );
     return data?.results;
   } catch (error) {
@@ -122,7 +128,7 @@ export async function getUpcomingMovies(): Promise<Movie[]> {
 export async function getSimilarMovies(id: number): Promise<Movie[]> {
   try {
     const data = await fetchFromTMDB<MovieResponse>(
-      `/movie/${id}/similar?llanguage=en-US&page=1&sort_by=popularity.desc`
+      `/movie/${id}/similar?language=en-US?include_adult=false&page=1&sort_by=popularity.desc`
     );
     return data?.results || []; // Ensure it returns an empty array if results are undefined
   } catch (error) {
@@ -130,7 +136,6 @@ export async function getSimilarMovies(id: number): Promise<Movie[]> {
     throw new Error("Failed to fetch similar movies");
   }
 }
-
 
 export async function getMoviesByGenre(id: string): Promise<Movie[]> {
   try {
@@ -205,12 +210,12 @@ export const fetchMovieCast = async (movieId: number) => {
       `${BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_API_KEY}&language=en-US`
     );
     if (!response.ok) {
-      throw new Error('Failed to fetch movie cast');
+      throw new Error("Failed to fetch movie cast");
     }
     const data = await response.json();
     return data.cast.slice(0, 12);
   } catch (error) {
-    console.error('Error in fetchMovieCast:', error);
+    console.error("Error in fetchMovieCast:", error);
     throw error;
   }
 };

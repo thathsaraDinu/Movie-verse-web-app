@@ -1,5 +1,5 @@
 import { searchMovies } from "@/lib/tmdb";
-import { MovieSection } from "@/components/movie-section";
+import { MovieSection } from "@/components/movies/movie-section";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";

@@ -14,8 +14,7 @@ export default async function MovieTrailers({
   const trailers = await fetchMovieTrailers(movieId);
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-2xl font-semibold">{movieTitle} Trailers </h2>
-      <TrailerSelect trailers={trailers} />
+      <TrailerSelect trailers={trailers} movieTitle={movieTitle} />
     </div>
   );
 }

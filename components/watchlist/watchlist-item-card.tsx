@@ -1,15 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import WatchlistRemoveButton from "./watchlist-remove-button";
+import WatchlistItemDeleteButton from "./watchlist-item-delete-button";
 import { Card } from "@/components/ui/card";
 import { getImageUrl } from "@/lib/tmdb";
-import { Calendar } from "lucide-react";
+import { Calendar, Loader } from "lucide-react";
 import { watch } from "node:fs";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface WatchlistCardProps {
   watchlistItem: {
@@ -17,12 +19,21 @@ interface WatchlistCardProps {
     imageUrl: string;
     name: string;
     releaseDate: string;
+    moviebackdrop_path : string;
     addedAt: string;
   };
   refetch: () => void;
+  watchlistId: string;
+  updateWatchlistImage: (imageUrl: string) => Promise<void>;
 }
 
-export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
+export function WatchlistCard({
+  watchlistItem,
+  refetch,
+  watchlistId,
+  updateWatchlistImage,
+}: WatchlistCardProps) {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -30,8 +41,8 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
       transition={{ duration: 0.5 }}
       className="h-full"
     >
-      <Card>
-        <div className="group relative overflow-hidden h-[300px] md:h-[400px] bg-card">
+      <Card className="overflow-clip min-w-[150px] sm:min-w-[200px] md:min-w-[240px]">
+        <div className="group relative h-[300px] md:h-[400px] bg-card">
           {/* Image */}
 
           <div className="absolute inset-0 rounded-t-md md:rounded-md overflow-clip">
@@ -53,7 +64,27 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
             {/* Gradient overlay */}
             <div className="absolute bottom-0 top-1/4 left-0 right-0 bg-gradient-to-t from-black to-transparent translate-y-[0%] group-hover:translate-y-0 transition-all duration-500" />
           </div>
-
+          <Button
+            onClick={async () => {
+              try {
+                setIsLoading(true);
+                await updateWatchlistImage(watchlistItem.moviebackdrop_path);
+                setIsLoading(false);
+                toast.success("Watchlist image updated successfully ");
+              } catch (error) {
+                toast.error("Failed to update watchlist image");
+              }
+            }}
+            className={`md:transform w-28 bg-blue-600 hover:bg-blue-700 text-white z-10 absolute md:group-hover:translate-x-[0%] md:-translate-x-[120%] top-2 mx-2 transition-transform duration-500 ${
+              isLoading ? "bg-blue-400 hover:bg-blue-500" : ""
+            }`}
+          >
+            {isLoading ? (
+              <Loader className="w-4 h-4 animate-spin" />
+            ) : (
+              <span>Set as Cover</span>
+            )}
+          </Button>
           {/* Content */}
           <div className="relative h-full flex flex-col justify-end p-3 md:p-6 text-white">
             {/* Main content */}
@@ -74,10 +105,11 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
                   Added: {new Date(watchlistItem.addedAt).toLocaleDateString()}
                 </div>{" "}
                 <div className="flex justify-center">
-                  <WatchlistRemoveButton
+                  <WatchlistItemDeleteButton
                     name={watchlistItem.name}
                     id={watchlistItem.movieId}
                     refetch={refetch}
+                    watchlistId={watchlistId}
                   />
                 </div>
               </div>
@@ -89,10 +121,11 @@ export function WatchlistCard({ watchlistItem, refetch }: WatchlistCardProps) {
             Added: {new Date(watchlistItem.addedAt).toLocaleDateString()}
           </div>{" "}
           <div className="flex justify-center">
-            <WatchlistRemoveButton
+            <WatchlistItemDeleteButton
               name={watchlistItem.name}
               id={watchlistItem.movieId}
               refetch={refetch}
+              watchlistId={watchlistId}
             />
           </div>
         </div>

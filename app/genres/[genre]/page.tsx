@@ -1,4 +1,4 @@
-import { MovieSection } from "@/components/movie-section";
+import { MovieSection } from "@/components/movies/movie-section";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { getMoviesByGenre } from "@/lib/tmdb";

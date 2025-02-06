@@ -2,24 +2,25 @@ import { getAuthSession } from "@/lib/auth";
 import React from "react";
 import WatchlistGrid from "@/components/watchlist/watchlist-grid";
 import { ErrorMessage } from "@/components/ui/error-message";
-import WatchlistsContent from "../../components/watchlists/watchlists-preview-main";
+import WatchlistPageContent from "../../../components/watchlist/watchlist-items-main";
 
-const WatchlistsPage: React.FC = async () => {
+async function WatchlistPage({ params }: { params: { id: string } }) {
   const session = await getAuthSession();
   return (
-    <section className="pagesection">
+    <section>
       {!session ? (
-        <ErrorMessage
+        <div className="pagesection">
+        <ErrorMessage 
           title="Not signed in"
           message="Please sign in to view your watchlist."
-        />
+        /></div>
       ) : (
         <div>
-          <WatchlistsContent />
+          <WatchlistPageContent watchlistId={params.id} />
         </div>
       )}
     </section>
   );
-};
+}
 
-export default WatchlistsPage;
+export default WatchlistPage;

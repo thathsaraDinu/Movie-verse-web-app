@@ -1,0 +1,163 @@
+import { NextResponse } from "next/server";
+import { getAuthSession } from "@/lib/auth";
+import connectDB from "@/lib/db";
+import { WatchList } from "@/lib/models/watchlist";
+
+// Add item to watchlist
+export async function POST(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session = await getAuthSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { name, movieId, releaseDate, imageUrl, moviebackdrop_path } =
+      await req.json();
+
+    await connectDB();
+
+     const existingWatchlist = await WatchList.findOne({
+      _id: params.id,
+      userId: session.user.id,
+      "items.movieId": movieId, 
+    });
+
+    if (existingWatchlist) {
+      return NextResponse.json(
+        { error: "Movie already exists in the watchlist" },
+        { status: 400 }
+      );
+    }
+    // Update the watchlist by adding the new movie and conditionally updating imageUrl
+    const updatedWatchlist = await WatchList.findOneAndUpdate(
+      {
+        _id: params.id,
+        userId: session.user.id,
+        "items.movieId": { $ne: movieId },
+      },
+      {
+        $set: {
+          $cond: {
+            if: { $eq: ["$imageUrl", ""] },
+            then: imageUrl,
+            else: "$imageUrl",
+          },
+        }, 
+        $push: {
+          items: { name, movieId, releaseDate, imageUrl, moviebackdrop_path },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedWatchlist) {
+      return NextResponse.json(
+        { error: "Watchlist not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(updatedWatchlist, { status: 200 });
+  } catch (error) {
+    console.error(error); 
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+  }
+}
+
+// update watchlist image
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session = await getAuthSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { imageUrl } = await req.json();
+
+    await connectDB();
+    const watchlist = await WatchList.findOneAndUpdate(
+      { _id: params.id, userId: session.user.id },
+      {
+        imageUrl,
+      },
+      { new: true }
+    );
+
+    if (!watchlist) {
+      return NextResponse.json(
+        { error: "Watchlist not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(watchlist);
+  } catch (error) {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}
+
+// Get all items in watchlist
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session = await getAuthSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    await connectDB();
+    const watchlist = await WatchList.findOne({
+      _id: params.id,
+      userId: session.user.id,
+    });
+
+    if (!watchlist) {
+      return NextResponse.json(
+        { error: "Watchlist not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(watchlist);
+  } catch (error) {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}
+
+// Delete watchlist
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session = await getAuthSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    await connectDB();
+    const watchlist = await WatchList.findOneAndDelete({
+      _id: params.id,
+      userId: session.user.id,
+    });
+
+    if (!watchlist) {
+      return NextResponse.json(
+        { error: "Watchlist not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ message: "Watchlist deleted successfully" });
+  } catch (error) {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}

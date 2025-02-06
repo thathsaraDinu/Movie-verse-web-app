@@ -14,33 +14,40 @@ const watchlistItemSchema = new mongoose.Schema({
     required: true,
   },
   imageUrl: String,
+  moviebackdrop_path: String,
   addedAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-const watchlistSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const watchlistSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+      default: "",
+    },
+    items: [watchlistItemSchema],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  items: [watchlistItemSchema],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-watchlistSchema.pre("save", function (next) {
-  this.updatedAt = new Date();
-  next();
-});
+  { timestamps: true }
+);
 
 export const WatchList =
   mongoose.models.WatchList || mongoose.model("WatchList", watchlistSchema);

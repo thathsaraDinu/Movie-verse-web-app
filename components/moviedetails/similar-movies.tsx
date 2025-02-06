@@ -1,5 +1,5 @@
 import { getSimilarMovies } from "@/lib/tmdb";
-import { MovieSection } from "../movie-section";
+import { MovieSection } from "../movies/movie-section";
 
 export default async function SimilarMovies({ movieId }: { movieId: number }) {
   const similarmovies = await getSimilarMovies(movieId);

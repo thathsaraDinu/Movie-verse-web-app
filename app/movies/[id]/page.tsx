@@ -1,5 +1,5 @@
 import { getMovieDetails } from "@/lib/tmdb";
-import { MovieDetails } from "@/components/movies/movie-details";
+import { MovieDetails } from "@/components/moviedetails/movie-details";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
