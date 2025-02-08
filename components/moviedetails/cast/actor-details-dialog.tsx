@@ -1,9 +1,9 @@
 import { ErrorMessage } from "../../ui/error-message";
-import { LoadingSpinner } from "../../ui/loading-spinner";
 import { useEffect, useState } from "react";
 import { Actor } from "@/lib/tmdb";
 import Image from "next/image";
 import { Loader } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
   const [actorDetails, setActorDetails] = useState<Actor | null>(null);
@@ -24,7 +24,7 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
       } catch (error) {
         setError(true);
       } finally {
-        setLoading(false); // Stop loading after fetch completes (success or error)
+        setLoading(false);
       }
     };
 
@@ -34,13 +34,13 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
   return (
     <div>
       {loading ? (
-        <div className="flex justify-center items-center p-4">
+        <div className="flex justify-center items-center h-[500px]">
           <Loader className="w-10 h-10 animate-spin" />
         </div>
       ) : error ? (
         <div className="container mx-auto">
           <ErrorMessage
-            title="Failed to load Watchlist"
+            title="Failed to load Actor Info"
             message="Please check again later"
           />
         </div>
@@ -48,29 +48,73 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
         actorDetails && (
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-6">
-              <h2 className="text-2xl font-semibold">
-                {actorDetails.name || ""}
-              </h2>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="text-2xl font-semibold">
+                  {actorDetails.name || ""}
+                </h2>
+              </motion.div>
+
               <div className="flex flex-col md:flex-row gap-6">
-                <Image
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  viewport={{ once: true }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
                   className="md:w-1/3 h-[500px] object-cover rounded-lg"
-                  src={`${actorDetails.profile_image}`}
-                  alt={actorDetails.name}
-                  width={500}
-                  height={750}
-                />
-                <div className="flex flex-col gap-6 w-2/3">
-                  <p className="text-lg">{actorDetails.biography || ""}</p>
-                  <p className="text-lg">
-                    <strong>Known for:</strong> {actorDetails.known_for || ""}
-                  </p>
-                  <p className="text-lg">
-                    <strong>Birthdate:</strong> {actorDetails.birthday || ""}
-                  </p>
-                  <p className="text-lg">
-                    <strong>Place of birth:</strong>{" "}
-                    {actorDetails.place_of_birth || ""}
-                  </p>
+                >
+                  <Image
+                    src={`${actorDetails.profile_image}`}
+                    alt={actorDetails.name}
+                    width={500}
+                    height={750}
+                  />
+                </motion.div>
+
+                <div className="flex flex-col gap-6 md:w-2/3">
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    viewport={{ once: true }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <p className="text-lg">{actorDetails.biography || ""}</p>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    viewport={{ once: true }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <p className="text-lg">
+                      <strong>Known for:</strong> {actorDetails.known_for || ""}
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    viewport={{ once: true }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <p className="text-lg">
+                      <strong>Birthdate:</strong> {actorDetails.birthday || ""}
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    viewport={{ once: true }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                  >
+                    <p className="text-lg">
+                      <strong>Place of birth:</strong>{" "}
+                      {actorDetails.place_of_birth || ""}
+                    </p>
+                  </motion.div>
                 </div>
               </div>
             </div>

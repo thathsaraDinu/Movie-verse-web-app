@@ -71,24 +71,24 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
   }
 
   return (
-    <div className="relative overflow-clip">
+    <div className="overflow-clip">
       {loading ? (
         <></>
       ) : watchlistImage == "" ? (
         <></>
       ) : (
-        <>
-          {" "}
+        <div className="absolute top-0 w-full -z-50 h-screen bg-cover object-cover">
           <Image
             src={getImageUrl(watchlistImage, "original")}
             alt="movie poster"
-            width="0"
-            height="0"
-            sizes="100vw"
-            className={`object-cover bg-center h-full w-full absolute top-0 -z-50`}
+            layout="fill"
+            objectFit="cover"
+            className={`bg-cover object-cover bg-center h-full w-full -z-50`}
           />
-          <div className="absolute top-0 h-full w-full bg-gradient-to-b from-background/50 -z-50  to-background" />
-        </>
+
+          {/* Gradient Overlay */}
+          <div className="h-full w-full bg-gradient-to-b from-background/20 to-background -z-40" />
+        </div>
       )}
       <section className="flex flex-col gap-6 pagesection">
         <motion.div

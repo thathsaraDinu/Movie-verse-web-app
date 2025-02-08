@@ -26,7 +26,7 @@ export default function WatchlistsSelect({
   return (
     <div>
       {loading ? (
-        <div className="flex justify-center items-center p-20">
+        <div className="flex justify-center items-center h-[500px]">
           <Loader className="w-10 h-10 animate-spin" />
         </div>
       ) : error ? (
@@ -53,7 +53,19 @@ export default function WatchlistsSelect({
                 />
               </motion.div>
             ))}
-          <AddNewWatchlist refetch={refetch} />
+          <>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.1 * watchlists?.length,
+              }}
+            >
+              <AddNewWatchlist refetch={refetch} />
+            </motion.div>
+          </>
         </div>
       )}
     </div>

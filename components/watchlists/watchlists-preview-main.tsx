@@ -11,6 +11,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import WatchlistDeleteButton from "@/components/watchlists/watchlist-delete-button";
 import { getImageUrl } from "@/lib/tmdb";
 import Image from "next/image";
+import { Loader } from "lucide-react";
 
 const WatchlistsContent: React.FC = () => {
   const { watchlists, loading, error, refetch } = useWatchlist();
@@ -39,7 +40,9 @@ const WatchlistsContent: React.FC = () => {
           </motion.div>
         </div>
         {loading ? (
-          <LoadingSpinner />
+          <div className="flex justify-center items-center h-[500px]">
+            <Loader className="w-10 h-10 animate-spin" />
+          </div>
         ) : error ? (
           <div className="container mx-auto">
             <ErrorMessage
@@ -61,52 +64,74 @@ const WatchlistsContent: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
               >
-                <Card className="p-4 relative shadow-md bg-transparent overflow-clip">
-                  <Image
-                    src={getImageUrl(watchlist.imageUrl, "w500")}
-                    alt="movie poster"
-                    layout="fill"
-                    objectFit="cover"
-                    className="absolute top-0 left-0 -z-20"
-                  />
-                  <div
-                    className={`absolute object-cover top-0 left-0 h-full w-full ${
-                      !watchlist.imageUrl || watchlist.imageUrl == ""
-                        ? "bg-background"
-                        : " bg-gradient-to-l from-background/20 to-background"
-                    }  -z-10`}
-                  />
-                  <CardHeader className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg font-semibold">
-                        {watchlist.name}
-                      </CardTitle>
-                      <WatchlistDeleteButton
-                        id={watchlist._id}
-                        name={watchlist.name}
-                        refetch={refetch}
+                <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-xl bg-white dark:bg-gray-800">
+                  {watchlist.imageUrl != "" ? (
+                    <div className="absolute inset-0">
+                      <Image
+                        src={getImageUrl(watchlist.imageUrl, "w500")}
+                        alt={watchlist.name}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        priority
                       />
+                      <div className="absolute inset-0 bg-black/30 " />
                     </div>
-                  </CardHeader>
-                  <CardContent className="flex flex-col gap-5">
-                    <div className="text-xl font-bold">
-                      {watchlist.items.length > 1 ? (
-                        <span>{watchlist.items.length} movies</span>
-                      ) : watchlist.items.length == 1 ? (
-                        <span>1 movie</span>
-                      ) : (
-                        <span>No movies</span>
-                      )}
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/50 " />
+                  )}
+                  <Link
+                    href={`/watchlist/${watchlist._id}`}
+                    className="relative h-full flex flex-col justify-between px-6 py-10 gap-5"
+                  >
+                    <div className="space-y-2">
+                      <CardHeader className="p-0">
+                        <div className="flex flex-col items-center gap-2 ">
+                          <CardTitle className="text-xl font-bold text-white">
+                            {watchlist.name}
+                          </CardTitle>
+                        </div>
+                      </CardHeader>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <Link
-                        href={`/watchlist/${watchlist._id}`}
-                        className="flex text-sm font-semibold items-center gap-2 text-secondary bg-primary hover:bg-secondary hover:text-primary px-4 py-2 rounded-md"
-                      >
-                        <span>View</span>
-                      </Link>
-                    </div>
-                  </CardContent>
+
+                    <CardContent className="p-0 space-y-4">
+                      <div className="flex items-stretch gap-4 justify-between">
+                        <div className="flex flex-col justify-between">
+                          <p className="text-sm text-gray-200">Movies</p>
+                          <p className="text-2xl font-bold text-white">
+                            {watchlist.items.length}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-end">
+                          <p className="text-sm text-gray-200">Created Date</p>
+                          <p className="text-sm text-white">
+                            {new Date(watchlist.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex -space-x-3 justify-between">
+                        <div className="flex -space-x-3 justify-between">
+                          {[...Array(4)].map((_, i) => (
+                            <div
+                              key={i}
+                              className="h-8 w-8 rounded-full border-2 border-foreground bg-background"
+                            />
+                          ))}
+                          {watchlist.items.length > 4 && (
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-foreground text-xs font-medium text-background">
+                              +{watchlist.items.length - 4}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Link>
+                  <div className="absolute bottom-10 right-6">
+                    <WatchlistDeleteButton
+                      id={watchlist._id}
+                      name={watchlist.name}
+                      refetch={refetch}
+                    />
+                  </div>
                 </Card>
               </motion.div>
             ))}

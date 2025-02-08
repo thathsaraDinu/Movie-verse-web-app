@@ -52,9 +52,8 @@ export function AddNewWatchlist({ refetch }: { refetch: () => Promise<void> }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create New Watchlist</DialogTitle>
-        </DialogHeader>
+        </DialogHeader> 
         <DialogDescription>
-          {" "}
           <form
             onSubmit={createWatchlist}
             className="space-y-4 flex flex-col justify-end items-end"

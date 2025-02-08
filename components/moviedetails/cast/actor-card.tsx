@@ -67,9 +67,8 @@ export default function ActorCard({ cast }: ActorDetailsProps) {
                   </div>
                 </motion.div>
               </DialogTrigger>
-
-              <DialogContent className="md:max-w-[80vw] h-[90vh] overflow-y-auto">
-                <DialogHeader className="leading-none tracking-tight">
+              <DialogContent className="md:max-w-[80vw] h-[90vh] flex flex-start flex-col overflow-y-auto">
+                <DialogHeader className="leading-none tracking-tight mb-0">
                   <DialogTitle>Actor Details</DialogTitle>
                 </DialogHeader>
                 <DialogDescription>
