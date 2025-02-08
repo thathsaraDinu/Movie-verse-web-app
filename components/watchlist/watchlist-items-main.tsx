@@ -115,7 +115,7 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
             >
               <Link
                 href={"/genres/Adventure?id=12"}
-                className="flex gap-3 w-full h-full flex-col p-20 justify-center hover:shadow-[0_0_15px_theme(colors.foreground/50)] items-center border-foreground border rounded-lg transition-colors duration-300 ease-in-out"
+                className="flex gap-3 w-full h-full flex-col p-20 justify-center hover:shadow-[0_0_15px_theme(colors.foreground/50)] items-center border-foreground border rounded-lg transition-shadow duration-500 ease-in-out"
               >
                 <Plus className="w-8 h-8" />
                 Add a movie
@@ -154,7 +154,7 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
             >
               <Link
                 href={"/genres/Adventure?id=12"}
-                className="flex gap-3 flex-col p-5 w-full h-full justify-center hover:shadow-[0_0_15px_theme(colors.foreground/50)] items-center border-foreground border rounded-lg transition-colors duration-300 ease-in-out"
+                className="flex gap-3 flex-col p-5 w-full h-full justify-center hover:shadow-[0_0_15px_theme(colors.foreground/50)] items-center border-foreground border rounded-lg transition-shadow duration-500 ease-in-out"
               >
                 <Plus className="w-8 h-8" />
                 Add another

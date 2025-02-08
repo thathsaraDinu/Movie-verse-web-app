@@ -130,8 +130,6 @@ export function WatchlistCard({
           />
         </div>
       </Card>
-
-      {/* Remove Button */}
     </motion.div>
   );
 }
