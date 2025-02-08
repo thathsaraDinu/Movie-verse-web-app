@@ -50,14 +50,14 @@ export default function ActorCard({ cast }: ActorDetailsProps) {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.05 * index }}
                 >
-                  <div className="bg-card rounded-lg overflow-hidden border h-full">
+                  <div className="bg-card rounded-lg overflow-hidden border h-full group">
                     <div className="text-center overflow-clip rounded-t-lg ">
                       <Image
                         src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
                         alt={actor.name}
                         width={185}
                         height={280}
-                        className="w-full h-56 object-cover mb-2 hover:scale-110 transition-transform duration-300"
+                        className="w-full h-56 object-cover mb-2 group-hover:scale-110 transition-transform duration-300"
                       />
                     </div>
                     <div className="p-2">
