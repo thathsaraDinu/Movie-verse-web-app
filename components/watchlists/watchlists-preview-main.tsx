@@ -30,14 +30,8 @@ const WatchlistsContent: React.FC = () => {
               Your Watchlists
             </h2>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            viewport={{ once: true }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <AddNewWatchlist refetch={refetch} />
-          </motion.div>
+         
+            <AddNewWatchlist refetch={refetch} numberOfItems={0} />
         </div>
         {loading ? (
           <div className="flex justify-center items-center h-[500px]">
