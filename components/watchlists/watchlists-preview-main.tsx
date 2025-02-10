@@ -7,11 +7,12 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { AddNewWatchlist } from "@/components/watchlists/add-new-watchlist";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import WatchlistDeleteButton from "@/components/watchlists/watchlist-delete-button";
 import { getImageUrl } from "@/lib/tmdb";
 import Image from "next/image";
 import { Loader } from "lucide-react";
+import { AddWatchlistByLink } from "./add-watchlist-by-link";
+import WatchlistShareUrl from "./watchlist-share-url";
 
 const WatchlistsContent: React.FC = () => {
   const { watchlists, loading, error, refetch } = useWatchlist();
@@ -30,8 +31,7 @@ const WatchlistsContent: React.FC = () => {
               Your Watchlists
             </h2>
           </motion.div>
-         
-            <AddNewWatchlist refetch={refetch} numberOfItems={0} />
+          <AddWatchlistByLink refetch = {refetch} />
         </div>
         {loading ? (
           <div className="flex justify-center items-center h-[500px]">
@@ -65,7 +65,7 @@ const WatchlistsContent: React.FC = () => {
                         src={getImageUrl(watchlist.imageUrl, "w500")}
                         alt={watchlist.name}
                         fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                         priority
                       />
                       <div className="absolute inset-0 bg-black/30 " />
@@ -119,6 +119,7 @@ const WatchlistsContent: React.FC = () => {
                       </div>
                     </CardContent>
                   </Link>
+                  <WatchlistShareUrl watchlistId={watchlist._id} />
                   <div className="absolute bottom-10 right-6">
                     <WatchlistDeleteButton
                       id={watchlist._id}
@@ -129,6 +130,12 @@ const WatchlistsContent: React.FC = () => {
                 </Card>
               </motion.div>
             ))}
+            <>
+              <AddNewWatchlist
+                refetch={refetch}
+                numberOfItems={watchlists?.length}
+              />
+            </>
           </div>
         )}
       </div>

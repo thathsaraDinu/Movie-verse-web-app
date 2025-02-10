@@ -30,24 +30,23 @@ const watchlistSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: function (this: any) {
+        return !this.isSnapshot; // Only required if it's NOT a snapshot
+      },
     },
     imageUrl: {
       type: String,
       default: "",
     },
     items: [watchlistItemSchema],
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
+    isShared: { type: Boolean, default: false }, // If the watchlist is shared
+    isSnapshot: { type: Boolean, default: false }, // If it's a frozen snapshot
+    shareToken: { type: String, unique: true, sparse: true }, // Token for sharing, only for snapshots
+    expiresAt: { type: Date, default: null }, // ⬅️ New field for TTL
   },
   { timestamps: true }
 );
+
 
 export const WatchList =
   mongoose.models.WatchList || mongoose.model("WatchList", watchlistSchema);

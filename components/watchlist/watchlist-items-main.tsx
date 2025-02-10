@@ -18,7 +18,7 @@ interface WatchlistItem {
   imageUrl?: string;
 }
 
-interface Watchlist {
+export interface Watchlist {
   _id: string;
   name: string;
   items: WatchlistItem[];
@@ -135,7 +135,6 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
                 >
                   <div className="col-span-1 ">
                     <WatchlistCard
-                      watchlistId={watchlistId}
                       updateWatchlistImage={updateWatchlistImage}
                       watchlistItem={item}
                       refetch={getWishlistItemsById}

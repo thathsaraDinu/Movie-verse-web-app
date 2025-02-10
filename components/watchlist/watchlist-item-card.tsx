@@ -21,16 +21,15 @@ interface WatchlistCardProps {
     releaseDate: string;
     moviebackdrop_path: string;
     addedAt: string;
+    _id: string;
   };
   refetch: () => void;
-  watchlistId: string;
-  updateWatchlistImage: (imageUrl: string) => Promise<void>;
+  updateWatchlistImage?: (imageUrl: string) => Promise<void>; 
 }
 
 export function WatchlistCard({
   watchlistItem,
   refetch,
-  watchlistId,
   updateWatchlistImage,
 }: WatchlistCardProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,27 +41,29 @@ export function WatchlistCard({
       className="h-full"
     >
       <Card className="relative group overflow-clip min-w-[150px] sm:min-w-[200px] md:min-w-[240px]">
-        <Button
-          onClick={async () => {
-            try {
-              setIsLoading(true);
-              await updateWatchlistImage(watchlistItem.moviebackdrop_path);
-              setIsLoading(false);
-              toast.success("Watchlist image updated successfully ");
-            } catch (error) {
-              toast.error("Failed to update watchlist image");
-            }
-          }}
-          className={`md:transform w-28 bg-blue-600 hover:bg-blue-700 text-white z-10 absolute md:group-hover:translate-x-[0%] md:-translate-x-[120%] top-2 mx-2 transition-transform duration-500  ${
-            isLoading ? "bg-blue-400 hover:bg-blue-500" : ""
-          }`}
-        >
-          {isLoading ? (
-            <Loader className="w-4 h-4 animate-spin" />
-          ) : (
-            <span>Set as Cover</span>
-          )}
-        </Button>
+        {updateWatchlistImage && (
+          <Button
+            onClick={async () => {
+              try {
+                setIsLoading(true);
+                await updateWatchlistImage(watchlistItem.moviebackdrop_path);
+                setIsLoading(false);
+                toast.success("Watchlist image updated successfully ");
+              } catch (error) {
+                toast.error("Failed to update watchlist image");
+              }
+            }}
+            className={`md:transform w-28 bg-blue-600 hover:bg-blue-700 text-white z-10 absolute md:group-hover:translate-x-[0%] md:-translate-x-[120%] top-2 mx-2 transition-transform duration-500  ${
+              isLoading ? "bg-blue-400 hover:bg-blue-500" : ""
+            }`}
+          >
+            {isLoading ? (
+              <Loader className="w-4 h-4 animate-spin" />
+            ) : (
+              <span>Set as Cover</span>
+            )}
+          </Button>
+        )}
         <Link href={`/movies/${watchlistItem.movieId}`}>
           <div className=" relative h-[300px] md:h-[400px] bg-card">
             {/* Image */}
@@ -119,15 +120,15 @@ export function WatchlistCard({
             <div className="h-9" />
           </div>
         </Link>
-        <div
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-12 opacity-0 transition-all duration-700 ease-in-out md:group-hover:translate-y-0 md:group-hover:opacity-100"
-        >
-          <WatchlistItemDeleteButton
-            name={watchlistItem.name}
-            id={watchlistItem.movieId}
-            refetch={refetch}
-            watchlistId={watchlistId}
-          />
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 md:translate-y-12 md:opacity-0 transition-all duration-700 ease-in-out md:group-hover:translate-y-0 md:group-hover:opacity-100">
+          {updateWatchlistImage && (
+            <WatchlistItemDeleteButton
+              name={watchlistItem.name}
+              id={watchlistItem.movieId}
+              refetch={refetch}
+              watchlistId={watchlistItem._id}
+            />
+          )}
         </div>
       </Card>
     </motion.div>

@@ -64,6 +64,7 @@
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.0.5",
     "vaul": "^1.1.2",
     "zod": "^3.23.8"
   },
