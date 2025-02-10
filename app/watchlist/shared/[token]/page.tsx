@@ -24,7 +24,6 @@ export default function SharedWatchlist({
     try {
       setLoading(true);
       const res = await fetch(`/api/watchlist/shared/${params.token}`);
-      console.log("jjj", res);
       const watchlist = await res.json();
 
       if (!res.ok) {
@@ -33,7 +32,6 @@ export default function SharedWatchlist({
       }
 
       setWatchlist(watchlist);
-      console.log(watchlist);
     } catch (error) {
       setError("Failed to load watchlist");
       console.error("Error fetching watchlist:", error);
@@ -50,7 +48,6 @@ export default function SharedWatchlist({
     try {
       setIsAdding(true);
       // Extract shareToken from the URL
-      console.log("shareUrl", shareToken);
 
       if (!shareToken) {
         alert("Invalid share link!");

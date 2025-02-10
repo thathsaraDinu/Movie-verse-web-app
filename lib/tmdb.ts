@@ -90,7 +90,6 @@ async function fetchFromTMDB<T>(endpoint: string): Promise<T> {
 
     return res.json();
   } catch (error) {
-    console.log(error);
     throw new Error("Failed to fetch data from TMDB");
   }
 }

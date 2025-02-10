@@ -24,7 +24,6 @@ export async function POST(req: Request) {
       items: snapshot.items,
       userId: session.user.id,
     });
-    console.log(existingWatchlist);
 
     if (existingWatchlist) {
       return NextResponse.json(

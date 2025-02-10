@@ -31,6 +31,15 @@ export async function POST(req: Request) {
     });
 
     if (existingSnapshot) {
+      await WatchList.updateOne(
+        { _id: existingSnapshot._id },
+        {
+          $set: {
+            imageUrl: originalWatchlist.imageUrl,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          },
+        }
+      );
       return NextResponse.json({
         message: "WatchList already shared!",
         shareUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}/watchlist/shared/${existingSnapshot.shareToken}`,

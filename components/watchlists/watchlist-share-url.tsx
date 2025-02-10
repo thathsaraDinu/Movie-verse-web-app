@@ -34,7 +34,6 @@ export default function WatchlistShareUrl({
       const data = await response.json();
       if (response.ok) {
         const { shareUrl } = data;
-        console.log(shareUrl);
         setWatchlistLink(shareUrl);
         toast.success("Watchlist link generated successfully");
       } else {
