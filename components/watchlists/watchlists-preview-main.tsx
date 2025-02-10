@@ -31,7 +31,7 @@ const WatchlistsContent: React.FC = () => {
               Your Watchlists
             </h2>
           </motion.div>
-          <AddWatchlistByLink refetch = {refetch} />
+          <AddWatchlistByLink refetch={refetch} />
         </div>
         {loading ? (
           <div className="flex justify-center items-center h-[500px]">
@@ -45,9 +45,15 @@ const WatchlistsContent: React.FC = () => {
             />
           </div>
         ) : watchlists.length < 1 ? (
-          <p className="text-center text-muted-foreground py-32 w-full">
-            No entries found.
-          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+           
+            <>
+              <AddNewWatchlist
+                refetch={refetch}
+                numberOfItems={watchlists?.length}
+              />
+            </>
+          </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {watchlists.map((watchlist, index) => (

@@ -61,7 +61,7 @@ export function AddNewWatchlist({
           className="flex gap-2 justify-center items-center p-4 rounded-md border border-gray-300 hover:border-gray-400 cursor-pointer"
         >
           <Plus />
-          New Watchlist
+          Create Watchlist
         </motion.div>
       </DialogTrigger>
 
