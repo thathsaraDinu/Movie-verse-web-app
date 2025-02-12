@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
+import { Heart, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -10,10 +10,11 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import WatchlistsSelect from "./watchlists-select";
 import { motion } from "framer-motion";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface WatchlistToggleButtonProps {
   movieId: Number;
@@ -39,7 +40,9 @@ export default function WatchlistToggleButton({
   imageUrl,
   moviebackdrop_path,
 }: WatchlistToggleButtonProps) {
+  const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   async function addItemToWatchlist(watchlistId: string) {
     try {
@@ -63,10 +66,9 @@ export default function WatchlistToggleButton({
       }
     } catch (error) {
       toast.error("Failed to add item to watchlist");
-
-      // Handle error
     }
   }
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -75,22 +77,39 @@ export default function WatchlistToggleButton({
       transition={{ duration: 0.5, delay: 0.1 }}
     >
       <div className="flex items-center justify-center">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button className="w-full">
-              <Heart className="w-5 h-5 mr-2" />
-              Add to Watchlist
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="md:max-w-[60vw] h-[80vh] overflow-y-auto flex flex-col">
-            <DialogHeader>
-              <DialogTitle>Select Watchlist</DialogTitle>
-            </DialogHeader>
-            <DialogDescription>
-              <WatchlistsSelect addItemToWatchlist={addItemToWatchlist} />
-            </DialogDescription>
-          </DialogContent>
-        </Dialog>
+        {status === "loading" ? (
+          <div className="w-full flex items-center justify-center">
+            <Loader2 />
+          </div>
+        ) : (
+          <Button
+            onClick={() => {
+              if (!session) {
+                toast.error("You need to be logged in to add to watchlist");
+                router.push("/auth/signin");
+              } else {
+                setOpen(true);
+              }
+            }}
+            className="w-full px-3 py-2"
+          >
+            <Heart className="hidden md:block w-5 h-5 mr-2" />
+            Add to Watchlist
+          </Button>
+        )}
+
+        {session && (
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent className="md:max-w-[60vw] h-[80vh] overflow-y-auto flex flex-col">
+              <DialogHeader>
+                <DialogTitle>Select Watchlist</DialogTitle>
+              </DialogHeader>
+              <DialogDescription>
+                <WatchlistsSelect addItemToWatchlist={addItemToWatchlist} />
+              </DialogDescription>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </motion.div>
   );

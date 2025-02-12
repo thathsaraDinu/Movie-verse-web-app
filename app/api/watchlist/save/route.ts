@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   try {
     const session = await getAuthSession();
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Please log in" }, { status: 401 });
     }
     await connectDB();
     const { shareToken } = await req.json();
