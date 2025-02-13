@@ -22,8 +22,6 @@ export async function POST(
 
     const movie_id = new mongoose.Types.ObjectId(id);
 
-    const userId = new mongoose.Types.ObjectId(session.user.id);
-
     await connectDB();
 
     const existingWatchlist = await WatchList.findOne({

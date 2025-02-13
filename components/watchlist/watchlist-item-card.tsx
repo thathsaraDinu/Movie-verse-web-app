@@ -23,12 +23,14 @@ interface WatchlistCardProps {
   };
   refetch: () => void;
   updateWatchlistImage?: (imageUrl: string) => Promise<void>; 
+  watchlistId: string;
 }
 
 export function WatchlistCard({
   watchlistItem,
   refetch,
   updateWatchlistImage,
+  watchlistId,
 }: WatchlistCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   return (
@@ -124,7 +126,7 @@ export function WatchlistCard({
               name={watchlistItem.name}
               id={watchlistItem.movieId}
               refetch={refetch}
-              watchlistId={watchlistItem._id}
+              watchlistId={watchlistId}
             />
           )}
         </div>

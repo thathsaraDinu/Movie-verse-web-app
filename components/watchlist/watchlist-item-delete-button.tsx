@@ -36,6 +36,8 @@ export default function WatchlistItemDeleteButton({
       if (response.ok) {
         toast.success("Removed successfully");
         await refetch();
+      } else {
+        toast.error("Failed to remove from Watchlist");
       }
     } catch (error) {
       toast.error("Failed to remove from Watchlist");

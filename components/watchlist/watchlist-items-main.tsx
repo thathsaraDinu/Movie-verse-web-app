@@ -143,6 +143,7 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
                       updateWatchlistImage={updateWatchlistImage}
                       watchlistItem={item}
                       refetch={getWishlistItemsById}
+                      watchlistId={watchlistId}
                     />
                   </div>
                 </motion.div>
