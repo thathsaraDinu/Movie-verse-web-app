@@ -45,7 +45,7 @@ export default function SharedWatchlist({
     } finally {
       setLoading(false);
     }
-  }, [token]); 
+  }, [token]);
 
   useEffect(() => {
     getWatchlist();
