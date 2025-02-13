@@ -116,7 +116,7 @@ export default function SharedWatchlist({
             {watchlist &&
               watchlist.items.map((watchlistItem: any, index: number) => (
                 <div key={index}>
-                  <Card className="group relative overflow-hidden h-[300px] sm:h-[400px] bg-card">
+                  <Card className="group relative overflow-hidden h-[300px] md:h-[400px] bg-card">
                     <div
                       className={`md:transform max-w-42 z-10 absolute md:group-hover:translate-x-[0%] md:-translate-x-[120%] top-2 mx-2 transition-transform duration-500 `}
                     >
