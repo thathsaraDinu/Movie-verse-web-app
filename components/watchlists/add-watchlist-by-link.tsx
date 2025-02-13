@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -18,6 +17,7 @@ export const AddWatchlistByLink = ({ refetch }: { refetch: any }) => {
   const [watchlistLink, setWatchlistLink] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const saveSharedWatchlist = async (shareUrl: string) => {
     try {
       setIsLoading(true);
@@ -51,6 +51,7 @@ export const AddWatchlistByLink = ({ refetch }: { refetch: any }) => {
     setWatchlistLink("");
     setIsLoading(false);
   };
+
   return (
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -71,44 +72,42 @@ export const AddWatchlistByLink = ({ refetch }: { refetch: any }) => {
           <DialogHeader>
             <DialogTitle>Add Watchlist by shared link</DialogTitle>
           </DialogHeader>
-          <DialogDescription>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                await saveSharedWatchlist(watchlistLink);
-              }}
-              className="space-y-4 flex flex-col justify-end items-end"
-            >
-              <input
-                type="text"
-                value={watchlistLink}
-                required
-                onChange={(e) => setWatchlistLink(e.target.value)}
-                placeholder="Enter watchlist shared link or token"
-                className="p-2 border border-gray-300 rounded-md w-full"
-              />
-              <div className="flex gap-4 justify-end items-center">
-                <Button
-                  type="button"
-                  onClick={() => setIsDialogOpen(false)}
-                  className="bg-gray-300 text-gray-800"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className="bg-blue-500 text-white hover:bg-blue-600"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <Loader className="w-4 h-4 animate-spin" />
-                  ) : (
-                    "Create Watchlist"
-                  )}
-                </Button>
-              </div>
-            </form>
-          </DialogDescription>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await saveSharedWatchlist(watchlistLink);
+            }}
+            className="space-y-4 flex flex-col justify-end items-end"
+          >
+            <input
+              type="text"
+              value={watchlistLink}
+              required
+              onChange={(e) => setWatchlistLink(e.target.value)}
+              placeholder="Enter watchlist shared link or token"
+              className="p-2 border border-gray-300 rounded-md w-full"
+            />
+            <div className="flex gap-4 justify-end items-center">
+              <Button
+                type="button"
+                onClick={() => setIsDialogOpen(false)}
+                className="bg-gray-300 text-gray-800"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="bg-blue-500 text-white hover:bg-blue-600"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Loader className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Create Watchlist"
+                )}
+              </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>{" "}
     </div>

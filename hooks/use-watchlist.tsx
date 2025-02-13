@@ -16,7 +16,7 @@ export function useWatchlist() {
         setWatchlists(data);
       }
     } catch (error) {
-     
+      setError(error);
     } finally {
       setLoading(false);
     }

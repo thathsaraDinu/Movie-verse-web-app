@@ -2,25 +2,22 @@
 
 import { ErrorMessage } from "@/components/ui/error-message";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import WatchlistCard from "@/components/watchlist/watchlist-item-card";
 import { Watchlist } from "@/components/watchlist/watchlist-items-main";
-import { useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Calendar, Loader, Plus, Star } from "lucide-react";
+import { Calendar, Loader, Plus } from "lucide-react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { getImageUrl } from "@/lib/tmdb";
-import { formatDate, formatRating } from "@/lib/utils/format";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { formatDate } from "@/lib/utils/format";
 import WatchlistToggleButton from "@/components/watchlists/watchlist-toggle-button";
 import Link from "next/link";
 
 export default function SharedWatchlist({
   params,
 }: {
-  params: { token: string };
+  params: Promise<{ token: string }>;
 }) {
   const [watchlist = { name: "", items: [] }, setWatchlist] =
     useState<Watchlist>();
@@ -28,10 +25,12 @@ export default function SharedWatchlist({
   const [error, setError] = useState("");
   const [isAdding, setIsAdding] = useState(false);
 
-  async function getWatchlist() {
+  const { token } = use(params);
+
+  const getWatchlist = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/watchlist/shared/${params.token}`);
+      const res = await fetch(`/api/watchlist/shared/${token}`);
       const watchlist = await res.json();
 
       if (!res.ok) {
@@ -46,16 +45,15 @@ export default function SharedWatchlist({
     } finally {
       setLoading(false);
     }
-  }
+  }, [token]); 
 
   useEffect(() => {
     getWatchlist();
-  }, []);
+  }, [getWatchlist]);
 
-  const saveSharedWatchlist = async (shareToken: string) => {
+  const saveSharedWatchlist = useCallback(async (shareToken: string) => {
     try {
       setIsAdding(true);
-      // Extract shareToken from the URL
 
       if (!shareToken) {
         alert("Invalid share link!");
@@ -80,9 +78,8 @@ export default function SharedWatchlist({
       console.error("Error saving watchlist:", error);
     }
     setIsAdding(false);
-  };
+  }, []);
 
-  console.log(watchlist?.items.length);
   return (
     <section className="pagesection">
       {loading ? (
@@ -101,7 +98,7 @@ export default function SharedWatchlist({
             >
               <button
                 disabled={isAdding}
-                onClick={() => saveSharedWatchlist(params.token)}
+                onClick={() => saveSharedWatchlist(token)}
                 className="w-56  justify-center items-center flex gap-2 p-4 rounded-md border border-gray-300 hover:border-gray-400 cursor-pointer"
               >
                 {isAdding ? (
@@ -117,8 +114,8 @@ export default function SharedWatchlist({
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5 mx-auto">
             {watchlist &&
-              watchlist.items.map((watchlistItem: any) => (
-                <>
+              watchlist.items.map((watchlistItem: any, index: number) => (
+                <div key={index}>
                   <Card className="group relative overflow-hidden h-[300px] sm:h-[400px] bg-card">
                     <div
                       className={`md:transform max-w-42 z-10 absolute md:group-hover:translate-x-[0%] md:-translate-x-[120%] top-2 mx-2 transition-transform duration-500 `}
@@ -173,7 +170,7 @@ export default function SharedWatchlist({
                       </div>
                     </Link>
                   </Card>
-                </>
+                </div>
               ))}
           </div>
         </div>

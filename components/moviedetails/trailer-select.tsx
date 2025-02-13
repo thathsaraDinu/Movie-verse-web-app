@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function TrailerSelect({
@@ -41,9 +40,9 @@ export default function TrailerSelect({
             {trailers.map((trailer, index) => (
               <motion.div
                 key={trailer.key}
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 viewport={{ once: true }}
-                whileInView={{ opacity: 1, x: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
                 className="group w-full"
               >

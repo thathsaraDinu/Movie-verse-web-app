@@ -21,7 +21,6 @@ const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
   // Dynamic particle options based on theme
   const options = useMemo(
     () => ({
-     
       fpsLimit: 120,
       interactivity: {
         events: {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ErrorMessage } from "@/components/ui/error-message";
 import WatchlistCard from "@/components/watchlist/watchlist-item-card";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
@@ -26,49 +26,54 @@ export interface Watchlist {
 
 function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
   const [watchlist, setWatchlist] = useState<Watchlist[]>([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [watchlistName, setWatchlistName] = useState("");
   const [watchlistImage, setWatchlistImage] = useState("");
 
-  async function getWishlistItemsById() {
+  const getWishlistItemsById = useCallback(async () => {
     try {
       const response = await fetch(`/api/watchlist/${watchlistId}`, {
-        method: "Get",
+        method: "GET",
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setWatchlist(data.items);
-        setWatchlistName(data.name);
-        setWatchlistImage(data.imageUrl);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to fetch watchlist");
       }
-    } catch (error) {
-      setError(true);
+      const data = await response.json();
+      setWatchlist(data.items || []);
+      setWatchlistName(data.name || "Unnamed Watchlist");
+      setWatchlistImage(data.imageUrl || "");
+    } catch (error: any) {
+      setError(error.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
-  }
+  }, [watchlistId]);
+
   useEffect(() => {
     getWishlistItemsById();
-  });
+  }, [getWishlistItemsById]);
 
-  async function updateWatchlistImage(imageUrl: string) {
-    try {
-      const response = await fetch(`/api/watchlist/${watchlistId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageUrl }),
-      });
+  const updateWatchlistImage = useCallback(
+    async (imageUrl: string) => {
+      try {
+        const response = await fetch(`/api/watchlist/${watchlistId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ imageUrl }),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setWatchlistImage(imageUrl);
+        if (response.ok) {
+          setWatchlistImage(imageUrl);
+        }
+      } catch (error) {
+        throw Error("Failed to update watchlist image");
       }
-    } catch (error) {
-      throw Error("Failed to update watchlist image");
-    }
-  }
+    },
+    [watchlistId] // Function will be recreated only if watchlistId changes
+  );
 
   return (
     <div className="overflow-clip">
@@ -102,8 +107,8 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
-          <ErrorMessage title="Error" message="Please try again later" />
-        ) : !watchlist?.length ? (
+          <ErrorMessage title="Error" message={error} />
+        ) : watchlist?.length == 0 ? (
           <div className="flex justify-center items-center p-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -114,7 +119,7 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
               }}
             >
               <Link
-                href={"/genres/Adventure?id=12"}
+                href={"/genres/12?name=Adventure"}
                 className="flex gap-3 w-full h-full flex-col p-20 justify-center hover:shadow-[0_0_15px_theme(colors.foreground/50)] items-center border-foreground border rounded-lg transition-shadow duration-500 ease-in-out"
               >
                 <Plus className="w-8 h-8" />
@@ -152,7 +157,7 @@ function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {
               }}
             >
               <Link
-                href={"/genres/Adventure?id=12"}
+                href={"/genres/12?name=Adventure"}
                 className="flex gap-3 flex-col p-5 w-full h-full justify-center hover:shadow-[0_0_15px_theme(colors.foreground/50)] items-center border-foreground border rounded-lg transition-shadow duration-500 ease-in-out"
               >
                 <Plus className="w-8 h-8" />

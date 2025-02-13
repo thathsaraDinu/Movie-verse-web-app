@@ -6,6 +6,7 @@ import { ErrorMessage } from "../ui/error-message";
 import { Loader } from "lucide-react";
 import WatchlistSelectionCard from "./watchlist-selection-card";
 import { motion } from "framer-motion";
+import { useCallback } from "react";
 
 export default function WatchlistsSelect({
   addItemToWatchlist,
@@ -14,14 +15,17 @@ export default function WatchlistsSelect({
 }) {
   const { watchlists, loading, error, refetch } = useWatchlist();
 
-  const handleAddItem = async (watchlistId: string) => {
-    try {
-      await addItemToWatchlist(watchlistId);
-      await refetch();
-    } catch (error) {
-    } finally {
-    }
-  };
+  const handleAddItem = useCallback(
+    async (watchlistId: string) => {
+      try {
+        await addItemToWatchlist(watchlistId);
+        await refetch();
+      } catch (error) {
+      } finally {
+      }
+    },
+    [addItemToWatchlist, refetch] // Dependencies
+  );
 
   return (
     <div>

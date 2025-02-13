@@ -30,7 +30,7 @@ const GenreSelection = ({ genres }: { genres: Genre[] }) => {
             genres.map((genre) => (
               <Link
                 key={genre.id}
-                href={`/genres/${genre.name}?id=${genre.id}`}
+                href={`/genres/${genre.id}?name=${genre.name}`}
                 passHref
               >
                 <DropdownMenuItem className="cursor-pointer  hover:bg-accent focus:bg-accent w-full p-1 rounded-md">

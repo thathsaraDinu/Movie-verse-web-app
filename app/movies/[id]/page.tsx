@@ -14,7 +14,7 @@ async function MovieContent({ id }: { id: string }) {
     }
 
     return (
-      <div >
+      <div>
         <MovieDetails movie={movie} />
       </div>
     );
@@ -30,11 +30,17 @@ async function MovieContent({ id }: { id: string }) {
   }
 }
 
-export default function MoviePage({ params }: { params: { id: string } }) {
+export default async function MoviePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
   return (
     <section className="">
       <Suspense fallback={<LoadingSpinner />}>
-        <MovieContent id={params.id} />
+        <MovieContent id={id} />
       </Suspense>
     </section>
   );

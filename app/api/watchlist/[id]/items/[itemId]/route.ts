@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import {  getAuthSession } from "@/lib/auth";
+import { getAuthSession } from "@/lib/auth";
 import connectDB from "@/lib/db";
 import { WatchList } from "@/lib/models/watchlist";
+import mongoose from "mongoose";
 
 // Get item by id
 // export async function GET(
@@ -44,7 +45,7 @@ import { WatchList } from "@/lib/models/watchlist";
 // Update item by id
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string; itemId: string } }
+  { params }: { params: Promise<{ id: string; itemId: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -52,14 +53,16 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id, itemId } = await params;
+
     const { name, movieId, releaseDate, imageUrl } = await req.json();
 
     await connectDB();
     const watchlist = await WatchList.findOneAndUpdate(
       {
-        _id: params.id,
+        _id: new mongoose.Types.ObjectId(id),
         userId: session.user.id,
-        "items.movieId": params.itemId,
+        "items.movieId": itemId,
       },
       {
         $set: {
@@ -90,7 +93,7 @@ export async function PUT(
 // Remove item from watchlist
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string; itemId: string } }
+  { params }: { params: Promise<{ id: string; itemId: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -98,12 +101,14 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id, itemId } = await params;
+
     await connectDB();
     const watchlist = await WatchList.findOneAndUpdate(
-      { _id: params.id, userId: session.user.id },
+      { _id: new mongoose.Types.ObjectId(id), userId: session.user.id },
       {
         $pull: {
-          items: { movieId: params.itemId },
+          items: { movieId: itemId },
         },
       },
       { new: true }

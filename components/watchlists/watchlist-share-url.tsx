@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -59,74 +58,73 @@ export default function WatchlistShareUrl({
           <DialogHeader>
             <DialogTitle>Share Link</DialogTitle>
           </DialogHeader>
-          <DialogDescription>
-            <div className="space-y-4 flex flex-col">
-              {isLoading ? (
-                <div className="flex justify-center items-center">
-                  <Loader className="w-4 h-4 animate-spin" />
-                </div>
-              ) : (
-                <input
-                  type="text"
-                  disabled
-                  value={watchlistLink}
-                  placeholder="Watchlist shared link"
-                  className="p-2 border border-gray-300 rounded-md w-full"
-                />
-              )}
-              <Button
-                onClick={async () => await shareWatchlist(watchlistId)}
-                disabled={isLoading}
-              >
-                {isLoading ? "Generating Link..." : "Generate Link"}
-              </Button>
-              <div className="space-y-2">
-                <p>
-                  Share this link with your friends to give them access to this
-                  watchlist.
-                </p>
-                <p>
-                  <strong>Note:</strong> Anyone with this link can view the
-                  watchlist.
-                </p>
-                <p className="text-sm text-red-500">
-                  This link contains a snapshot of the watchlist when the link
-                  is generated. The link will be expired in 7 days.
-                </p>
-              </div>
 
-              <div className="flex gap-4 justify-end items-center">
-                <Button
-                  type="button"
-                  onClick={() => setIsDialogOpen(false)}
-                  className="bg-gray-300 text-gray-800"
-                >
-                  {isCopying ? (
-                    <Loader className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <span>Cancel</span>
-                  )}
-                </Button>
-                <Button
-                  className="bg-blue-500 text-white hover:bg-blue-600"
-                  disabled={isLoading || isCopying || watchlistLink === ""}
-                  onClick={async () => {
-                    try {
-                      setIsCopying(true);
-                      if (watchlistLink !== "")
-                        await navigator.clipboard.writeText(watchlistLink);
-                      toast.success("Link copied to clipboard");
-                    } catch (error) {
-                      toast.error("Failed to copy link");
-                    }
-                    setIsCopying(false);
-                  }}
-                >
-                  Copy Link
-                </Button>
+          <div className="space-y-4 flex flex-col text-sm">
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <Loader className="w-4 h-4 animate-spin" />
               </div>
+            ) : (
+              <input
+                type="text"
+                disabled
+                value={watchlistLink}
+                placeholder="Watchlist shared link"
+                className="p-2 border border-gray-300 rounded-md w-full"
+              />
+            )}
+            <Button
+              onClick={async () => await shareWatchlist(watchlistId)}
+              disabled={isLoading}
+            >
+              {isLoading ? "Generating Link..." : "Generate Link"}
+            </Button>
+            <div className="space-y-2">
+              <p>
+                Share this link with your friends to give them access to this
+                watchlist.
+              </p>
+              <p>
+                <strong>Note:</strong> Anyone with this link can view the
+                watchlist.
+              </p>
+              <p className="text-sm text-red-500">
+                This link contains a snapshot of the watchlist when the link is
+                generated. The link will be expired in 7 days.
+              </p>
             </div>
-          </DialogDescription>
+
+            <div className="flex gap-4 justify-end items-center">
+              <Button
+                type="button"
+                onClick={() => setIsDialogOpen(false)}
+                className="bg-gray-300 text-gray-800"
+              >
+                {isCopying ? (
+                  <Loader className="w-4 h-4 animate-spin" />
+                ) : (
+                  <span>Cancel</span>
+                )}
+              </Button>
+              <Button
+                className="bg-blue-500 text-white hover:bg-blue-600"
+                disabled={isLoading || isCopying || watchlistLink === ""}
+                onClick={async () => {
+                  try {
+                    setIsCopying(true);
+                    if (watchlistLink !== "")
+                      await navigator.clipboard.writeText(watchlistLink);
+                    toast.success("Link copied to clipboard");
+                  } catch (error) {
+                    toast.error("Failed to copy link");
+                  }
+                  setIsCopying(false);
+                }}
+              >
+                Copy Link
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

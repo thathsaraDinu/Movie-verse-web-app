@@ -95,7 +95,7 @@ export default function SignUp() {
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Creating account..." : "Sign Up"}
             </Button>
-            <p className="text-center text-sm text-gray-600">
+            <div className="text-center text-sm text-gray-600">
               Already have an account?{" "}
               <Link
                 href="/auth/signin"
@@ -103,7 +103,7 @@ export default function SignUp() {
               >
                 Sign in
               </Link>
-            </p>
+            </div>
           </form>
         </CardContent>
       </Card>

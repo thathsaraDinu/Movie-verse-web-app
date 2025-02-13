@@ -1,5 +1,4 @@
-import { fetchMovieCast, fetchMovieTrailers } from "@/lib/tmdb";
-import React, { useState } from "react";
+import { fetchMovieTrailers } from "@/lib/tmdb";
 import TrailerSelect from "./trailer-select";
 
 interface MovieCastProps {

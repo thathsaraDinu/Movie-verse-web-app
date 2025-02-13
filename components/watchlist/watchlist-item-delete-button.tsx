@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogHeader,
   DialogTrigger,
-  DialogClose,
 } from "../ui/dialog";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";

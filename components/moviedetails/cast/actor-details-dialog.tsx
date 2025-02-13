@@ -90,9 +90,9 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
-                    <p className="text-lg">
+                    <picture className="text-lg">
                       <strong>Known for:</strong> {actorDetails.known_for || ""}
-                    </p>
+                    </picture>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}

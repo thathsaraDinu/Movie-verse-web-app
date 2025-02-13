@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -71,11 +70,9 @@ export default function ActorCard({ cast }: ActorDetailsProps) {
                 <DialogHeader className="leading-none tracking-tight mb-0">
                   <DialogTitle>Actor Details</DialogTitle>
                 </DialogHeader>
-                <DialogDescription>
                   {selectedActorId && (
                     <ActorDetailsDialog actorId={selectedActorId} />
                   )}
-                </DialogDescription>
                 <DialogFooter className="flex justify-end gap-2"></DialogFooter>
               </DialogContent>
             </Dialog>

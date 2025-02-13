@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth";
 import connectDB from "@/lib/db";
@@ -6,7 +7,7 @@ import { WatchList } from "@/lib/models/watchlist";
 // Add item to watchlist
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -17,12 +18,18 @@ export async function POST(
     const { name, movieId, releaseDate, imageUrl, moviebackdrop_path } =
       await req.json();
 
+    const { id } = await params;
+
+    const movie_id = new mongoose.Types.ObjectId(id);
+
+    const userId = new mongoose.Types.ObjectId(session.user.id);
+
     await connectDB();
 
-     const existingWatchlist = await WatchList.findOne({
-      _id: params.id,
+    const existingWatchlist = await WatchList.findOne({
+      _id: movie_id,
       userId: session.user.id,
-      "items.movieId": movieId, 
+      "items.movieId": movieId,
     });
 
     if (existingWatchlist) {
@@ -34,7 +41,7 @@ export async function POST(
     // Update the watchlist by adding the new movie and conditionally updating imageUrl
     const updatedWatchlist = await WatchList.findOneAndUpdate(
       {
-        _id: params.id,
+        _id: movie_id,
         userId: session.user.id,
         "items.movieId": { $ne: movieId },
       },
@@ -45,7 +52,7 @@ export async function POST(
             then: imageUrl,
             else: "$imageUrl",
           },
-        }, 
+        },
         $push: {
           items: { name, movieId, releaseDate, imageUrl, moviebackdrop_path },
         },
@@ -62,7 +69,7 @@ export async function POST(
 
     return NextResponse.json(updatedWatchlist, { status: 200 });
   } catch (error) {
-    console.error(error); 
+    console.error(error);
     return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }
 }
@@ -70,7 +77,7 @@ export async function POST(
 // update watchlist image
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -79,10 +86,11 @@ export async function PUT(
     }
 
     const { imageUrl } = await req.json();
+    const { id } = await params;
 
     await connectDB();
     const watchlist = await WatchList.findOneAndUpdate(
-      { _id: params.id, userId: session.user.id },
+      { _id: new mongoose.Types.ObjectId(id), userId: session.user.id },
       {
         imageUrl,
       },
@@ -105,7 +113,7 @@ export async function PUT(
 // Get all items in watchlist
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -114,11 +122,13 @@ export async function GET(
     }
 
     await connectDB();
+
+    const { id } = await params;
+
     const watchlist = await WatchList.findOne({
-      _id: params.id,
+      _id: new mongoose.Types.ObjectId(id),
       userId: session.user.id,
     });
-
     if (!watchlist) {
       return NextResponse.json(
         { error: "Watchlist not found" },
@@ -127,7 +137,11 @@ export async function GET(
     }
 
     return NextResponse.json(watchlist);
-  } catch (error) {
+  } catch (error: any) {
+    console.log(`Error type: ${error.constructor.name}`);
+    if (error.name === "BSONError") {
+      return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+    }
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -135,7 +149,7 @@ export async function GET(
 // Delete watchlist
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getAuthSession();
@@ -143,9 +157,11 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id } = await params;
+
     await connectDB();
     const watchlist = await WatchList.findOneAndDelete({
-      _id: params.id,
+      _id: new mongoose.Types.ObjectId(id),
       userId: session.user.id,
     });
 

@@ -25,22 +25,24 @@ async function SearchResults({ query }: { query: string }) {
   }
 }
 
-export default function SearchPage({
+export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q: string }>;
 }) {
+
+  const { q } = await searchParams;
   return (
     <section className="pagesection flex flex-col justify-start gap-10">
       <SearchBar />
-      {!searchParams.q ? (
+      {!q ? (
         <ErrorMessage
           title="No search query"
           message="Please enter a search term to find movies."
         />
       ) : (
         <Suspense fallback={<LoadingSpinner />}>
-          <SearchResults query={searchParams.q ?? ""} />
+          <SearchResults query={q ?? ""} />
         </Suspense>
       )}
     </section>

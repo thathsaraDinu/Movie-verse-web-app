@@ -4,12 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 import WatchlistItemDeleteButton from "./watchlist-item-delete-button";
 import { Card } from "@/components/ui/card";
 import { getImageUrl } from "@/lib/tmdb";
 import { Calendar, Loader } from "lucide-react";
-import { watch } from "node:fs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 

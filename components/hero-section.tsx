@@ -1,7 +1,7 @@
 "use client";
+
 import { SearchBar } from "./search-bar";
 import Image from "next/image";
-import { getAuthSession } from "@/lib/auth";
 import { Suspense } from "react";
 import { motion } from "framer-motion";
 

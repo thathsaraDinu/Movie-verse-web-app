@@ -36,20 +36,22 @@ async function GenreMovies({ id, name }: { id: string; name: string }) {
   }
 }
 
-export default function GenrePage({
+export default async function GenrePage({
   params,
   searchParams,
 }: {
-  params: { genre?: string };
-  searchParams: { id: string };
+  params: Promise<{ genre: string }>;
+  searchParams: Promise<{ name: string }>;
 }) {
-  const decodedGenre = params.genre ? decodeURIComponent(params.genre) : ""; // Decode spaces
-  const decodedId = searchParams.id ? decodeURIComponent(searchParams.id) : ""; // Decode spaces if needed
+  const { genre } =  await params;
+  const { name } =  await searchParams;
+
+  const decodedName = name ? decodeURIComponent(name) : ""; // Decode spaces if needed
 
   return (
     <section className="pagesection">
       <Suspense fallback={<LoadingSpinner />}>
-        <GenreMovies id={decodedId} name={decodedGenre} />
+        <GenreMovies id={genre} name={decodedName} />
       </Suspense>
     </section>
   );

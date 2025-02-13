@@ -7,9 +7,9 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const actorId = params.id;
+    const { id } = await params;
 
-  if (!actorId) {
+  if (!id) {
     return NextResponse.json(
       { error: "Actor ID is required" },
       { status: 400 }
@@ -19,13 +19,13 @@ export async function GET(
   try {
     // Fetch actor details
     const actorRes = await fetch(
-      `${BASE_URL}/person/${actorId}?api_key=${TMDB_API_KEY}&language=en-US`
+      `${BASE_URL}/person/${id}?api_key=${TMDB_API_KEY}&language=en-US`
     );
     const actorData = await actorRes.json();
 
     // Fetch actor movie credits
     const creditsRes = await fetch(
-      `${BASE_URL}/person/${actorId}/movie_credits?api_key=${TMDB_API_KEY}&language=en-US`
+      `${BASE_URL}/person/${id}/movie_credits?api_key=${TMDB_API_KEY}&language=en-US`
     );
     const creditsData = await creditsRes.json();
 

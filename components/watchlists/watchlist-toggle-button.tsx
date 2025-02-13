@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "../ui/button";
 import { Heart, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
@@ -44,30 +43,33 @@ export default function WatchlistToggleButton({
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  async function addItemToWatchlist(watchlistId: string) {
-    try {
-      const response = await fetch(`/api/watchlist/${watchlistId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          movieId,
-          name,
-          releaseDate,
-          imageUrl,
-          moviebackdrop_path,
-        } as AddItemToWatchlistParams),
-      });
+  const addItemToWatchlist = useCallback(
+    async (watchlistId: string) => {
+      try {
+        const response = await fetch(`/api/watchlist/${watchlistId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            movieId,
+            name,
+            releaseDate,
+            imageUrl,
+            moviebackdrop_path,
+          } as AddItemToWatchlistParams),
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        toast.error(errorData.error);
-      } else {
-        toast.success("Item added to watchlist");
+        if (!response.ok) {
+          const errorData = await response.json();
+          toast.error(errorData.error);
+        } else {
+          toast.success("Item added to watchlist");
+        }
+      } catch (error) {
+        toast.error("Failed to add item to watchlist");
       }
-    } catch (error) {
-      toast.error("Failed to add item to watchlist");
-    }
-  }
+    },
+    [movieId, name, releaseDate, imageUrl, moviebackdrop_path] // Dependencies
+  );
 
   return (
     <motion.div
@@ -104,9 +106,7 @@ export default function WatchlistToggleButton({
               <DialogHeader>
                 <DialogTitle>Select Watchlist</DialogTitle>
               </DialogHeader>
-              <DialogDescription>
-                <WatchlistsSelect addItemToWatchlist={addItemToWatchlist} />
-              </DialogDescription>
+              <WatchlistsSelect addItemToWatchlist={addItemToWatchlist} />
             </DialogContent>
           </Dialog>
         )}
