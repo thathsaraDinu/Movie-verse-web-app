@@ -22,7 +22,6 @@ export async function POST(req: Request) {
     let existingWatchlist = await WatchList.findOne({
       name: snapshot.name,
       items: snapshot.items,
-      userId: session.user.id,
     });
 
     if (existingWatchlist) {
