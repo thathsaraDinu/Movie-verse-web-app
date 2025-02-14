@@ -22,12 +22,13 @@ export async function POST(req: Request) {
     let existingWatchlist = await WatchList.findOne({
       name: snapshot.name,
       items: snapshot.items,
+      isSnapshot: false,
     });
 
     if (existingWatchlist) {
       return NextResponse.json(
         {
-          error: "WatchList already exists!",
+          error: "Watchlist already exists!",
         },
         { status: 400 }
       );

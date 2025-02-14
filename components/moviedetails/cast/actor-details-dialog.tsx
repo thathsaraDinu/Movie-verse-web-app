@@ -65,7 +65,7 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
                   viewport={{ once: true }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="md:w-1/3 h-[500px] object-cover rounded-lg"
+                  className="md:w-1/3 object-cover rounded-lg"
                 >
                   <Image
                     src={`${actorDetails.profile_image}`}
