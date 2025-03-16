@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${raleway.variable} ${inter.className} antialiased`}>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
+      <body className={`${raleway.variable} ${inter.className} antialiased overflow-x-hidden`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
