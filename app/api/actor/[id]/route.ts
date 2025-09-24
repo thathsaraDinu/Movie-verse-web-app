@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  sanitizeObject,
+  containsPII,
+  logPIIDetection,
+} from "@/lib/utils/sanitize";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
@@ -29,17 +34,35 @@ export async function GET(
     );
     const creditsData = await creditsRes.json();
 
+    // Sanitize both responses
+    const sanitizedActorData = sanitizeObject(actorData, true);
+    const sanitizedCreditsData = sanitizeObject(creditsData, true);
+
+    // Log PII detection for monitoring
+    if (process.env.NODE_ENV !== "production") {
+      if (containsPII(JSON.stringify(actorData))) {
+        logPIIDetection("TMDB-actor", `actor-${id}`, JSON.stringify(actorData));
+      }
+      if (containsPII(JSON.stringify(creditsData))) {
+        logPIIDetection(
+          "TMDB-credits",
+          `actor-${id}`,
+          JSON.stringify(creditsData)
+        );
+      }
+    }
+
     // Return combined response
     return NextResponse.json({
-      id: actorData.id,
-      name: actorData.name,
-      birthday: actorData.birthday,
-      place_of_birth: actorData.place_of_birth,
-      biography: actorData.biography,
-      profile_image: `https://image.tmdb.org/t/p/w500${actorData.profile_path}`,
-      popularity: actorData.popularity,
-      known_for: actorData.known_for_department,
-      movies: creditsData.cast.map((movie: any) => ({
+      id: sanitizedActorData.id,
+      name: sanitizedActorData.name,
+      birthday: sanitizedActorData.birthday,
+      place_of_birth: sanitizedActorData.place_of_birth,
+      biography: sanitizedActorData.biography,
+      profile_image: `https://image.tmdb.org/t/p/w500${sanitizedActorData.profile_path}`,
+      popularity: sanitizedActorData.popularity,
+      known_for: sanitizedActorData.known_for_department,
+      movies: sanitizedCreditsData.cast.map((movie: any) => ({
         id: movie.id,
         title: movie.title,
         character: movie.character,

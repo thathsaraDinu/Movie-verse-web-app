@@ -1,3 +1,5 @@
+import { sanitizeObject, containsPII, logPIIDetection } from "./utils/sanitize";
+
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
@@ -88,7 +90,26 @@ async function fetchFromTMDB<T>(endpoint: string): Promise<T> {
       throw new Error(`TMDB API error: ${res.status}`);
     }
 
-    return res.json();
+    const data = await res.json();
+
+    // Sanitize the response data to remove any PII
+    const sanitizedData = sanitizeObject(data, true);
+
+    // Log PII detection for monitoring
+    if (process.env.NODE_ENV !== "production") {
+      const checkForPII = (obj: any, path: string = "") => {
+        if (typeof obj === "string" && containsPII(obj)) {
+          logPIIDetection("TMDB-API", path, obj);
+        } else if (obj && typeof obj === "object") {
+          Object.keys(obj).forEach((key) => {
+            checkForPII(obj[key], path ? `${path}.${key}` : key);
+          });
+        }
+      };
+      checkForPII(data);
+    }
+
+    return sanitizedData as T;
   } catch (error) {
     throw new Error("Failed to fetch data from TMDB");
   }
@@ -196,7 +217,25 @@ export const fetchMovieTrailers = async (movieId: number) => {
       throw new Error("Failed to fetch movie trailers");
     }
     const data = await response.json();
-    return data.results.filter((video: any) => video.type === "Trailer");
+
+    // Sanitize the response data
+    const sanitizedData = sanitizeObject(data, true);
+
+    // Log PII detection for monitoring
+    if (
+      process.env.NODE_ENV !== "production" &&
+      containsPII(JSON.stringify(data))
+    ) {
+      logPIIDetection(
+        "TMDB-trailers",
+        `movie-${movieId}`,
+        JSON.stringify(data)
+      );
+    }
+
+    return sanitizedData.results.filter(
+      (video: any) => video.type === "Trailer"
+    );
   } catch (error) {
     console.error("Error in fetchMovieTrailers:", error);
     throw error;
@@ -212,7 +251,19 @@ export const fetchMovieCast = async (movieId: number) => {
       throw new Error("Failed to fetch movie cast");
     }
     const data = await response.json();
-    return data.cast.slice(0, 12);
+
+    // Sanitize the response data
+    const sanitizedData = sanitizeObject(data, true);
+
+    // Log PII detection for monitoring
+    if (
+      process.env.NODE_ENV !== "production" &&
+      containsPII(JSON.stringify(data))
+    ) {
+      logPIIDetection("TMDB-cast", `movie-${movieId}`, JSON.stringify(data));
+    }
+
+    return sanitizedData.cast.slice(0, 12);
   } catch (error) {
     console.error("Error in fetchMovieCast:", error);
     throw error;
