@@ -8,6 +8,20 @@ export default withAuth(
     const isUser = token?.role === "user";
     const path = req.nextUrl.pathname;
 
+    // Create response with security headers
+    const response = NextResponse.next();
+
+    // Add security headers to prevent data leakage
+    response.headers.set("X-Content-Type-Options", "nosniff");
+    response.headers.set("X-Frame-Options", "DENY");
+    response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    response.headers.set(
+      "Cache-Control",
+      "private, no-cache, no-store, must-revalidate"
+    );
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
+
     // Protect admin routes
     if (path.startsWith("/admin") && !isAdmin) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
@@ -18,7 +32,7 @@ export default withAuth(
       return NextResponse.redirect(new URL("/auth/signin", req.url));
     }
 
-    return NextResponse.next();
+    return response;
   },
   {
     callbacks: {
@@ -28,5 +42,10 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/admin/:path*",
+    "/api/:path*",
+    "/movies/:path*",
+  ],
 };
