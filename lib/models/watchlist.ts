@@ -21,6 +21,11 @@ const watchlistItemSchema = new mongoose.Schema({
   },
 });
 
+// Define the required function separately
+const userIdRequired = function (this: any) {
+  return !this.isSnapshot; // Only required if it's NOT a snapshot
+};
+
 const watchlistSchema = new mongoose.Schema(
   {
     name: {
@@ -30,9 +35,7 @@ const watchlistSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: function (this: any) {
-        return !this.isSnapshot; // Only required if it's NOT a snapshot
-      },
+      required: userIdRequired, // Use the predefined function
     },
     imageUrl: {
       type: String,
@@ -46,7 +49,6 @@ const watchlistSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 
 export const WatchList =
   mongoose.models.WatchList || mongoose.model("WatchList", watchlistSchema);
