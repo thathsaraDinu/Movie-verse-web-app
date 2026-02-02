@@ -23,9 +23,10 @@ const watchlistItemSchema = new mongoose.Schema({
 
 // Define the required function separately
 const userIdRequired = function (this: any) {
-  return !this.isSnapshot; // Only required if it's NOT a snapshot
+  return !this.isSnapshot;
 };
 
+// Use type assertion to bypass TypeScript's complex type inference
 const watchlistSchema = new mongoose.Schema(
   {
     name: {
@@ -35,20 +36,20 @@ const watchlistSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: userIdRequired, // Use the predefined function
+      required: userIdRequired,
     },
     imageUrl: {
       type: String,
       default: "",
     },
     items: [watchlistItemSchema],
-    isShared: { type: Boolean, default: false }, // If the watchlist is shared
-    isSnapshot: { type: Boolean, default: false }, // If it's a frozen snapshot
-    shareToken: { type: String, unique: true, sparse: true }, // Token for sharing, only for snapshots
-    expiresAt: { type: Date, default: null }, // ⬅️ New field for TTL
+    isShared: { type: Boolean, default: false },
+    isSnapshot: { type: Boolean, default: false },
+    shareToken: { type: String, unique: true, sparse: true },
+    expiresAt: { type: Date, default: null },
   },
   { timestamps: true }
-);
+) as any; // ← ADD THIS TYPE ASSERTION
 
 export const WatchList =
   mongoose.models.WatchList || mongoose.model("WatchList", watchlistSchema);
