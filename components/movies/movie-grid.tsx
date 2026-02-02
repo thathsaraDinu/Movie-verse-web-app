@@ -52,7 +52,7 @@ export function MovieGrid({ movies, title }: MovieGridProps) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.05 * index }}
+            transition={{ duration: 0.5 }}
           >
             <MovieCard key={movie.id} movie={movie} />
           </motion.div>

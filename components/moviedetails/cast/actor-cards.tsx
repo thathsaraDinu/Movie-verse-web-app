@@ -18,7 +18,7 @@ interface ActorDetailsProps {
   cast: any;
 }
 
-export default function ActorCard({ cast }: ActorDetailsProps) {
+export default function ActorCards({ cast }: ActorDetailsProps) {
   const [selectedActorId, setSelectedActorId] = useState<string | null>(null);
 
   return (
@@ -47,7 +47,7 @@ export default function ActorCard({ cast }: ActorDetailsProps) {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.05 * index }}
+                  transition={{ duration: 0.5 }}
                 >
                   <div className="bg-card rounded-lg overflow-hidden border h-full group">
                     <div className="text-center overflow-clip rounded-t-lg ">
