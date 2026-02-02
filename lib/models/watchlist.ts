@@ -1,55 +1,43 @@
 import mongoose from "mongoose";
 
+// 1. Create a simple watchlist item schema without complex options
 const watchlistItemSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  movieId: {
-    type: String,
-    required: true,
-  },
-  releaseDate: {
-    type: Date,
-    required: true,
-  },
+  name: String,
+  movieId: String,
+  releaseDate: Date,
   imageUrl: String,
   moviebackdrop_path: String,
-  addedAt: {
-    type: Date,
-    default: Date.now,
-  },
+  addedAt: { type: Date, default: Date.now }
 });
 
-// Define the required function separately
-const userIdRequired = function (this: any) {
-  return !this.isSnapshot;
+// 2. Create the main schema with minimal configuration
+const schemaDefinition = {
+  name: { type: String, required: true },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+    // Remove the complex required function for now
+  },
+  imageUrl: { type: String, default: "" },
+  items: [watchlistItemSchema],
+  isShared: { type: Boolean, default: false },
+  isSnapshot: { type: Boolean, default: false },
+  shareToken: { type: String },
+  expiresAt: { type: Date }
 };
 
-// Use type assertion to bypass TypeScript's complex type inference
-const watchlistSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: userIdRequired,
-    },
-    imageUrl: {
-      type: String,
-      default: "",
-    },
-    items: [watchlistItemSchema],
-    isShared: { type: Boolean, default: false },
-    isSnapshot: { type: Boolean, default: false },
-    shareToken: { type: String, unique: true, sparse: true },
-    expiresAt: { type: Date, default: null },
-  },
-  { timestamps: true }
-) as any; // ← ADD THIS TYPE ASSERTION
+// 3. Create the schema
+const watchlistSchema = new mongoose.Schema(schemaDefinition, {
+  timestamps: true
+});
+
+// 4. Add custom validation AFTER schema creation
+watchlistSchema.path('userId').validate(function(this: any) {
+  return !this.isSnapshot;
+}, 'User ID is required for non-snapshot watchlists');
+
+// 5. Add unique index separately if needed
+watchlistSchema.index({ shareToken: 1 }, { unique: true, sparse: true });
 
 export const WatchList =
   mongoose.models.WatchList || mongoose.model("WatchList", watchlistSchema);
