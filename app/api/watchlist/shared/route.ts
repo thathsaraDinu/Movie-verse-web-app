@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import { WatchList } from "@/lib/models/watchlist";
+import { Watchlist } from "@/lib/models/watchlist";
 import { v4 as uuidv4 } from "uuid";
 import { getAuthSession } from "@/lib/auth";
 
@@ -14,16 +14,16 @@ export async function POST(req: Request) {
     await connectDB(); // Connect to database
     const { watchlistId } = await req.json(); // Get watchlist ID from request
 
-    const originalWatchlist = await WatchList.findById(watchlistId);
+    const originalWatchlist = await Watchlist.findById(watchlistId);
     if (!originalWatchlist) {
       return NextResponse.json(
-        { error: "WatchList not found" },
+        { error: "Watchlist not found" },
         { status: 404 }
       );
     }
 
     // Check if a snapshot already exists
-    let existingSnapshot = await WatchList.findOne({
+    let existingSnapshot = await Watchlist.findOne({
       isSnapshot: true,
       shareToken: { $exists: true },
       name: originalWatchlist.name,
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     });
 
     if (existingSnapshot) {
-      await WatchList.updateOne(
+      await Watchlist.updateOne(
         { _id: existingSnapshot._id },
         {
           $set: {
@@ -41,13 +41,13 @@ export async function POST(req: Request) {
         }
       );
       return NextResponse.json({
-        message: "WatchList already shared!",
+        message: "Watchlist already shared!",
         shareUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}/watchlist/shared/${existingSnapshot.shareToken}`,
       });
     }
 
     // Create a new snapshot only if none exist
-    const snapshotWatchlist = new WatchList({
+    const snapshotWatchlist = new Watchlist({
       name: originalWatchlist.name,
       userId: null, // No owner, making it a shared snapshot
       items: originalWatchlist.items,
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     await snapshotWatchlist.save();
 
     return NextResponse.json({
-      message: "WatchList shared successfully!",
+      message: "Watchlist shared successfully!",
       shareUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}/watchlist/shared/${snapshotWatchlist.shareToken}`,
     });
   } catch (error) {

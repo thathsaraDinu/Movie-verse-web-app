@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import { WatchList } from "@/lib/models/watchlist";
+import { Watchlist } from "@/lib/models/watchlist";
 import { getAuthSession } from "@/lib/auth";
 
 export async function POST(req: Request) {
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
     await connectDB();
     const { shareToken } = await req.json();
-    const snapshot = await WatchList.findOne({ shareToken, isSnapshot: true });
+    const snapshot = await Watchlist.findOne({ shareToken, isSnapshot: true });
     if (!snapshot) {
       return NextResponse.json(
         { error: "Shared watchlist not found or expired" },
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       );
     }
 
-    let existingWatchlist = await WatchList.findOne({
+    let existingWatchlist = await Watchlist.findOne({
       name: snapshot.name,
       items: snapshot.items,
       isSnapshot: false,
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     }
 
     // Create a new personal copy for the user
-    const newWatchlist = new WatchList({
+    const newWatchlist = new Watchlist({
       name: snapshot.name,
       userId: session.user.id,
       imageUrl: snapshot.imageUrl,
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
     await newWatchlist.save();
 
-    return NextResponse.json({ message: "WatchList saved successfully!" });
+    return NextResponse.json({ message: "Watchlist saved successfully!" });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

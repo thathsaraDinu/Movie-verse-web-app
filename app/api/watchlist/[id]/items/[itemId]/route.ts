@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth";
 import connectDB from "@/lib/db";
-import { WatchList } from "@/lib/models/watchlist";
+import { Watchlist } from "@/lib/models/watchlist";
 import mongoose from "mongoose";
 
 // Get item by id
@@ -16,7 +16,7 @@ import mongoose from "mongoose";
 //     }
 
 //     await connectDB();
-//     const watchlist = await WatchList.findOne({
+//     const watchlist = await Watchlist.findOne({
 //       _id: params.id,
 //       userId: session.user.id,
 //     });
@@ -58,7 +58,7 @@ export async function PUT(
     const { name, movieId, releaseDate, imageUrl } = await req.json();
 
     await connectDB();
-    const watchlist = await WatchList.findOneAndUpdate(
+    const watchlist = await Watchlist.findOneAndUpdate(
       {
         _id: new mongoose.Types.ObjectId(id),
         userId: session.user.id,
@@ -104,7 +104,7 @@ export async function DELETE(
     const { id, itemId } = await params;
 
     await connectDB();
-    const watchlist = await WatchList.findOneAndUpdate(
+    const watchlist = await Watchlist.findOneAndUpdate(
       { _id: new mongoose.Types.ObjectId(id), userId: session.user.id },
       {
         $pull: {

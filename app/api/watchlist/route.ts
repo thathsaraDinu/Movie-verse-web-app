@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import { WatchList } from "@/lib/models/watchlist";
+import { Watchlist } from "@/lib/models/watchlist";
 import { getAuthSession } from "@/lib/auth";
 
 // Create a new watchlist
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     }
 
     await connectDB();
-    const watchlist = await WatchList.create({
+    const watchlist = await Watchlist.create({
       name,
       userId: session.user.id,
       items: [],
@@ -38,7 +38,7 @@ export async function GET() {
     }
 
     await connectDB();
-    const watchlists = await WatchList.find({ userId: session.user.id });
+    const watchlists = await Watchlist.find({ userId: session.user.id });
     return NextResponse.json(watchlists);
   } catch (error) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });

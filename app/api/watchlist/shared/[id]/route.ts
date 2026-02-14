@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import { WatchList } from "@/lib/models/watchlist";
+import { Watchlist } from "@/lib/models/watchlist";
 
 // Get watchlist id by share token
 export async function GET(
@@ -11,7 +11,7 @@ export async function GET(
     const { id } = await params;
 
     await connectDB();
-    const watchlist = await WatchList.findOne({
+    const watchlist = await Watchlist.findOne({
       shareToken: id as string,
       isSnapshot: true,
     });
