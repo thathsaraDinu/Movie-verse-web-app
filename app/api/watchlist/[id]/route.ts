@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth";
 import connectDB from "@/lib/db";
-import { WatchList } from "@/lib/models/watchlist";
+import { Watchlist } from "@/lib/models/watchlist";
 
 // Add item to watchlist
 export async function POST(
@@ -24,7 +24,7 @@ export async function POST(
 
     await connectDB();
 
-    const existingWatchlist = await WatchList.findOne({
+    const existingWatchlist = await Watchlist.findOne({
       _id: movie_id,
       userId: session.user.id,
       "items.movieId": movieId,
@@ -37,7 +37,7 @@ export async function POST(
       );
     }
     // Update the watchlist by adding the new movie and conditionally updating imageUrl
-    const updatedWatchlist = await WatchList.findOneAndUpdate(
+    const updatedWatchlist = await Watchlist.findOneAndUpdate(
       {
         _id: movie_id,
         userId: session.user.id,
@@ -87,7 +87,7 @@ export async function PUT(
     const { id } = await params;
 
     await connectDB();
-    const watchlist = await WatchList.findOneAndUpdate(
+    const watchlist = await Watchlist.findOneAndUpdate(
       { _id: new mongoose.Types.ObjectId(id), userId: session.user.id },
       {
         imageUrl,
@@ -123,7 +123,7 @@ export async function GET(
 
     const { id } = await params;
 
-    const watchlist = await WatchList.findOne({
+    const watchlist = await Watchlist.findOne({
       _id: new mongoose.Types.ObjectId(id),
       userId: session.user.id,
     });
@@ -158,7 +158,7 @@ export async function DELETE(
     const { id } = await params;
 
     await connectDB();
-    const watchlist = await WatchList.findOneAndDelete({
+    const watchlist = await Watchlist.findOneAndDelete({
       _id: new mongoose.Types.ObjectId(id),
       userId: session.user.id,
     });
