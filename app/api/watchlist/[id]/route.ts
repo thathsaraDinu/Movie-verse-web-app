@@ -26,7 +26,7 @@ export async function POST(
 
     const existingWatchlist = await Watchlist.findOne({
       _id: movie_id,
-      userId: session.user.id,
+      user: session.user.id,
       "items.movieId": movieId,
     });
 
@@ -40,7 +40,7 @@ export async function POST(
     const updatedWatchlist = await Watchlist.findOneAndUpdate(
       {
         _id: movie_id,
-        userId: session.user.id,
+        user: session.user.id,
         "items.movieId": { $ne: movieId },
       },
       {
@@ -88,7 +88,7 @@ export async function PUT(
 
     await connectDB();
     const watchlist = await Watchlist.findOneAndUpdate(
-      { _id: new mongoose.Types.ObjectId(id), userId: session.user.id },
+      { _id: new mongoose.Types.ObjectId(id), user: session.user.id },
       {
         imageUrl,
       },
@@ -125,7 +125,7 @@ export async function GET(
 
     const watchlist = await Watchlist.findOne({
       _id: new mongoose.Types.ObjectId(id),
-      userId: session.user.id,
+      user: session.user.id,
     });
     if (!watchlist) {
       return NextResponse.json(
@@ -160,7 +160,7 @@ export async function DELETE(
     await connectDB();
     const watchlist = await Watchlist.findOneAndDelete({
       _id: new mongoose.Types.ObjectId(id),
-      userId: session.user.id,
+      user: session.user.id,
     });
 
     if (!watchlist) {

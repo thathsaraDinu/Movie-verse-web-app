@@ -16,11 +16,13 @@ const userSchema = new mongoose.Schema<IUser>(
       required: [true, "Email is required"],
       unique: true,
       lowercase: true,
+      trim: true,
     },
     password: {
       type: String,
       required: [true, "Password is required"],
-      minlength: 6,
+      minlength: 8,
+      select: false,
     },
     name: {
       type: String,
@@ -39,7 +41,6 @@ const userSchema = new mongoose.Schema<IUser>(
 
 userSchema.pre("save", async function (next) {
   try {
-    // Capitalize the first letter of the names
     if (this.isModified("name") && typeof this.name === "string") {
       this.name = this.name
         .split(" ")
@@ -49,9 +50,8 @@ userSchema.pre("save", async function (next) {
         .join(" ");
     }
 
-    // Hash the password
     if (this.isModified("password")) {
-      const salt = await bcrypt.genSalt(10);
+      const salt = await bcrypt.genSalt(12);
       this.password = await bcrypt.hash(this.password, salt);
     }
 

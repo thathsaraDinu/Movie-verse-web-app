@@ -30,6 +30,8 @@ async function MovieContent({ id }: { id: string }) {
   }
 }
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function MoviePage({
   params,
 }: {

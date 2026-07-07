@@ -1,27 +1,25 @@
 "use client";
+import { memo, useEffect, useMemo } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { useEffect, useMemo } from "react";
-import { loadSlim } from "@tsparticles/slim"; // Install this package for slim configuration
+import { loadSlim } from "@tsparticles/slim";
 import { useTheme } from "next-themes";
 
 interface ParticlesComponentProps {
   id: string;
 }
 
-const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
-  const { theme } = useTheme(); // Access the current theme
+const ParticlesComponent = memo(function ParticlesComponent(props: ParticlesComponentProps): JSX.Element {
+  const { theme } = useTheme();
 
-  // Initialize particles engine once
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     }).then(() => {});
   }, []);
 
-  // Dynamic particle options based on theme
   const options = useMemo(
     () => ({
-      fpsLimit: 120,
+      fpsLimit: 30, // Reduced from 60 to save CPU
       interactivity: {
         events: {
           onClick: {
@@ -41,9 +39,8 @@ const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
       },
       particles: {
         color: {
-          value: theme === "dark" ? "#A9A9A9" : "#333333", // Adjust particle colors based on theme
+          value: theme === "dark" ? "#A9A9A9" : "#333333",
         },
-
         move: {
           direction: "none" as const,
           enable: true,
@@ -51,28 +48,28 @@ const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
             default: "bounce" as const,
           },
           random: true,
-          speed: 0.2,
+          speed: 0.1, // Reduced from 0.2 to save CPU
           straight: false,
         },
         number: {
           density: {
             enable: true,
           },
-          value: 150,
+          value: 40, // Reduced from 80 to save CPU
         },
         opacity: {
-          value: 1.0,
+          value: 0.3, // Reduced from 0.5
         },
         shape: {
           type: "circle",
         },
         size: {
-          value: { min: 1, max: 3 },
+          value: { min: 1, max: 2 },
         },
       },
       detectRetina: true,
     }),
-    [theme] // Recompute options when the theme changes
+    [theme]
   );
 
   return (
@@ -82,6 +79,6 @@ const ParticlesComponent = (props: ParticlesComponentProps): JSX.Element => {
       options={options}
     />
   );
-};
+});
 
 export default ParticlesComponent;

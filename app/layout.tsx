@@ -48,7 +48,7 @@ export default function RootLayout({
               <ParticlesComponent id="particles" />
             </div>
             <Toaster position="bottom-center" richColors />
-            <div className="z-10 min-h-screen flex flex-col justify- bg-">
+            <div className="z-10 min-h-screen flex flex-col">
               <Navbar />
               <div>
                 <Suspense fallback={<LoadingSpinner />}>

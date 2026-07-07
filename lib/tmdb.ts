@@ -76,11 +76,12 @@ async function fetchFromTMDB<T>(endpoint: string): Promise<T> {
     if (!TMDB_API_KEY) {
       throw new Error("TMDB API key is not configured");
     }
-    // Ensure the URL is correctly formed
     const url = `${BASE_URL}${endpoint}${
       endpoint.includes("?") ? "&" : "?"
     }api_key=${TMDB_API_KEY}`;
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      next: { revalidate: 1800 }, // Cache for 30 minutes
+    });
     if (!res.ok) {
       if (res.status === 404) {
         return null as T;
@@ -106,7 +107,7 @@ export async function getGenres(): Promise<Genre[]> {
 export async function getTrendingMovies(): Promise<Movie[]> {
   try {
     const data = await fetchFromTMDB<MovieResponse>(
-      `/discover/movie?include_adult=false?language=en-US&page=1&sort_by=popularity.desc&&release_date.gte=${formatted_lastYear}&release_date.lte=${start_date}`
+      `/discover/movie?include_adult=false&language=en-US&page=1&sort_by=popularity.desc&release_date.gte=${formatted_lastYear}&release_date.lte=${formatted_start_date}`
     );
     return data?.results;
   } catch (error) {
@@ -127,9 +128,9 @@ export async function getUpcomingMovies(): Promise<Movie[]> {
 export async function getSimilarMovies(id: number): Promise<Movie[]> {
   try {
     const data = await fetchFromTMDB<MovieResponse>(
-      `/movie/${id}/similar?language=en-US?include_adult=false&page=1&sort_by=popularity.desc`
+      `/movie/${id}/similar?language=en-US&include_adult=false&page=1&sort_by=popularity.desc`
     );
-    return data?.results || []; // Ensure it returns an empty array if results are undefined
+    return data?.results || [];
   } catch (error) {
     console.error("Error fetching similar movies:", error);
     throw new Error("Failed to fetch similar movies");

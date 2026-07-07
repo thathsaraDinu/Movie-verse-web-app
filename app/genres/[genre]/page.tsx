@@ -36,6 +36,8 @@ async function GenreMovies({ id, name }: { id: string; name: string }) {
   }
 }
 
+export const revalidate = 1800; // Revalidate every 30 minutes
+
 export default async function GenrePage({
   params,
   searchParams,

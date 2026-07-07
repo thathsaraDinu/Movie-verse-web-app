@@ -2,7 +2,6 @@
 
 import { SearchBar } from "./search-bar";
 import Image from "next/image";
-import { Suspense } from "react";
 import { motion } from "framer-motion";
 
 const UserName = ({ userName }: { userName: string | null }) => {
@@ -32,7 +31,7 @@ export function HeroSection({ userName }: { userName: string | null }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
             >
               <div className="flex justify-center mb-6">
                 <Image
@@ -52,9 +51,7 @@ export function HeroSection({ userName }: { userName: string | null }) {
             >
               <div className="text-4xl font-bold tracking-tight sm:text-6xl mb-6 text-gray-800 dark:text-white font-raleway">
                 Welcome
-                <Suspense fallback={<span></span>}>
-                  <UserName userName={userName} />
-                </Suspense>
+                <UserName userName={userName} />
               </div>
             </motion.div>
             <motion.div

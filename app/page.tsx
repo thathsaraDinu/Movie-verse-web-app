@@ -6,6 +6,8 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { HeroSection } from "@/components/hero-section";
 import { getAuthSession } from "@/lib/auth";
 
+export const revalidate = 1800; // Revalidate every 30 minutes
+
 async function MovieData() {
   try {
     const [trendingMovies, upcomingMovies] = await Promise.all([

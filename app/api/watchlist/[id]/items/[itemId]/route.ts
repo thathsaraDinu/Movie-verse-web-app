@@ -4,44 +4,6 @@ import connectDB from "@/lib/db";
 import { Watchlist } from "@/lib/models/watchlist";
 import mongoose from "mongoose";
 
-// Get item by id
-// export async function GET(
-//   req: Request,
-//   { params }: { params: { id: string; itemId: string } }
-// ) {
-//   try {
-//     const session = await getAuthSession();
-//     if (!session) {
-//       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-//     }
-
-//     await connectDB();
-//     const watchlist = await Watchlist.findOne({
-//       _id: params.id,
-//       userId: session.user.id,
-//     });
-
-//     if (!watchlist) {
-//       return NextResponse.json(
-//         { error: "Watchlist not found" },
-//         { status: 404 }
-//       );
-//     }
-
-//     const item = watchlist.items.find(
-//       (item) => item.movieId === params.itemId
-//     );
-
-//     if (!item) {
-//       return NextResponse.json({ error: "Item not found" }, { status: 404 });
-//     }
-
-//     return NextResponse.json(item);
-//   } catch (error) {
-//     return NextResponse.json({ error: "Server error" }, { status: 500 });
-//   }
-// }
-
 // Update item by id
 export async function PUT(
   req: Request,
@@ -61,7 +23,7 @@ export async function PUT(
     const watchlist = await Watchlist.findOneAndUpdate(
       {
         _id: new mongoose.Types.ObjectId(id),
-        userId: session.user.id,
+        user: session.user.id,
         "items.movieId": itemId,
       },
       {
@@ -105,7 +67,7 @@ export async function DELETE(
 
     await connectDB();
     const watchlist = await Watchlist.findOneAndUpdate(
-      { _id: new mongoose.Types.ObjectId(id), userId: session.user.id },
+      { _id: new mongoose.Types.ObjectId(id), user: session.user.id },
       {
         $pull: {
           items: { movieId: itemId },

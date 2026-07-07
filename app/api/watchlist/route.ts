@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     await connectDB();
     const watchlist = await Watchlist.create({
       name,
-      userId: session.user.id,
+      user: session.user.id,
       items: [],
     });
 
@@ -38,7 +38,7 @@ export async function GET() {
     }
 
     await connectDB();
-    const watchlists = await Watchlist.find({ userId: session.user.id });
+    const watchlists = await Watchlist.find({ user: session.user.id });
     return NextResponse.json(watchlists);
   } catch (error) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });

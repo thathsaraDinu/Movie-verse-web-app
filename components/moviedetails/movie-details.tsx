@@ -2,14 +2,26 @@ import { MoviePoster } from "./movie-poster";
 import { MovieInfo } from "./movie-info";
 import { MovieMetadata } from "./movie-metadata";
 import { getImageUrl, type MovieDetails as MovieDetailsType } from "@/lib/tmdb";
-import WatchlistToggleButton from "../watchlists/watchlist-toggle-button";
 import { getAuthSession } from "@/lib/auth";
-import MovieCast from "./cast/movie-cast";
 import { Suspense } from "react";
-import MovieTrailers from "./movie-trailer";
-import SimilarMovies from "./similar-movies";
 import { LoadingSpinner } from "../ui/loading-spinner";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+// Lazy load heavy components
+const WatchlistToggleButton = dynamic(
+  () => import("../watchlists/watchlist-toggle-button"),
+  { loading: () => <div className="w-full p-2 text-center text-sm text-muted-foreground">Loading...</div> }
+);
+const MovieCast = dynamic(() => import("./cast/movie-cast"), {
+  loading: () => <LoadingSpinner />,
+});
+const MovieTrailers = dynamic(() => import("./movie-trailer"), {
+  loading: () => <LoadingSpinner />,
+});
+const SimilarMovies = dynamic(() => import("./similar-movies"), {
+  loading: () => <LoadingSpinner />,
+});
 
 interface MovieDetailsProps {
   movie: MovieDetailsType;
