@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import WatchlistItemDeleteButton from "./watchlist-item-delete-button";
 import { Card } from "@/components/ui/card";
 import { getImageUrl } from "@/lib/tmdb";
-import { Calendar, Loader } from "lucide-react";
+import { Calendar, Loader, Film } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -33,6 +33,8 @@ export function WatchlistCard({
   watchlistId,
 }: WatchlistCardProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -69,7 +71,7 @@ export function WatchlistCard({
             {/* Image */}
 
             <div className="absolute inset-0 rounded-t-md md:rounded-md overflow-clip">
-              {watchlistItem.imageUrl ? (
+              {watchlistItem.imageUrl && !imageError ? (
                 <Image
                   src={getImageUrl(watchlistItem.imageUrl, "w500")}
                   alt={watchlistItem.name}
@@ -77,10 +79,12 @@ export function WatchlistCard({
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                   priority={false}
+                  onError={() => setImageError(true)}
                 />
               ) : (
-                <div className="flex items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center">
-                  No Image Available
+                <div className="flex flex-col items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center p-4">
+                  <Film className="w-12 h-12 mb-2 opacity-50" />
+                  <span className="text-sm font-medium">No Image</span>
                 </div>
               )}
 

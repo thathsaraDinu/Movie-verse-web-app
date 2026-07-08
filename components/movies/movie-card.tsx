@@ -8,9 +8,12 @@ import type { Movie } from "@/lib/tmdb";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Star } from "lucide-react";
+import { Calendar, Star, Film } from "lucide-react";
+import { useState } from "react";
 
 export function MovieCard({ movie }: { movie: Movie }) {
+  const [imageError, setImageError] = useState(false);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -21,7 +24,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
       <Link href={`/movies/${movie.id}`} className="block h-full">
         <Card className="group relative overflow-hidden h-[300px] sm:h-[400px] bg-card">
           <div className="absolute inset-0">
-            {movie.poster_path ? (
+            {movie.poster_path && !imageError ? (
               <Image
                 src={getImageUrl(movie.poster_path, "w500")}
                 alt={movie.title || "movie poster"}
@@ -29,10 +32,12 @@ export function MovieCard({ movie }: { movie: Movie }) {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                 priority={false}
+                onError={() => setImageError(true)}
               />
             ) : (
-              <div className="flex items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center">
-                No Image Available
+              <div className="flex flex-col items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center p-4">
+                <Film className="w-12 h-12 mb-2 opacity-50" />
+                <span className="text-sm font-medium">No Image</span>
               </div>
             )}
 

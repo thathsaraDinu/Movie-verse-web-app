@@ -6,7 +6,7 @@ import { Watchlist } from "@/components/watchlist/watchlist-items-main";
 import { use, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Calendar, Loader, Plus } from "lucide-react";
+import { Calendar, Loader, Plus, Film } from "lucide-react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { getImageUrl } from "@/lib/tmdb";
@@ -24,6 +24,7 @@ export default function SharedWatchlist({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isAdding, setIsAdding] = useState(false);
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 
   const { token } = use(params);
 
@@ -129,7 +130,7 @@ export default function SharedWatchlist({
                       />
                     </div>
                     <div className="absolute inset-0">
-                      {watchlistItem.imageUrl ? (
+                      {watchlistItem.imageUrl && !imageErrors.has(index) ? (
                         <Image
                           src={getImageUrl(watchlistItem.imageUrl, "w500")}
                           alt={watchlistItem.title || "movie poster"}
@@ -137,10 +138,14 @@ export default function SharedWatchlist({
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                           priority={false}
+                          onError={() => {
+                            setImageErrors(prev => new Set(prev).add(index));
+                          }}
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center">
-                          No Image Available
+                        <div className="flex flex-col items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center p-4">
+                          <Film className="w-12 h-12 mb-2 opacity-50" />
+                          <span className="text-sm font-medium">No Image</span>
                         </div>
                       )}
 
