@@ -4,7 +4,7 @@ import {
   getUpcomingMovies,
   getMoviesByGenre,
   searchMovies,
-  Movie,
+  type Movie,
 } from "@/lib/tmdb";
 
 // Simple in-memory rate limiter

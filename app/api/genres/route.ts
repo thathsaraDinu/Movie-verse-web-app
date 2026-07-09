@@ -1,5 +1,5 @@
 import { getGenres } from "@/lib/tmdb";
-import { Genre } from "@/lib/tmdb";
+import type { Genre } from "@/lib/tmdb";
 
 // Simple in-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
