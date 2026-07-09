@@ -12,9 +12,10 @@ const nextConfig = {
         pathname: '/t/p/**',
       },
     ],
-    formats: ['image/avif', 'image/webp'], // Use modern image formats
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840], // Optimized device sizes
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Optimized thumbnail sizes
+    unoptimized: true, // Disable Vercel image optimization to save resources - use TMDB's CDN instead
+    // formats: ['image/avif', 'image/webp'], // Disabled to save Vercel resources
+    // deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840], // Disabled to save Vercel resources
+    // imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Disabled to save Vercel resources
   },
   swcMinify: true,
   reactStrictMode: true,

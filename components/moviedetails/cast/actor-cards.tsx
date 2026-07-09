@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import ActorDetailsDialog from "./actor-details-dialog";
 import { motion } from "framer-motion";
-import { getImageUrl } from "@/lib/tmdb";
+import { getOptimizedImageUrl } from "@/lib/tmdb";
 import { Film } from "lucide-react";
 
 interface ActorDetailsProps {
@@ -56,7 +56,7 @@ export default function ActorCards({ cast }: ActorDetailsProps) {
                     <div className="text-center overflow-clip rounded-t-lg relative h-56">
                       {actor.profile_path && !imageErrors.has(actor.id) ? (
                         <Image
-                          src={getImageUrl(actor.profile_path, "w185")}
+                          src={getOptimizedImageUrl(actor.profile_path, 'profile', 'medium')}
                           alt={actor.name}
                           fill
                           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"

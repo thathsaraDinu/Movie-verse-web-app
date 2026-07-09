@@ -62,6 +62,50 @@ export { getMovieCredits, getMovieCast, getMovieCrew } from './credits';
 // Re-export getImageUrl for backward compatibility
 import { tmdb as tmdbClient } from './client';
 
-export function getImageUrl(path: string | null, size: string = 'w500'): string {
+export function getImageUrl(
+  path: string | null,
+  size: string = 'w500'
+): string {
+  if (!path) {
+    return '/placeholder-movie.jpg';
+  }
   return tmdbClient.getImageUrl(path, size);
+}
+
+// Optimized image sizes for TMDB CDN (no Vercel optimization needed)
+export const TMDB_IMAGE_SIZES = {
+  poster: {
+    small: 'w92',
+    medium: 'w185',
+    large: 'w342',
+    xlarge: 'w500',
+    original: 'original',
+  },
+  backdrop: {
+    small: 'w300',
+    medium: 'w780',
+    large: 'w1280',
+    original: 'original',
+  },
+  profile: {
+    small: 'w45',
+    medium: 'w185',
+    large: 'h632',
+    original: 'original',
+  },
+} as const;
+
+export type TMDBImageSize = typeof TMDB_IMAGE_SIZES;
+
+// Helper function to get optimized image URL based on usage
+export function getOptimizedImageUrl(
+  path: string | null,
+  type: 'poster' | 'backdrop' | 'profile' = 'poster',
+  size: 'small' | 'medium' | 'large' | 'original' = 'large'
+): string {
+  if (!path) {
+    return '/placeholder-movie.jpg';
+  }
+  const imageSize = TMDB_IMAGE_SIZES[type][size];
+  return tmdbClient.getImageUrl(path, imageSize);
 }

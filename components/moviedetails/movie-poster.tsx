@@ -24,7 +24,7 @@ export function MoviePoster({ path, title }: MoviePosterProps) {
       <div className="aspect-[2/3] relative rounded-lg overflow-hidden bg-card">
         {path && !imageError ? (
           <Image
-            src={getImageUrl(path, "w500")}
+            src={getOptimizedImageUrl(path, 'poster', 'xlarge')}
             alt={title || "movie poster"}
             fill
             className="object-cover"

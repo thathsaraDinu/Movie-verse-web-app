@@ -3,7 +3,7 @@
 import { ErrorMessage } from "../../ui/error-message";
 import { useEffect, useState } from "react";
 import { Actor } from "@/lib/tmdb";
-import { getImageUrl } from "@/lib/tmdb";
+import { getOptimizedImageUrl } from "@/lib/tmdb";
 import Image from "next/image";
 import { Loader, Film } from "lucide-react";
 import { motion } from "framer-motion";
@@ -73,7 +73,7 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
                 >
                   {actorDetails.profile_path && !imageError ? (
                     <Image
-                      src={getImageUrl(actorDetails.profile_path, "w500")}
+                      src={getOptimizedImageUrl(actorDetails.profile_path, 'profile', 'large')}
                       alt={actorDetails.name}
                       width={500}
                       height={750}
