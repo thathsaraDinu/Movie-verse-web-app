@@ -33,13 +33,16 @@ export async function MovieDetails({ movie }: MovieDetailsProps) {
     <div className="">
       <div className="overflow-clip">
         <div className="absolute top-0 w-full -z-50 h-screen bg-cover object-cover">
-          <Image
-            src={getImageUrl(movie.backdrop_path, "original")}
-            alt="movie poster"
-            layout="fill"
-            objectFit="cover"
-            className={`bg-cover object-cover bg-center h-full w-full -z-50`}
-          />
+          {movie.backdrop_path ? (
+            <Image
+              src={getImageUrl(movie.backdrop_path, "original")}
+              alt="movie poster"
+              fill
+              style={{ objectFit: 'cover' }}
+              className={`bg-cover object-cover bg-center h-full w-full -z-50`}
+              priority
+            />
+          ) : null}
 
           {/* Gradient Overlay */}
           <div className="h-full w-full bg-gradient-to-b from-background/30 to-background -z-40" />

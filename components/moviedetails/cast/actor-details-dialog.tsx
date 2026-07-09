@@ -1,14 +1,18 @@
+"use client";
+
 import { ErrorMessage } from "../../ui/error-message";
 import { useEffect, useState } from "react";
 import { Actor } from "@/lib/tmdb";
+import { getImageUrl } from "@/lib/tmdb";
 import Image from "next/image";
-import { Loader } from "lucide-react";
+import { Loader, Film } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
   const [actorDetails, setActorDetails] = useState<Actor | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     const fetchActorData = async () => {
@@ -67,12 +71,21 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="md:w-1/3 object-cover rounded-lg"
                 >
-                  <Image
-                    src={`${actorDetails.profile_image}`}
-                    alt={actorDetails.name}
-                    width={500}
-                    height={750}
-                  />
+                  {actorDetails.profile_path && !imageError ? (
+                    <Image
+                      src={getImageUrl(actorDetails.profile_path, "w500")}
+                      alt={actorDetails.name}
+                      width={500}
+                      height={750}
+                      className="rounded-lg"
+                      onError={() => setImageError(true)}
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-[500px] text-gray-500 text-center p-4 rounded-lg bg-card">
+                      <Film className="w-16 h-16 mb-2 opacity-50" />
+                      <span className="text-sm font-medium">No Image</span>
+                    </div>
+                  )}
                 </motion.div>
 
                 <div className="flex flex-col gap-6 md:w-2/3">
@@ -90,9 +103,9 @@ export default function ActorDetailsDialog({ actorId }: { actorId: string }) {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
-                    <picture className="text-lg">
-                      <strong>Known for:</strong> {actorDetails.known_for || ""}
-                    </picture>
+                    <p className="text-lg">
+                      <strong>Known for:</strong> {actorDetails.known_for_department || ""}
+                    </p>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}

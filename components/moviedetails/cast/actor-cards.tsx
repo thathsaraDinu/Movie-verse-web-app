@@ -13,11 +13,14 @@ import {
 import Image from "next/image";
 import ActorDetailsDialog from "./actor-details-dialog";
 import { motion } from "framer-motion";
+import { getImageUrl } from "@/lib/tmdb";
+import { Film } from "lucide-react";
 
 interface ActorDetailsProps {
   cast: any;
 }
 
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 export default function ActorCards({ cast }: ActorDetailsProps) {
   const [selectedActorId, setSelectedActorId] = useState<string | null>(null);
 
@@ -50,14 +53,24 @@ export default function ActorCards({ cast }: ActorDetailsProps) {
                   transition={{ duration: 0.5 }}
                 >
                   <div className="bg-card rounded-lg overflow-hidden border h-full group">
-                    <div className="text-center overflow-clip rounded-t-lg ">
-                      <Image
-                        src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                        alt={actor.name}
-                        width={185}
-                        height={280}
-                        className="w-full h-56 object-cover mb-2 group-hover:scale-110 transition-transform duration-300"
-                      />
+                    <div className="text-center overflow-clip rounded-t-lg relative h-56">
+                      {actor.profile_path && !imageErrors.has(actor.id) ? (
+                        <Image
+                          src={getImageUrl(actor.profile_path, "w185")}
+                          alt={actor.name}
+                          fill
+                          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                          className="object-cover group-hover:scale-110 transition-transform duration-300"
+                          onError={() => {
+                            setImageErrors(prev => new Set(prev).add(actor.id));
+                          }}
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center h-full text-gray-500 text-center p-4">
+                          <Film className="w-12 h-12 mb-2 opacity-50" />
+                          <span className="text-xs font-medium">No Image</span>
+                        </div>
+                      )}
                     </div>
                     <div className="p-2">
                       <p className="text-sm text-gray-600">{actor.character}</p>
