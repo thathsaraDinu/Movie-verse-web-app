@@ -1,4 +1,4 @@
-import { fetchMovieCast } from "@/lib/tmdb";
+import { getMovieCast } from "@/lib/tmdb";
 import React from "react";
 import ActorCards from "./actor-cards";
 
@@ -8,7 +8,7 @@ interface MovieCastProps {
 
 export default async function MovieCast({ movieId }: MovieCastProps) {
   try {
-    const cast = await fetchMovieCast(movieId);
+    const cast = await getMovieCast(movieId);
     return (
       <div className="flex flex-col gap-6">
         <ActorCards cast={cast} />
