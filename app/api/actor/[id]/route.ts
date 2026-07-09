@@ -36,15 +36,15 @@ export async function GET(
       birthday: actorData.birthday,
       place_of_birth: actorData.place_of_birth,
       biography: actorData.biography,
-      profile_image: `https://image.tmdb.org/t/p/w500${actorData.profile_path}`,
+      profile_path: actorData.profile_path,
       popularity: actorData.popularity,
-      known_for: actorData.known_for_department,
+      known_for_department: actorData.known_for_department,
       movies: creditsData.cast.map((movie: any) => ({
         id: movie.id,
         title: movie.title,
         character: movie.character,
         release_date: movie.release_date,
-        poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        poster_path: movie.poster_path,
       })),
     });
   } catch (error) {

@@ -1,4 +1,4 @@
-import { tmdb } from './client';
+import { getTMDBClient } from './client';
 import type { Movie, MovieDetails, MovieResponse, DiscoverParams, SearchParams } from './types';
 
 /**
@@ -11,6 +11,7 @@ export async function getTrendingMovies(
   timeWindow: 'day' | 'week' = 'week'
 ): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       '/trending/movie/' + timeWindow,
       { page },
@@ -33,6 +34,7 @@ export async function getPopularMovies(
   language: string = 'en-US'
 ): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       '/movie/popular',
       { page, language },
@@ -55,6 +57,7 @@ export async function getUpcomingMovies(
   region: string = 'US'
 ): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const dateRange = tmdb.getDateRange(1, 30);
     const data = await tmdb.get<MovieResponse>(
       '/discover/movie',
@@ -91,6 +94,7 @@ export async function getMoviesByGenre(
       return [];
     }
     
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       '/discover/movie',
       {
@@ -121,6 +125,7 @@ export async function searchMovies(
       return [];
     }
     
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       '/search/movie',
       { query, page: 1, ...params },
@@ -143,6 +148,7 @@ export async function getMovieDetails(
   appendToResponse: string = 'credits,videos,similar'
 ): Promise<MovieDetails | null> {
   try {
+    const tmdb = getTMDBClient();
     return await tmdb.get<MovieDetails>(
       `/movie/${movieId}`,
       { append_to_response: appendToResponse },
@@ -164,6 +170,7 @@ export async function getSimilarMovies(
   page: number = 1
 ): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       `/movie/${movieId}/similar`,
       { page },
@@ -186,6 +193,7 @@ export async function getMovieRecommendations(
   page: number = 1
 ): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       `/movie/${movieId}/recommendations`,
       { page },
@@ -204,6 +212,7 @@ export async function getMovieRecommendations(
  */
 export async function getRecentTrendingMovies(page: number = 1): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const lastYear = tmdb.getDateYearsAgo(1);
     const today = tmdb.getDateRange(0).start;
     
@@ -230,6 +239,7 @@ export async function getRecentTrendingMovies(page: number = 1): Promise<Movie[]
  */
 export async function getTopRatedMovies(page: number = 1): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       '/movie/top_rated',
       { page },
@@ -252,6 +262,7 @@ export async function getNowPlayingMovies(
   region: string = 'US'
 ): Promise<Movie[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<MovieResponse>(
       '/movie/now_playing',
       { page, region },

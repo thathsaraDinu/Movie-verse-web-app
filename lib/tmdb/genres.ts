@@ -1,4 +1,4 @@
-import { tmdb } from './client';
+import { getTMDBClient } from './client';
 import type { Genre } from './types';
 
 /**
@@ -6,6 +6,7 @@ import type { Genre } from './types';
  */
 export async function getGenres(): Promise<Genre[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<{ genres: Genre[] }>(
       '/genre/movie/list',
       {},

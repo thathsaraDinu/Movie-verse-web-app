@@ -1,4 +1,4 @@
-import { tmdb } from './client';
+import { getTMDBClient } from './client';
 import type { Actor, ActorMovieCredits, CreditsResponse } from './types';
 
 /**
@@ -7,6 +7,7 @@ import type { Actor, ActorMovieCredits, CreditsResponse } from './types';
  */
 export async function getActorDetails(actorId: number): Promise<Actor | null> {
   try {
+    const tmdb = getTMDBClient();
     return await tmdb.get<Actor>(
       `/person/${actorId}`,
       {},
@@ -24,6 +25,7 @@ export async function getActorDetails(actorId: number): Promise<Actor | null> {
  */
 export async function getActorMovieCredits(actorId: number): Promise<ActorMovieCredits> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<CreditsResponse>(
       `/person/${actorId}/movie_credits`,
       {},
@@ -47,6 +49,7 @@ export async function getActorMovieCredits(actorId: number): Promise<ActorMovieC
  */
 export async function getPopularActors(page: number = 1): Promise<Actor[]> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<{ results: Actor[] }>(
       '/person/popular',
       { page },
@@ -70,6 +73,7 @@ export async function searchActors(query: string, page: number = 1): Promise<Act
       return [];
     }
     
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<{ results: Actor[] }>(
       '/search/person',
       { query, page },

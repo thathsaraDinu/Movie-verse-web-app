@@ -1,4 +1,4 @@
-import { tmdb } from './client';
+import { getTMDBClient } from './client';
 import type { CreditsResponse, CastMember, CrewMember } from './types';
 
 /**
@@ -11,6 +11,7 @@ export async function getMovieCredits(
   language: string = 'en-US'
 ): Promise<{ cast: CastMember[]; crew: CrewMember[] }> {
   try {
+    const tmdb = getTMDBClient();
     const data = await tmdb.get<CreditsResponse>(
       `/movie/${movieId}/credits`,
       { language },

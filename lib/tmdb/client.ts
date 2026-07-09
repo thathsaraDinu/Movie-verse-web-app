@@ -232,6 +232,3 @@ export function getTMDBClient(): TMDBClient {
   }
   return clientInstance;
 }
-
-// Export a convenience function for direct usage
-export const tmdb = getTMDBClient();

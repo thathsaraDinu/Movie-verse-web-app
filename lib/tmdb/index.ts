@@ -1,7 +1,7 @@
 // TMDB API Library - Main Entry Point
 
 // Export client and utilities
-export { TMDBClient, getTMDBClient, tmdb } from './client';
+export { TMDBClient, getTMDBClient } from './client';
 export type { TMDBClientConfig, TMDBRequestOptions } from './client';
 export {
   TMDBError,
@@ -60,8 +60,6 @@ export { getMovieTrailers, getMovieVideos } from './videos';
 export { getMovieCredits, getMovieCast, getMovieCrew } from './credits';
 
 // Re-export getImageUrl for backward compatibility
-import { tmdb as tmdbClient } from './client';
-
 export function getImageUrl(
   path: string | null,
   size: string = 'w500'
@@ -69,7 +67,7 @@ export function getImageUrl(
   if (!path) {
     return '/placeholder-movie.jpg';
   }
-  return tmdbClient.getImageUrl(path, size);
+  return `https://image.tmdb.org/t/p/${size}${path}`;
 }
 
 // Optimized image sizes for TMDB CDN (no Vercel optimization needed)
@@ -107,7 +105,7 @@ export function getOptimizedImageUrl(
     return '/placeholder-movie.jpg';
   }
   const imageSize = TMDB_IMAGE_SIZES[type][size];
-  return tmdbClient.getImageUrl(path, imageSize);
+  return `https://image.tmdb.org/t/p/${imageSize}${path}`;
 }
 
 // Specialized helper for posters with xlarge option

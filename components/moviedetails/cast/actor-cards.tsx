@@ -20,8 +20,8 @@ interface ActorDetailsProps {
   cast: any;
 }
 
-  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 export default function ActorCards({ cast }: ActorDetailsProps) {
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
   const [selectedActorId, setSelectedActorId] = useState<string | null>(null);
 
   return (
