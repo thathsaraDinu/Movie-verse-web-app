@@ -26,7 +26,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
           <div className="absolute inset-0">
             {movie.poster_path && !imageError ? (
               <Image
-                src={getOptimizedImageUrl(movie.poster_path, 'poster', 'xlarge')}
+                src={getImageUrl(movie.poster_path, 'w500')}
                 alt={movie.title || "movie poster"}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

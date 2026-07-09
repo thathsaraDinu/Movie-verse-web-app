@@ -109,3 +109,11 @@ export function getOptimizedImageUrl(
   const imageSize = TMDB_IMAGE_SIZES[type][size];
   return tmdbClient.getImageUrl(path, imageSize);
 }
+
+// Specialized helper for posters with xlarge option
+export function getPosterImageUrl(
+  path: string | null,
+  size: 'small' | 'medium' | 'large' | 'xlarge' | 'original' = 'xlarge'
+): string {
+  return getOptimizedImageUrl(path, 'poster', size as any);
+}

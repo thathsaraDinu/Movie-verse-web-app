@@ -1,7 +1,7 @@
 import { MoviePoster } from "./movie-poster";
 import { MovieInfo } from "./movie-info";
 import { MovieMetadata } from "./movie-metadata";
-import { getOptimizedImageUrl, type MovieDetails as MovieDetailsType } from "@/lib/tmdb";
+import { getImageUrl, type MovieDetails as MovieDetailsType } from "@/lib/tmdb";
 import { getAuthSession } from "@/lib/auth";
 import { Suspense } from "react";
 import { LoadingSpinner } from "../ui/loading-spinner";
@@ -35,7 +35,7 @@ export async function MovieDetails({ movie }: MovieDetailsProps) {
         <div className="absolute top-0 w-full -z-50 h-screen bg-cover object-cover">
           {movie.backdrop_path ? (
             <Image
-              src={getOptimizedImageUrl(movie.backdrop_path, 'backdrop', 'large')}
+              src={getImageUrl(movie.backdrop_path, 'w1280')}
               alt="movie poster"
               fill
               style={{ objectFit: 'cover' }}
