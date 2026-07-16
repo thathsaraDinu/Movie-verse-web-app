@@ -8,10 +8,12 @@ import { SearchBar } from "@/components/search-bar";
 async function SearchResults({ query }: { query: string }) {
   try {
     const movies = await searchMovies(query);
+
     return (
-      <>
-        <MovieSection title={`Search Results for "${query}"`} movies={movies} />
-      </>
+      <MovieSection
+        title={`Search Results for "${query}"`}
+        movies={movies}
+      />
     );
   } catch (error) {
     return (
@@ -25,16 +27,19 @@ async function SearchResults({ query }: { query: string }) {
   }
 }
 
+export const revalidate = 300;
+
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q: string }>;
+  searchParams: Promise<{ q?: string }>;
 }) {
-
   const { q } = await searchParams;
+
   return (
     <section className="pagesection flex flex-col justify-start gap-10">
       <SearchBar />
+
       {!q ? (
         <ErrorMessage
           title="No search query"
@@ -42,7 +47,7 @@ export default async function SearchPage({
         />
       ) : (
         <Suspense fallback={<LoadingSpinner />}>
-          <SearchResults query={q ?? ""} />
+          <SearchResults query={q} />
         </Suspense>
       )}
     </section>

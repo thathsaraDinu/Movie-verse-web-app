@@ -10,18 +10,24 @@ import { Plus } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-interface WatchlistItem {
-  _id: string;
+export interface WatchlistItem {
+  movieId: number;
   name: string;
-  movieId: string;
-  releaseDate: string;
+  releaseDate?: string;
   imageUrl?: string;
+  moviebackdrop_path?: string;
+  addedAt?: string;
 }
 
 export interface Watchlist {
-  _id: string;
+  _id?: string;
   name: string;
+  imageUrl?: string;
   items: WatchlistItem[];
+  user?: string;
+  isShared?: boolean;
+  isSnapshot?: boolean;
+  shareToken?: string;
 }
 
 function WatchlistPageContent({ watchlistId }: { watchlistId: string }) {

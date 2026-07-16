@@ -21,6 +21,7 @@ export default function SharedWatchlist({
 }) {
   const [watchlist = { name: "", items: [] }, setWatchlist] =
     useState<Watchlist>();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isAdding, setIsAdding] = useState(false);
@@ -31,6 +32,7 @@ export default function SharedWatchlist({
   const getWatchlist = useCallback(async () => {
     try {
       setLoading(true);
+
       const res = await fetch(`/api/watchlist/shared/${token}`);
       const watchlist = await res.json();
 
@@ -63,11 +65,14 @@ export default function SharedWatchlist({
 
       const response = await fetch("/api/watchlist/save", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ shareToken }),
       });
 
       const data = await response.json();
+
       if (response.ok) {
         toast.success(data.message);
         window.location.href = `/watchlist`;
@@ -77,8 +82,9 @@ export default function SharedWatchlist({
     } catch (error) {
       toast.error("Failed to save watchlist");
       console.error("Error saving watchlist:", error);
+    } finally {
+      setIsAdding(false);
     }
-    setIsAdding(false);
   }, []);
 
   return (
@@ -90,7 +96,10 @@ export default function SharedWatchlist({
       ) : (
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap gap-5 justify-between">
-            <h1 className="text-3xl font-bold">{watchlist.name} (Shared)</h1>
+            <h1 className="text-3xl font-bold">
+              {watchlist.name} (Shared)
+            </h1>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               viewport={{ once: true }}
@@ -100,7 +109,7 @@ export default function SharedWatchlist({
               <button
                 disabled={isAdding}
                 onClick={() => saveSharedWatchlist(token)}
-                className="w-56  justify-center items-center flex gap-2 p-4 rounded-md border border-gray-300 hover:border-gray-400 cursor-pointer"
+                className="w-56 justify-center items-center flex gap-2 p-4 rounded-md border border-gray-300 hover:border-gray-400 cursor-pointer"
               >
                 {isAdding ? (
                   <Loader className="w-4 h-4 animate-spin" />
@@ -113,54 +122,59 @@ export default function SharedWatchlist({
               </button>
             </motion.div>
           </div>
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5 mx-auto">
             {watchlist &&
               watchlist.items.map((watchlistItem: any, index: number) => (
                 <div key={index}>
                   <Card className="group relative overflow-hidden h-[300px] md:h-[400px] bg-card">
-                    <div
-                      className={`md:transform max-w-42 z-10 absolute md:group-hover:translate-x-[0%] md:-translate-x-[120%] top-2 mx-2 transition-transform duration-500 `}
-                    >
+
+                    <div className="md:transform max-w-42 z-10 absolute md:group-hover:translate-x-[0%] md:-translate-x-[120%] top-2 mx-2 transition-transform duration-500">
                       <WatchlistToggleButton
                         movieId={watchlistItem.movieId}
                         name={watchlistItem.name}
                         releaseDate={watchlistItem.releaseDate}
                         imageUrl={watchlistItem.imageUrl}
-                        moviebackdrop_path={watchlistItem.moviebackdrop_path}
+                        moviebackdrop_path={
+                          watchlistItem.moviebackdrop_path
+                        }
                       />
                     </div>
+
                     <div className="absolute inset-0">
                       {watchlistItem.imageUrl && !imageErrors.has(index) ? (
                         <Image
                           src={getImageUrl(watchlistItem.imageUrl, "w500")}
-                          alt={watchlistItem.title || "movie poster"}
+                          alt={watchlistItem.name || "movie poster"}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                           priority={false}
                           onError={() => {
-                            setImageErrors(prev => new Set(prev).add(index));
+                            setImageErrors((prev) =>
+                              new Set(prev).add(index)
+                            );
                           }}
                         />
                       ) : (
                         <div className="flex flex-col items-center justify-center h-full text-gray-500 transition-transform duration-500 group-hover:scale-110 text-center p-4">
                           <Film className="w-12 h-12 mb-2 opacity-50" />
-                          <span className="text-sm font-medium">No Image</span>
+                          <span className="text-sm font-medium">
+                            No Image
+                          </span>
                         </div>
                       )}
 
-                      {/* Gradient overlays */}
                       <div className="absolute bottom-0 top-1/4 left-0 right-0 bg-gradient-to-t from-black to-transparent translate-y-[0%] group-hover:translate-y-0 transition-all duration-500" />
                     </div>
 
-                    {/* Content */}
                     <Link
                       href={`/movies/${watchlistItem.movieId}`}
                       className="relative h-full flex flex-col justify-end p-3 md:p-5 text-white"
                     >
-                      {/* Main content - slides up on hover */}
                       <div className="transform translate-y-[40%] group-hover:translate-y-0 transition-transform duration-500">
-                        <h3 className="md:text-2xl font-bold mb-2 text-white/90 line-clam text-xl">
+
+                        <h3 className="md:text-2xl font-bold mb-2 text-white/90 line-clamp-2 text-xl">
                           {watchlistItem.name}
                         </h3>
 
@@ -168,12 +182,10 @@ export default function SharedWatchlist({
                           <Calendar className="w-4 h-4 mr-1" />
                           {formatDate(watchlistItem.releaseDate || "")}
                         </div>
-                        <div className="text-xs md:text-sm text-white/80 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                          Added:{" "}
-                          {new Date(watchlistItem.addedAt).toLocaleDateString()}
-                        </div>
+
                       </div>
                     </Link>
+
                   </Card>
                 </div>
               ))}

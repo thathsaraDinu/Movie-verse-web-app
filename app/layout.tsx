@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import Footer from "@/components/footer";
 import AuthProvider from "@/components/providers/auth-provider";
+import QueryProvider from "@/components/providers/query-provider";
 import { Toaster } from "sonner";
 import ParticlesComponent from "@/components/particles";
 import { Analytics } from "@vercel/analytics/react";
@@ -18,14 +19,14 @@ const inter = Inter({
 const raleway = Raleway({
   subsets: ["latin"],
   weight: ["700"],
-  variable: "--font-raleway", // Define the custom property
+  variable: "--font-raleway",
 });
 
 export const metadata: Metadata = {
   title: "Movie Verse - Dive Into a Universe of Cinematic Wonders",
   description: "Explore Cinematic Universe with MovieVerse",
   icons: {
-    icon: "/monogram-hq.png", // SVG favicon link
+    icon: "/monogram-hq.png",
   },
 };
 
@@ -35,8 +36,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
-      <body className={`${raleway.variable} ${inter.className} antialiased overflow-x-hidden`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="overflow-x-hidden"
+    >
+      <body
+        className={`${raleway.variable} ${inter.className} antialiased overflow-x-hidden`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -44,23 +51,43 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <div className="-z-50">
-              <ParticlesComponent id="particles" />
-            </div>
-            <Toaster position="bottom-center" richColors />
-            <div className="z-10 min-h-screen flex flex-col">
-              <Navbar />
-              <div>
-                <Suspense fallback={<LoadingSpinner />}>
-                  <main className="mx-auto min-h-screen">{children}</main>
-                </Suspense>
-                <div className="h-10" />
+
+            <QueryProvider>
+
+              <div className="-z-50">
+                <ParticlesComponent id="particles" />
               </div>
-              <Footer />
-            </div>
+
+              <Toaster
+                position="bottom-center"
+                richColors
+              />
+
+              <div className="z-10 min-h-screen flex flex-col">
+
+                <Navbar />
+
+                <div>
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <main className="mx-auto min-h-screen">
+                      {children}
+                    </main>
+                  </Suspense>
+
+                  <div className="h-10" />
+                </div>
+
+                <Footer />
+
+              </div>
+
+            </QueryProvider>
+
           </AuthProvider>
         </ThemeProvider>
-        <Analytics/>
+
+        <Analytics />
+
       </body>
     </html>
   );

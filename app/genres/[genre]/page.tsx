@@ -4,26 +4,35 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { getMoviesByGenre } from "@/lib/tmdb";
 import { Suspense } from "react";
 
-async function GenreMovies({ id, name }: { id: string; name: string }) {
+async function GenreMovies({
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+}) {
   try {
     const movies = await getMoviesByGenre(id);
 
-    if (movies?.length === 0) {
+    if (!movies || movies.length === 0) {
       return (
         <div className="container mx-auto">
           <ErrorMessage
             title="No Movies Found"
-            message={`No movies found for the genre: ${name}. Please try again later.`}
+            message={`No movies found for the genre: ${name}.`}
           />
         </div>
       );
-    } else {
-      return (
-        <div className="container mx-auto">
-          <MovieSection title={`Genre: ${name}`} movies={movies} />
-        </div>
-      );
     }
+
+    return (
+      <div className="container mx-auto">
+        <MovieSection
+          title={`Genre: ${name}`}
+          movies={movies}
+        />
+      </div>
+    );
   } catch (error) {
     return (
       <div className="container mx-auto">
@@ -36,24 +45,25 @@ async function GenreMovies({ id, name }: { id: string; name: string }) {
   }
 }
 
-export const revalidate = 1800; // Revalidate every 30 minutes
+export const revalidate = 1800;
 
 export default async function GenrePage({
   params,
   searchParams,
 }: {
   params: Promise<{ genre: string }>;
-  searchParams: Promise<{ name: string }>;
+  searchParams: Promise<{ name?: string }>;
 }) {
-  const { genre } =  await params;
-  const { name } =  await searchParams;
-
-  const decodedName = name ? decodeURIComponent(name) : ""; // Decode spaces if needed
+  const { genre } = await params;
+  const { name } = await searchParams;
 
   return (
     <section className="pagesection">
       <Suspense fallback={<LoadingSpinner />}>
-        <GenreMovies id={genre} name={decodedName} />
+        <GenreMovies
+          id={genre}
+          name={name ?? ""}
+        />
       </Suspense>
     </section>
   );

@@ -1,11 +1,17 @@
+import dns from "node:dns";
+
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+
 import mongoose from "mongoose";
 
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/nextjs-rbac";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable");
 }
+
+// After the check above, TypeScript knows this is a string
+const MONGODB_URI_STRING: string = MONGODB_URI;
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -13,24 +19,29 @@ interface MongooseCache {
 }
 
 declare global {
-  var mongoose: MongooseCache;
+  var mongooseCache: MongooseCache | undefined;
 }
 
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+const cached: MongooseCache = global.mongooseCache ?? {
+  conn: null,
+  promise: null,
+};
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+global.mongooseCache = cached;
 
-async function connectDB() {
+async function connectDB(): Promise<typeof mongoose> {
   if (cached.conn) {
     return cached.conn;
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI);
+    cached.promise = mongoose.connect(MONGODB_URI_STRING, {
+      bufferCommands: false,
+    });
   }
+
   cached.conn = await cached.promise;
+
   return cached.conn;
 }
 

@@ -30,8 +30,6 @@ async function MovieContent({ id }: { id: string }) {
   }
 }
 
-export const revalidate = 3600; // Revalidate every hour
-
 export default async function MoviePage({
   params,
 }: {
@@ -40,7 +38,7 @@ export default async function MoviePage({
   const { id } = await params;
 
   return (
-    <section className="">
+    <section>
       <Suspense fallback={<LoadingSpinner />}>
         <MovieContent id={id} />
       </Suspense>

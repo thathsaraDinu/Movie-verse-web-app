@@ -40,25 +40,33 @@ export async function GET(
     const creditsData = await creditsRes.json();
 
     // Return combined response
-    return NextResponse.json({
-      id: actorData.id,
-      name: actorData.name,
-      birthday: actorData.birthday,
-      place_of_birth: actorData.place_of_birth,
-      biography: actorData.biography,
-      profile_path: actorData.profile_path,
-      popularity: actorData.popularity,
-      known_for_department: actorData.known_for_department,
-      movies: creditsData.cast.map((movie: any) => ({
-        id: movie.id,
-        title: movie.title,
-        character: movie.character,
-        release_date: movie.release_date,
-        poster_path: movie.poster_path,
-      })),
-    });
-  } catch (error) {
-    console.error("Error fetching actor details:", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
-  }
+    return NextResponse.json(
+      {
+        id: actorData.id,
+        name: actorData.name,
+        birthday: actorData.birthday,
+        place_of_birth: actorData.place_of_birth,
+        biography: actorData.biography,
+        profile_path: actorData.profile_path,
+        popularity: actorData.popularity,
+        known_for_department: actorData.known_for_department,
+        movies: creditsData.cast.map((movie: any) => ({
+          id: movie.id,
+          title: movie.title,
+          character: movie.character,
+          release_date: movie.release_date,
+          poster_path: movie.poster_path,
+        })),
+      },
+      {
+        headers: {
+          "Cache-Control":
+            "public, s-maxage=86400, stale-while-revalidate=604800",
+        },
+      }
+    );
+    } catch (error) {
+      console.error("Error fetching actor details:", error);
+      return NextResponse.json({ error: "Server error" }, { status: 500 });
+    }
 }

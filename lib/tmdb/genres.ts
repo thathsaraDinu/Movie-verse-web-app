@@ -7,11 +7,16 @@ import type { Genre } from './types';
 export async function getGenres(): Promise<Genre[]> {
   try {
     const tmdb = getTMDBClient();
+
     const data = await tmdb.get<{ genres: Genre[] }>(
       '/genre/movie/list',
       {},
-      { revalidate: 86400, tags: ['genres'] } // Cache for 24 hours
+      {
+        revalidate: 2592000, // 30 days
+        tags: ['genres'],
+      }
     );
+
     return data?.genres || [];
   } catch (error) {
     console.error('Error fetching genres:', error);
@@ -26,7 +31,8 @@ export async function getGenres(): Promise<Genre[]> {
 export async function getGenreById(genreId: number): Promise<Genre | null> {
   try {
     const genres = await getGenres();
-    return genres.find(g => g.id === genreId) || null;
+
+    return genres.find((g) => g.id === genreId) || null;
   } catch (error) {
     console.error('Error fetching genre by ID:', error);
     throw error;

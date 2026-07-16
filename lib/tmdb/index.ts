@@ -3,6 +3,7 @@
 // Export client and utilities
 export { TMDBClient, getTMDBClient } from './client';
 export type { TMDBClientConfig, TMDBRequestOptions } from './client';
+
 export {
   TMDBError,
   TMDBRateLimitError,
@@ -43,7 +44,10 @@ export {
 } from './movies';
 
 // Export genre functions
-export { getGenres, getGenreById } from './genres';
+export {
+  getGenres,
+  getGenreById,
+} from './genres';
 
 // Export actor functions
 export {
@@ -54,12 +58,22 @@ export {
 } from './actors';
 
 // Export video functions
-export { getMovieTrailers, getMovieVideos } from './videos';
+export {
+  getMovieTrailers,
+  getMovieVideos,
+} from './videos';
 
 // Export credits functions
-export { getMovieCredits, getMovieCast, getMovieCrew } from './credits';
+export {
+  getMovieCredits,
+  getMovieCast,
+  getMovieCrew,
+} from './credits';
 
-// Re-export getImageUrl for backward compatibility
+
+/**
+ * Backward compatible image helper
+ */
 export function getImageUrl(
   path: string | null,
   size: string = 'w500'
@@ -67,10 +81,17 @@ export function getImageUrl(
   if (!path) {
     return '/placeholder-movie.jpg';
   }
+
   return `https://image.tmdb.org/t/p/${size}${path}`;
 }
 
-// Optimized image sizes for TMDB CDN (no Vercel optimization needed)
+
+/**
+ * TMDB CDN image sizes
+ *
+ * Using TMDB resized images avoids requesting unnecessarily
+ * large original files and reduces bandwidth usage.
+ */
 export const TMDB_IMAGE_SIZES = {
   poster: {
     small: 'w92',
@@ -79,12 +100,14 @@ export const TMDB_IMAGE_SIZES = {
     xlarge: 'w500',
     original: 'original',
   },
+
   backdrop: {
     small: 'w300',
     medium: 'w780',
     large: 'w1280',
     original: 'original',
   },
+
   profile: {
     small: 'w45',
     medium: 'w185',
@@ -93,25 +116,53 @@ export const TMDB_IMAGE_SIZES = {
   },
 } as const;
 
+
 export type TMDBImageSize = typeof TMDB_IMAGE_SIZES;
 
-// Helper function to get optimized image URL based on usage
+
+type ImageType = keyof typeof TMDB_IMAGE_SIZES;
+
+
+type PosterSize =
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'original';
+
+
+/**
+ * Get optimized TMDB image URL
+ */
 export function getOptimizedImageUrl(
   path: string | null,
-  type: 'poster' | 'backdrop' | 'profile' = 'poster',
-  size: 'small' | 'medium' | 'large' | 'original' = 'large'
+  type: ImageType = 'poster',
+  size: keyof typeof TMDB_IMAGE_SIZES[ImageType] = 'large'
 ): string {
   if (!path) {
     return '/placeholder-movie.jpg';
   }
+
   const imageSize = TMDB_IMAGE_SIZES[type][size];
+
   return `https://image.tmdb.org/t/p/${imageSize}${path}`;
 }
 
-// Specialized helper for posters with xlarge option
+
+/**
+ * Specialized helper for movie posters
+ */
 export function getPosterImageUrl(
   path: string | null,
-  size: 'small' | 'medium' | 'large' | 'xlarge' | 'original' = 'xlarge'
+  size: PosterSize = 'xlarge'
 ): string {
-  return getOptimizedImageUrl(path, 'poster', size as any);
+  if (!path) {
+    return '/placeholder-movie.jpg';
+  }
+
+  if (size === 'xlarge') {
+    return `https://image.tmdb.org/t/p/w500${path}`;
+  }
+
+  return getOptimizedImageUrl(path, 'poster', size);
 }
