@@ -19,13 +19,23 @@ export async function GET(
   try {
     // Fetch actor details
     const actorRes = await fetch(
-      `${BASE_URL}/person/${id}?api_key=${TMDB_API_KEY}&language=en-US`
+      `${BASE_URL}/person/${id}?api_key=${TMDB_API_KEY}&language=en-US`,
+      {
+        next: {
+          revalidate: 86400
+        }
+      }
     );
     const actorData = await actorRes.json();
 
     // Fetch actor movie credits
     const creditsRes = await fetch(
-      `${BASE_URL}/person/${id}/movie_credits?api_key=${TMDB_API_KEY}&language=en-US`
+      `${BASE_URL}/person/${id}/movie_credits?api_key=${TMDB_API_KEY}&language=en-US`,
+      {
+        next: {
+          revalidate: 86400
+        }
+      }
     );
     const creditsData = await creditsRes.json();
 

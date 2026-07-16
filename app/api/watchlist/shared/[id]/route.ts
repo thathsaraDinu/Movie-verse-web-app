@@ -2,31 +2,82 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { Watchlist } from "@/lib/models/watchlist";
 
-// Get watchlist id by share token
+
+// Get watchlist by share token
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  {
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  }
 ) {
   try {
+
     const { id } = await params;
 
-    await connectDB();
-    const watchlist = await Watchlist.findOne({
-      shareToken: id as string,
-      isSnapshot: true,
-    });
-    if (!watchlist) {
+
+    if (!id || typeof id !== "string") {
       return NextResponse.json(
-        { error: "Watchlist not found or expired" },
-        { status: 404 }
+        {
+          error: "Invalid share token",
+        },
+        {
+          status: 400,
+        }
       );
     }
-    return NextResponse.json(watchlist);
-  } catch (error) {
-    console.error(error);
+
+
+    await connectDB();
+
+
+    const watchlist =
+      await Watchlist.findOne({
+        shareToken: id,
+        isSnapshot: true,
+      }).lean();
+
+
+
+    if (!watchlist) {
+      return NextResponse.json(
+        {
+          error: "Watchlist not found or expired",
+        },
+        {
+          status:404,
+        }
+      );
+    }
+
+
+
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
+      watchlist,
+      {
+        headers:{
+          "Cache-Control":"no-store",
+        },
+      }
+    );
+
+
+  } catch(error) {
+
+    console.error(
+      "Get shared watchlist error:",
+      error
+    );
+
+
+    return NextResponse.json(
+      {
+        error:"Internal server error",
+      },
+      {
+        status:500,
+      }
     );
   }
 }

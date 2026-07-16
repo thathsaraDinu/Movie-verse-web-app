@@ -14,12 +14,12 @@ const GenreSelection = ({ genres }: { genres: Genre[] }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex flex-row items-center">
-        <div
-          className={`w-full px-3 py-2 cursor-pointer inline-flex space-x-2 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-800 text-white hover:bg-blue-800/90`}
+        <span
+          className="w-full px-3 py-2 cursor-pointer inline-flex space-x-2 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-800 text-white hover:bg-blue-800/90"
         >
           <span>Genres</span>
           <ChevronDown className="w-4 h-4" />
-        </div>
+        </span>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent

@@ -19,7 +19,7 @@ const ParticlesComponent = memo(function ParticlesComponent(props: ParticlesComp
 
   const options = useMemo(
     () => ({
-      fpsLimit: 30, // Reduced from 60 to save CPU
+      fpsLimit: 30, 
       interactivity: {
         events: {
           onClick: {
@@ -48,17 +48,17 @@ const ParticlesComponent = memo(function ParticlesComponent(props: ParticlesComp
             default: "bounce" as const,
           },
           random: true,
-          speed: 0.1, // Reduced from 0.2 to save CPU
+          speed: 0.2, 
           straight: false,
         },
         number: {
           density: {
             enable: true,
           },
-          value: 40, // Reduced from 80 to save CPU
+          value: 80, 
         },
         opacity: {
-          value: 0.3, // Reduced from 0.5
+          value: 0.5, 
         },
         shape: {
           type: "circle",

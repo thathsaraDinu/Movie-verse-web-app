@@ -3,44 +3,143 @@ import connectDB from "@/lib/db";
 import { Watchlist } from "@/lib/models/watchlist";
 import { getAuthSession } from "@/lib/auth";
 
+
 // Create a new watchlist
 export async function POST(req: Request) {
   try {
+
     const session = await getAuthSession();
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        {
+          error: "Unauthorized"
+        },
+        {
+          status: 401
+        }
+      );
     }
+
 
     const { name } = await req.json();
-    if (!name) {
-      return NextResponse.json({ error: "Name is required" }, { status: 400 });
+
+
+    if (!name || !name.trim()) {
+      return NextResponse.json(
+        {
+          error: "Name is required"
+        },
+        {
+          status:400
+        }
+      );
     }
 
+
     await connectDB();
+
+
     const watchlist = await Watchlist.create({
-      name,
+
+      name: name.trim(),
+
       user: session.user.id,
-      items: [],
+
+      items: []
+
     });
 
-    return NextResponse.json(watchlist);
-  } catch (error) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+
+    return NextResponse.json(
+      watchlist,
+      {
+        status:201
+      }
+    );
+
+
+  } catch(error) {
+
+
+    console.error(
+      "Create watchlist error:",
+      error
+    );
+
+
+    return NextResponse.json(
+      {
+        error:"Server error"
+      },
+      {
+        status:500
+      }
+    );
   }
 }
 
-// Get all watchlists for the user
+
+
+
+
+// Get all watchlists for the logged-in user
 export async function GET() {
+
   try {
+
+
     const session = await getAuthSession();
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+
+    if (!session?.user?.id) {
+
+      return NextResponse.json(
+        {
+          error:"Unauthorized"
+        },
+        {
+          status:401
+        }
+      );
+
     }
 
+
     await connectDB();
-    const watchlists = await Watchlist.find({ user: session.user.id });
-    return NextResponse.json(watchlists);
-  } catch (error) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+
+
+    const watchlists =
+      await Watchlist
+        .find({
+          user: session.user.id
+        })
+        .lean();
+
+
+
+    return NextResponse.json(
+      watchlists
+    );
+
+
+  } catch(error) {
+
+
+    console.error(
+      "Get watchlists error:",
+      error
+    );
+
+
+    return NextResponse.json(
+      {
+        error:"Server error"
+      },
+      {
+        status:500
+      }
+    );
+
   }
 }
